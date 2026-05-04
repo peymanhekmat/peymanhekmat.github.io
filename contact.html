@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0e1f3b;
+      --navy-mid: #1a3260;
+      --navy-light: #24478a;
+      --gold: #b8972a;
+      --gold-light: #d4af50;
+      --cream: #f7f4ef;
+      --cream-dark: #ede9e0;
+      --text: #1c1c1c;
+      --text-muted: #5a5a5a;
+      --white: #ffffff;
+      --border: #d0c9b8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 62px; }
+    .nav-brand { font-family: 'EB Garamond', serif; color: var(--white); font-size: 1.15rem; text-decoration: none; }
+    .nav-brand span { color: var(--gold-light); }
+    .nav-links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav-links a { color: #b8c8e0; text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 3px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--navy-light); }
+
+    .page-header { background: var(--navy); background-image: linear-gradient(135deg, #0e1f3b 0%, #1a3260 60%, #0e2a4a 100%); padding: 3rem 2rem; border-bottom: 4px solid var(--gold); }
+    .page-header-inner { max-width: 1100px; margin: 0 auto; }
+    .page-header h1 { font-family: 'EB Garamond', serif; font-size: 2.2rem; color: var(--white); font-weight: 400; margin-bottom: 0.3rem; }
+    .page-header p { color: #b8c8e0; font-size: 0.9rem; }
+
+    .main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+
+    .card { background: var(--white); border: 1px solid var(--border); border-top: 4px solid var(--navy); padding: 2rem; border-radius: 0 0 4px 4px; }
+    .card-title { font-family: 'EB Garamond', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--gold); }
+
+    .contact-row { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.3rem; }
+    .contact-icon { width: 38px; height: 38px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .contact-icon svg { color: var(--gold-light); }
+    .contact-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .contact-value { font-size: 0.95rem; color: var(--text); }
+    .contact-value a { color: var(--navy-light); text-decoration: none; }
+    .contact-value a:hover { color: var(--gold); text-decoration: underline; }
+
+    .profiles-card { background: var(--white); border: 1px solid var(--border); border-top: 4px solid var(--gold); padding: 2rem; border-radius: 0 0 4px 4px; }
+    .profile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; text-decoration: none; font-size: 0.85rem; font-weight: 600; color: var(--navy); transition: all 0.2s; margin-bottom: 0.6rem; }
+    .profile-link:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .profile-link:last-child { margin-bottom: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    .note { background: var(--cream-dark); border: 1px solid var(--border); border-left: 4px solid var(--gold); padding: 1rem 1.2rem; border-radius: 0 4px 4px 0; font-size: 0.88rem; color: var(--text-muted); margin-top: 2.5rem; max-width: 900px; margin-left: auto; margin-right: auto; margin-bottom: 3rem; padding-left: 2rem; padding-right: 2rem; }
+
+    footer { background: var(--navy); border-top: 3px solid var(--gold); color: #7a90b0; text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .main { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#research">Research</a></li>
+      <li><a href="index.html#teaching">Teaching</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>Contact</h1>
+    <p>Department of Sociology · Oklahoma State University – Tulsa</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- CONTACT INFO -->
+  <div class="card">
+    <p class="card-title">Get in Touch</p>
+
+    <div class="contact-row">
+      <div class="contact-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+      </div>
+      <div>
+        <p class="contact-label">Email</p>
+        <p class="contact-value"><a href="mailto:phekmat@okstate.edu">phekmat@okstate.edu</a></p>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      </div>
+      <div>
+        <p class="contact-label">Mobile</p>
+        <p class="contact-value"><a href="tel:+18323510761">+1 (832) 351-0761</a></p>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <p class="contact-label">Office Address</p>
+        <p class="contact-value">700 N. Greenwood Ave<br>Main Hall 2217<br>Tulsa, OK 74106</p>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div>
+        <p class="contact-label">Office Hours</p>
+        <p class="contact-value">By appointment</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILES -->
+  <div>
+    <div class="profiles-card">
+      <p class="card-title" style="font-family:'EB Garamond',serif;font-size:1.3rem;color:var(--navy);margin-bottom:1.5rem;padding-bottom:0.5rem;border-bottom:2px solid var(--gold);">Academic Profiles</p>
+      <a class="profile-link" href="https://scholar.google.com/citations?hl=en&user=fucRfBoAAAAJ" target="_blank">
+        <span class="dot" style="background:#4285f4"></span> Google Scholar
+      </a>
+      <a class="profile-link" href="https://www.researchgate.net/profile/Peyman-Hekmatpour" target="_blank">
+        <span class="dot" style="background:#00ccbb"></span> ResearchGate
+      </a>
+      <a class="profile-link" href="https://experts.okstate.edu/phekmat" target="_blank">
+        <span class="dot" style="background:#f47920"></span> OSU Faculty Profile
+      </a>
+      <a class="profile-link" href="https://www.linkedin.com/in/peyman-hekmatpour/" target="_blank">
+        <span class="dot" style="background:#0077b5"></span> LinkedIn
+      </a>
+      <a class="profile-link" href="https://twitter.com/phekmatpour" target="_blank">
+        <span class="dot" style="background:#1da1f2"></span> Twitter / X
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="note" style="max-width:860px; margin: 0 auto 3rem; padding: 1rem 2rem;">
+  <strong>Note:</strong> For general inquiries, collaboration proposals, or media requests, email is the preferred method of contact. I typically respond within 2–3 business days.
+</div>
+
+<footer>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+</footer>
+
+</body>
+</html>
