@@ -80,6 +80,47 @@
       background: var(--navy-light);
     }
 
+    /* ── DROPDOWN ── */
+    .nav-links li { position: relative; }
+    .nav-links li.has-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 0;
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 3px solid var(--gold);
+      border-radius: 0 0 4px 4px;
+      min-width: 230px;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .nav-links li.has-dropdown.open .dropdown { display: block; }
+    .dropdown-label {
+      display: block;
+      padding: 0.55rem 1rem 0.25rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .dropdown a {
+      display: block;
+      color: #b8c8e0 !important;
+      padding: 0.55rem 1rem !important;
+      font-size: 0.81rem !important;
+      border-radius: 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: transparent !important;
+      letter-spacing: 0.04em !important;
+      text-transform: none !important;
+    }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover { background: var(--navy-light) !important; color: var(--white) !important; }
+
     /* ── HERO ── */
     .hero {
       background: var(--navy);
@@ -408,7 +449,14 @@
     <a class="nav-brand" href="#"><span>P.</span> Hekmatpour</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event, this)">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+        </div>
+      </li>
       <li><a href="#teaching">Teaching</a></li>
       <li><a href="#awards">Awards</a></li>
       <li><a href="publications.html">Publications</a></li>
@@ -572,10 +620,6 @@
     <div class="card" id="awards">
       <p class="card-title">Grants &amp; Awards</p>
       <div class="award-item">
-        <span class="award-year">2024</span>
-        <span class="award-text">Advancing Undergraduate Research and Creative Activity (AURCA) Award,  Oklahoma State University</span>
-      </div>
-      <div class="award-item">
         <span class="award-year">2022</span>
         <span class="award-text">Nancy L. Mergler Dissertation Completion Fellowship, University of Oklahoma</span>
       </div>
@@ -603,5 +647,19 @@
   <a href="https://peymanhekmat.github.io">peymanhekmat.github.io</a></p>
 </footer>
 
+<script>
+  function toggleDropdown(e, el) {
+    e.preventDefault();
+    const li = el.parentElement;
+    const isOpen = li.classList.contains('open');
+    document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) li.classList.add('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dropdown')) {
+      document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+</script>
 </body>
 </html>

@@ -94,7 +94,14 @@
     <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#research">Research</a></li>
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event, this)">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+        </div>
+      </li>
       <li><a href="index.html#teaching">Teaching</a></li>
       <li><a href="publications.html" class="active">Publications</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -473,5 +480,9 @@
   }
 </script>
 
+<script>
+  function toggleDropdown(e, el) { e.preventDefault(); const li = el.parentElement; const isOpen = li.classList.contains("open"); document.querySelectorAll(".has-dropdown").forEach(d => d.classList.remove("open")); if (!isOpen) li.classList.add("open"); }
+  document.addEventListener("click", function(e) { if (!e.target.closest(".has-dropdown")) document.querySelectorAll(".has-dropdown").forEach(d => d.classList.remove("open")); });
+</script>
 </body>
 </html>

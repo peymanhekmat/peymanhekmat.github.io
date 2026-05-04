@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FDI & Climate Adaptability — Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0e1f3b; --navy-mid: #1a3260; --navy-light: #24478a;
+      --gold: #b8972a; --gold-light: #d4af50;
+      --cream: #f7f4ef; --cream-dark: #ede9e0;
+      --text: #1c1c1c; --text-muted: #5a5a5a;
+      --white: #ffffff; --border: #d0c9b8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 62px; }
+    .nav-brand { font-family: 'EB Garamond', serif; color: var(--white); font-size: 1.15rem; text-decoration: none; }
+    .nav-brand span { color: var(--gold-light); }
+    .nav-links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav-links li { position: relative; }
+    .nav-links a { color: #b8c8e0; text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 3px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--navy-light); }
+    .nav-links li.has-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
+    .dropdown { display: none; position: absolute; top: calc(100% + 3px); left: 0; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-top: 3px solid var(--gold); border-radius: 0 0 4px 4px; min-width: 230px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .nav-links li.has-dropdown.open .dropdown { display: block; }
+    .dropdown-label { display: block; padding: 0.55rem 1rem 0.25rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); pointer-events: none; }
+    .dropdown a { display: block; color: #b8c8e0 !important; padding: 0.55rem 1rem !important; font-size: 0.81rem !important; border-radius: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.06); background: transparent !important; text-transform: none !important; letter-spacing: 0.04em !important; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover { background: var(--navy-light) !important; color: var(--white) !important; }
+
+    .page-header { background: var(--navy); background-image: linear-gradient(135deg, #0e1f3b 0%, #1a3260 60%, #0e2a4a 100%); padding: 3rem 2rem; border-bottom: 4px solid var(--gold); }
+    .page-header-inner { max-width: 1100px; margin: 0 auto; }
+    .page-header .breadcrumb { font-size: 0.78rem; color: var(--gold-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .page-header .breadcrumb a { color: var(--gold-light); text-decoration: none; opacity: 0.7; }
+    .page-header .breadcrumb a:hover { opacity: 1; }
+    .page-header h1 { font-family: 'EB Garamond', serif; font-size: 2.1rem; color: var(--white); font-weight: 400; margin-bottom: 0.5rem; line-height: 1.25; }
+    .page-header .subtitle { color: #b8c8e0; font-size: 0.92rem; }
+    .status-badge { display: inline-block; background: var(--gold); color: var(--navy); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.7rem; border-radius: 2px; margin-top: 0.75rem; }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+
+    .section-title { font-family: 'EB Garamond', serif; font-size: 1.45rem; color: var(--navy); font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold); }
+    section { margin-bottom: 2.5rem; }
+    section p { font-size: 0.96rem; color: var(--text); margin-bottom: 0.85rem; }
+
+    .placeholder-box { background: var(--white); border: 2px dashed var(--border); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem; color: var(--text-muted); }
+    .placeholder-box .icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.4; }
+    .placeholder-box p { font-size: 0.88rem; margin: 0; }
+    .placeholder-box strong { display: block; font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem; opacity: 0.6; }
+    .map-placeholder { height: 420px; }
+    .chart-placeholder { height: 280px; }
+
+    .card { background: var(--white); border: 1px solid var(--border); border-top: 4px solid var(--navy); padding: 1.4rem; margin-bottom: 1.5rem; border-radius: 0 0 4px 4px; }
+    .card-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin-bottom: 1rem; }
+    .info-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid var(--cream-dark); font-size: 0.85rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: var(--text-muted); }
+    .info-val { color: var(--navy); font-weight: 600; text-align: right; }
+    .tag { display: inline-block; background: var(--navy); color: #b8c8e0; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 2px; border-left: 3px solid var(--gold); margin: 0.2rem 0.2rem 0.2rem 0; }
+
+    footer { background: var(--navy); border-top: 3px solid var(--gold); color: #7a90b0; text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    @media (max-width: 768px) { .main { grid-template-columns: 1fr; } .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event, this)" class="active">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+        </div>
+      </li>
+      <li><a href="index.html#teaching">Teaching</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> › Research › Current Projects</p>
+    <h1>Foreign Direct Investment Networks<br>&amp; Climate Adaptability</h1>
+    <p class="subtitle">Examining how FDI network position shapes countries' capacity to adapt to climate change</p>
+    <span class="status-badge">Work in Progress</span>
+  </div>
+</div>
+
+<!-- COPYRIGHT BANNER -->
+<div style="background:#f0ebe0; border-top: 1px solid #d0c9b8; border-bottom: 1px solid #d0c9b8; padding: 0.6rem 2rem; text-align:center;">
+  <p style="font-size:0.75rem; color:#5a5a5a; margin:0;"><div class="main">#9400; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials presented on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+</div>
+
+<div class="main">
+  <main>
+
+    <section>
+      <h2 class="section-title">Project Overview</h2>
+      <p>
+        [Description coming soon. This section will introduce the theoretical motivation for linking FDI network centrality to climate adaptability outcomes across countries.]
+      </p>
+      <p>
+        [Additional context on how core-periphery FDI structures shape the distribution of resources available for climate adaptation will be added here.]
+      </p>
+    </section>
+
+    <section>
+      <h2 class="section-title">Data &amp; Methods</h2>
+      <p>
+        [This section will describe the FDI network data, climate adaptability indices used, country coverage, time period, and the network-analytic and econometric methods applied.]
+      </p>
+    </section>
+
+    <section>
+      <h2 class="section-title">Interactive FDI Network Map</h2>
+      <div class="placeholder-box map-placeholder">
+        <div class="icon">🌐</div>
+        <strong>Network Map Coming Soon</strong>
+        <p>An interactive visualization of the global FDI network showing core-periphery structure and climate adaptability scores will be displayed here.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Preliminary Findings</h2>
+      <div class="placeholder-box chart-placeholder">
+        <div class="icon">📊</div>
+        <strong>Charts &amp; Findings Coming Soon</strong>
+        <p>Key results and interactive visualizations will be added here as the project progresses.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <aside style="position:sticky; top:80px;">
+    <div class="card">
+      <p class="card-title">Project Details</p>
+      <div class="info-row"><span class="info-label">Status</span><span class="info-val">In Progress</span></div>
+      <div class="info-row"><span class="info-label">Level of Analysis</span><span class="info-val">Cross-national</span></div>
+      <div class="info-row"><span class="info-label">Method</span><span class="info-val">Network Analysis</span></div>
+      <div class="info-row"><span class="info-label">Outcome</span><span class="info-val">Climate Adaptability</span></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Keywords</p>
+      <span class="tag">Foreign Direct Investment</span>
+      <span class="tag">Climate Adaptability</span>
+      <span class="tag">Network Analysis</span>
+      <span class="tag">Core-Periphery</span>
+      <span class="tag">Global Stratification</span>
+      <span class="tag">Environmental Sociology</span>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Related Publication</p>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.6;">Hekmatpour (2024). Foreign direct investment, sectoral distribution and income inequality in developed and developing economies. <em>International Journal of Sociology</em> 54(3).</p>
+      <a href="publications.html" style="font-size:0.8rem; color:var(--navy-light); text-decoration:none; font-weight:600;">View all publications →</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+  function toggleDropdown(e, el) {
+    e.preventDefault();
+    const li = el.parentElement;
+    const isOpen = li.classList.contains('open');
+    document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) li.classList.add('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dropdown')) {
+      document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+</script>
+</body>
+</html>
