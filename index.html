@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0e1f3b;
+      --navy-mid: #1a3260;
+      --navy-light: #24478a;
+      --gold: #b8972a;
+      --gold-light: #d4af50;
+      --cream: #f7f4ef;
+      --cream-dark: #ede9e0;
+      --text: #1c1c1c;
+      --text-muted: #5a5a5a;
+      --white: #ffffff;
+      --border: #d0c9b8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--gold);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 62px;
+    }
+    .nav-brand {
+      font-family: 'EB Garamond', serif;
+      color: var(--white);
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-brand span { color: var(--gold-light); }
+    .nav-links {
+      display: flex;
+      gap: 0.2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #b8c8e0;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.75rem;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+      background: var(--navy-light);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      background-image:
+        linear-gradient(135deg, #0e1f3b 0%, #1a3260 60%, #0e2a4a 100%);
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 80px,
+          rgba(255,255,255,0.015) 80px,
+          rgba(255,255,255,0.015) 81px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 80px,
+          rgba(255,255,255,0.015) 80px,
+          rgba(255,255,255,0.015) 81px
+        );
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+      position: relative;
+    }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      object-fit: cover;
+      box-shadow: 0 0 0 8px rgba(184,151,42,0.15);
+      background: var(--navy-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'EB Garamond', serif;
+      font-size: 3.5rem;
+      color: var(--gold-light);
+    }
+    .hero-text h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: 2.8rem;
+      color: var(--white);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+    .hero-text h1 em {
+      color: var(--gold-light);
+      font-style: normal;
+    }
+    .hero-subtitle {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .hero-affil {
+      color: #b8c8e0;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .hero-affil strong { color: var(--white); }
+    .hero-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      border: 2px solid var(--gold);
+    }
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-outline {
+      background: transparent;
+      color: #b8c8e0;
+      border: 2px solid rgba(184,200,224,0.35);
+    }
+    .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+    /* ── GOLD RULE ── */
+    .gold-rule {
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── SECTIONS ── */
+    section { margin-bottom: 3rem; }
+    .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.55rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .section-title svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* ── BIO ── */
+    .bio p {
+      color: var(--text);
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+    }
+    .bio p:last-child { margin-bottom: 0; }
+
+    /* ── RESEARCH TAGS ── */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .tag {
+      background: var(--navy);
+      color: #b8c8e0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      border-left: 3px solid var(--gold);
+    }
+
+    /* ── COURSES ── */
+    .course-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .course-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--navy-light);
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ── METHODS ── */
+    .methods-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .method-tag {
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      color: var(--navy-mid);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 80px; }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--navy);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 0 4px 4px;
+    }
+    .card-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+    }
+
+    /* contact card */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .contact-item svg { flex-shrink: 0; margin-top: 2px; color: var(--navy-light); }
+    .contact-item a { color: var(--navy-light); text-decoration: none; }
+    .contact-item a:hover { color: var(--gold); text-decoration: underline; }
+
+    /* scholar links */
+    .scholar-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .scholar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+    .scholar-link:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .scholar-link span.dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* awards */
+    .award-item {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.84rem;
+    }
+    .award-year {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      margin-top: 2px;
+      min-width: 36px;
+    }
+    .award-text { color: var(--text-muted); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 3px solid var(--gold);
+      color: #7a90b0;
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-text { animation: fadeUp 0.7s ease both; }
+    .hero-photo-wrap { animation: fadeUp 0.7s 0.1s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; text-align: center; gap: 1.5rem; }
+      .hero-links { justify-content: center; }
+      .main-wrapper { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .course-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-text h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#"><span>P.</span> Hekmatpour</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="https://sites.google.com/view/phekmat/publications" target="_blank">Publications</a></li>
+      <li><a href="https://sites.google.com/view/phekmat/contact-me" target="_blank">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap">
+      <img class="hero-photo" src="photo.jpg" alt="Peyman Hekmatpour" />
+    </div>
+    <div class="hero-text">
+      <p class="hero-subtitle">Academic Portfolio</p>
+      <h1>Peyman <em>Hekmatpour</em>, PhD</h1>
+      <p class="hero-affil">
+        <strong>Teaching Assistant Professor</strong> · Department of Sociology<br>
+        Oklahoma State University – Tulsa &nbsp;|&nbsp; Adjunct Professor, University of Oklahoma
+      </p>
+      <div class="hero-links">
+        <a class="btn btn-gold" href="https://scholar.google.com/citations?hl=en&user=fucRfBoAAAAJ&view_op=list_works&sortby=pubdate" target="_blank">
+          &#x1F393; Google Scholar
+        </a>
+        <a class="btn btn-outline" href="https://www.researchgate.net/profile/Peyman-Hekmatpour" target="_blank">ResearchGate</a>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/peyman-hekmatpour/" target="_blank">LinkedIn</a>
+        <a class="btn btn-outline" href="https://twitter.com/phekmatpour" target="_blank">Twitter / X</a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="gold-rule"></div>
+
+<!-- MAIN -->
+<div class="main-wrapper">
+
+  <!-- LEFT COLUMN -->
+  <main>
+
+    <!-- ABOUT -->
+    <section id="about" class="bio">
+      <h2 class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        About
+      </h2>
+      <p>
+        Dr. Peyman Hekmatpour is a sociologist whose research sits at the intersection of global stratification, environmental sociology, and quantitative methods. He uses advanced statistical and computational approaches to examine how cultural and material forces — both local and global — shape inequalities within and between nations.
+      </p>
+      <p>
+        He received his PhD in Sociology from the <strong>University of Oklahoma</strong> in 2022, where he was named <em>Outstanding Doctoral Student of the Year</em> (2019) and received the <em>Nancy L. Mergler Dissertation Completion Fellowship</em>. His research has been published in top-tier academic journals.
+      </p>
+      <p>
+        Beyond academia, Dr. Hekmatpour brings extensive experience in longitudinal and cross-sectional data management, dataset construction, and econometric modeling — skills he applies across both scholarly research and applied settings.
+      </p>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research">
+      <h2 class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Research Interests
+      </h2>
+      <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:0.75rem;">
+        His work spans four interconnected areas, united by a focus on global inequality and rigorous quantitative methodology:
+      </p>
+      <div class="tag-cloud">
+        <span class="tag">Global &amp; Transnational Sociology</span>
+        <span class="tag">Environmental Sociology</span>
+        <span class="tag">Quantitative Methods</span>
+        <span class="tag">Sociology of Religion</span>
+        <span class="tag">Ecologically Unequal Exchange</span>
+        <span class="tag">Foreign Direct Investment Networks</span>
+        <span class="tag">Renewable Energy Adoption</span>
+        <span class="tag">Global Stratification</span>
+      </div>
+    </section>
+
+    <!-- METHODS -->
+    <section>
+      <h2 class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Methods &amp; Tools
+      </h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.75rem;">Statistical approaches and software used in research and teaching:</p>
+      <div class="methods-list">
+        <span class="method-tag">Stata</span>
+        <span class="method-tag">R</span>
+        <span class="method-tag">Python</span>
+        <span class="method-tag">Econometric Models</span>
+        <span class="method-tag">Hierarchical Linear Models (HLM)</span>
+        <span class="method-tag">Structural Equation Models (SEM)</span>
+        <span class="method-tag">Confirmatory Factor Analysis (CFA)</span>
+        <span class="method-tag">Machine Learning</span>
+        <span class="method-tag">Network Analysis</span>
+        <span class="method-tag">Cross-national Panel Data</span>
+      </div>
+    </section>
+
+    <!-- TEACHING -->
+    <section id="teaching">
+      <h2 class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M8 21h8M12 17v4"/></svg>
+        Teaching Portfolio
+      </h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.75rem;">Courses taught at OSU-Tulsa and the University of Oklahoma:</p>
+      <div class="course-grid">
+        <div class="course-item">Quantitative Methods</div>
+        <div class="course-item">Social Research Methods</div>
+        <div class="course-item">Applied Regression Analysis</div>
+        <div class="course-item">Database Design for Information Organizations</div>
+        <div class="course-item">Environmental Sociology</div>
+        <div class="course-item">Environmental Inequalities</div>
+        <div class="course-item">Social Stratification</div>
+        <div class="course-item">Race &amp; Ethnic Relations</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- CONTACT -->
+    <div class="card" id="contact">
+      <p class="card-title">Contact &amp; Affiliations</p>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+        <span><a href="mailto:phekmat@okstate.edu">phekmat@okstate.edu</a></span>
+      </div>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>OSU-Tulsa, Department of Sociology<br>Tulsa, Oklahoma</span>
+      </div>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        <span><a href="https://experts.okstate.edu/phekmat" target="_blank">OSU Faculty Profile ↗</a></span>
+      </div>
+    </div>
+
+    <!-- SCHOLAR PROFILES -->
+    <div class="card">
+      <p class="card-title">Academic Profiles</p>
+      <div class="scholar-links">
+        <a class="scholar-link" href="https://scholar.google.com/citations?hl=en&user=fucRfBoAAAAJ" target="_blank">
+          <span class="dot" style="background:#4285f4"></span> Google Scholar
+        </a>
+        <a class="scholar-link" href="https://www.researchgate.net/profile/Peyman-Hekmatpour" target="_blank">
+          <span class="dot" style="background:#00ccbb"></span> ResearchGate
+        </a>
+        <a class="scholar-link" href="https://www.linkedin.com/in/peyman-hekmatpour/" target="_blank">
+          <span class="dot" style="background:#0077b5"></span> LinkedIn
+        </a>
+        <a class="scholar-link" href="https://twitter.com/phekmatpour" target="_blank">
+          <span class="dot" style="background:#1da1f2"></span> Twitter / X
+        </a>
+      </div>
+    </div>
+
+    <!-- AWARDS -->
+    <div class="card" id="awards">
+      <p class="card-title">Grants &amp; Awards</p>
+      <div class="award-item">
+        <span class="award-year">2022</span>
+        <span class="award-text">Nancy L. Mergler Dissertation Completion Fellowship, University of Oklahoma</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2019</span>
+        <span class="award-text">Outstanding Doctoral Student of the Year, OU Department of Sociology</span>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="card">
+      <p class="card-title">Education</p>
+      <div class="award-item">
+        <span class="award-year">2022</span>
+        <span class="award-text"><strong>PhD, Sociology</strong><br>University of Oklahoma</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD &nbsp;·&nbsp; Oklahoma State University – Tulsa &nbsp;·&nbsp;
+  <a href="https://peymanhekmat.github.io">peymanhekmat.github.io</a></p>
+</footer>
+
+</body>
+</html>
