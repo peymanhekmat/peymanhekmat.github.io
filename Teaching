@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teaching — Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' ▾';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .page-header .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .page-header .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
+    .page-header p{color:#b8c8e0;font-size:0.9rem;}
+    .main{max-width:900px;margin:0 auto;padding:3rem 2rem;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.96rem;color:var(--text);margin-bottom:0.85rem;}
+    .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.75rem;}
+    .course-item{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--navy-light);padding:0.6rem 0.85rem;font-size:0.85rem;border-radius:0 3px 3px 0;}
+    .placeholder-box{background:var(--white);border:2px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;color:var(--text-muted);margin-top:1rem;}
+    .placeholder-box .icon{font-size:2.5rem;margin-bottom:0.75rem;opacity:0.4;}
+    .placeholder-box strong{display:block;font-size:1rem;color:var(--navy);margin-bottom:0.3rem;opacity:0.6;}
+    .placeholder-box p{font-size:0.88rem;margin:0;}
+    @media(max-width:600px){.course-grid{grid-template-columns:1fr;}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+        </div>
+      </li>
+      <li><a href="teaching.html" class="active">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">About</a>
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="publications.html">Publications</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> › Teaching</p>
+    <h1>Teaching</h1>
+    <p>Courses taught at OSU-Tulsa and the University of Oklahoma</p>
+  </div>
+</div>
+
+<div class="main">
+  <section>
+    <h2 class="section-title">Teaching Portfolio</h2>
+    <div class="course-grid">
+      <div class="course-item">Quantitative Methods</div>
+      <div class="course-item">Social Research Methods</div>
+      <div class="course-item">Applied Regression Analysis</div>
+      <div class="course-item">Database Design for Information Organizations</div>
+      <div class="course-item">Environmental Sociology</div>
+      <div class="course-item">Environmental Inequalities</div>
+      <div class="course-item">Social Stratification</div>
+      <div class="course-item">Race &amp; Ethnic Relations</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Teaching Philosophy</h2>
+    <p>[Teaching philosophy coming soon.]</p>
+    <div class="placeholder-box">
+      <div class="icon">🎓</div>
+      <strong>More Content Coming Soon</strong>
+      <p>Teaching philosophy, syllabi, and course descriptions will be added here.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+</footer>
+<script>
+  function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
+  function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
+</script>
+</body>
+</html>
