@@ -347,8 +347,20 @@ const VAR_DESC = {
 };
 
 // Load both in parallel
+const DATA_URLS = [
+  'eue_data.json',
+  'https://raw.githubusercontent.com/peymanhekmat/peymanhekmat.github.io/main/eue_data.json'
+];
+
+function tryFetchData(urls) {
+  if (urls.length === 0) return Promise.reject('All URLs failed');
+  return fetch(urls[0])
+    .then(r => { if (!r.ok) throw new Error('not ok'); return r.json(); })
+    .catch(() => tryFetchData(urls.slice(1)));
+}
+
 Promise.all([
-  fetch('eue_data.json').then(r => r.json()),
+  tryFetchData(DATA_URLS),
   fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-albers-10m.json').then(r => r.json())
 ]).then(([data, topo]) => {
   data.forEach(d => { DATA_MAP[d.GEOID] = d; });
@@ -358,6 +370,7 @@ Promise.all([
   drawMap();
   drawCoef();
 }).catch(err => {
+  console.error('Map load error:', err);
   document.getElementById('map-loading').textContent = 'Map unavailable — data could not be loaded.';
   drawCoef();
 });
