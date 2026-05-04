@@ -1,129 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FDI & Climate Adaptability — Peyman Hekmatpour, PhD</title>
+  <title>FDI &amp; Climate Adaptability — Peyman Hekmatpour, PhD</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
-    :root {
-      --navy: #0e1f3b; --navy-mid: #1a3260; --navy-light: #24478a;
-      --gold: #b8972a; --gold-light: #d4af50;
-      --cream: #f7f4ef; --cream-dark: #ede9e0;
-      --text: #1c1c1c; --text-muted: #5a5a5a;
-      --white: #ffffff; --border: #d0c9b8;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' ▾';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;line-height:1.25;}
+    .page-header .subtitle{color:#b8c8e0;font-size:0.9rem;}
+    .status-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:2px;margin-top:0.75rem;}
+    .copyright-banner{background:#f0ebe0;border-bottom:1px solid var(--border);padding:0.55rem 2rem;text-align:center;}
+    .copyright-banner p{font-size:0.74rem;color:var(--text-muted);margin:0;}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:var(--navy);padding:1rem 0.75rem;border-radius:4px;border-bottom:3px solid var(--gold);text-align:center;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block;}
+    .stat-label{font-size:0.68rem;color:#b8c8e0;letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem;line-height:1.3;}
 
-    nav { background: var(--navy); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold); }
-    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 62px; }
-    .nav-brand { font-family: 'EB Garamond', serif; color: var(--white); font-size: 1.15rem; text-decoration: none; }
-    .nav-brand span { color: var(--gold-light); }
-    .nav-links { display: flex; gap: 0.2rem; list-style: none; }
-    .nav-links li { position: relative; }
-    .nav-links a { color: #b8c8e0; text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 3px; transition: color 0.2s, background 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--navy-light); }
-    .nav-links li.has-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
-    .dropdown { display: none; position: absolute; top: calc(100% + 3px); left: 0; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-top: 3px solid var(--gold); border-radius: 0 0 4px 4px; min-width: 230px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-    .nav-links li.has-dropdown.open .dropdown { display: block; }
-    .dropdown-label { display: block; padding: 0.55rem 1rem 0.25rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); pointer-events: none; }
-    .dropdown a { display: block; color: #b8c8e0 !important; padding: 0.55rem 1rem !important; font-size: 0.81rem !important; border-radius: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.06); background: transparent !important; text-transform: none !important; letter-spacing: 0.04em !important; }
-    .dropdown a:last-child { border-bottom: none; }
-    .dropdown a:hover { background: var(--navy-light) !important; color: var(--white) !important; }
+    /* INDEX FORMULA */
+    .index-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+    .index-card h4{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--navy);margin-bottom:0.75rem;}
+    .formula-step{display:flex;gap:0.75rem;margin-bottom:0.65rem;align-items:flex-start;}
+    .step-num{background:var(--navy);color:var(--gold-light);font-size:0.7rem;font-weight:700;width:1.4rem;height:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .formula-text{font-size:0.85rem;color:var(--text-muted);line-height:1.55;}
+    .formula-eq{font-family:monospace;font-size:0.82rem;background:var(--cream-dark);padding:0.35rem 0.6rem;border-radius:3px;color:var(--navy-mid);display:inline-block;margin:0.25rem 0;}
 
-    .page-header { background: var(--navy); background-image: linear-gradient(135deg, #0e1f3b 0%, #1a3260 60%, #0e2a4a 100%); padding: 3rem 2rem; border-bottom: 4px solid var(--gold); }
-    .page-header-inner { max-width: 1100px; margin: 0 auto; }
-    .page-header .breadcrumb { font-size: 0.78rem; color: var(--gold-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
-    .page-header .breadcrumb a { color: var(--gold-light); text-decoration: none; opacity: 0.7; }
-    .page-header .breadcrumb a:hover { opacity: 1; }
-    .page-header h1 { font-family: 'EB Garamond', serif; font-size: 2.1rem; color: var(--white); font-weight: 400; margin-bottom: 0.5rem; line-height: 1.25; }
-    .page-header .subtitle { color: #b8c8e0; font-size: 0.92rem; }
-    .status-badge { display: inline-block; background: var(--gold); color: var(--navy); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.7rem; border-radius: 2px; margin-top: 0.75rem; }
+    /* VIZ PANELS */
+    .viz-panel{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .viz-header{background:var(--navy);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;}
+    .viz-title{color:var(--white);font-size:0.85rem;font-weight:600;}
+    .viz-btns{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .viz-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .viz-btn:hover,.viz-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+    .viz-note{padding:0.55rem 1.2rem;background:var(--cream-dark);border-top:1px solid var(--border);font-size:0.73rem;color:var(--text-muted);}
 
-    .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .info-row{display:flex;justify-content:space-between;padding:0.42rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:var(--text-muted);}
+    .info-val{color:var(--navy);font-weight:600;text-align:right;}
+    .tag{display:inline-block;background:var(--navy);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:2px;border-left:3px solid var(--gold);margin:0.18rem;}
+    .finding{display:flex;gap:0.6rem;margin-bottom:0.8rem;font-size:0.83rem;}
+    .finding-icon{color:var(--gold);flex-shrink:0;font-weight:700;}
+    .finding-text{color:var(--text-muted);line-height:1.5;}
 
-    .section-title { font-family: 'EB Garamond', serif; font-size: 1.45rem; color: var(--navy); font-weight: 600; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold); }
-    section { margin-bottom: 2.5rem; }
-    section p { font-size: 0.96rem; color: var(--text); margin-bottom: 0.85rem; }
-
-    .placeholder-box { background: var(--white); border: 2px dashed var(--border); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem; color: var(--text-muted); }
-    .placeholder-box .icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.4; }
-    .placeholder-box p { font-size: 0.88rem; margin: 0; }
-    .placeholder-box strong { display: block; font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem; opacity: 0.6; }
-    .map-placeholder { height: 420px; }
-    .chart-placeholder { height: 280px; }
-
-    .card { background: var(--white); border: 1px solid var(--border); border-top: 4px solid var(--navy); padding: 1.4rem; margin-bottom: 1.5rem; border-radius: 0 0 4px 4px; }
-    .card-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin-bottom: 1rem; }
-    .info-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid var(--cream-dark); font-size: 0.85rem; }
-    .info-row:last-child { border-bottom: none; }
-    .info-label { color: var(--text-muted); }
-    .info-val { color: var(--navy); font-weight: 600; text-align: right; }
-    .tag { display: inline-block; background: var(--navy); color: #b8c8e0; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 2px; border-left: 3px solid var(--gold); margin: 0.2rem 0.2rem 0.2rem 0; }
-
-    footer { background: var(--navy); border-top: 3px solid var(--gold); color: #7a90b0; text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; }
-    footer a { color: var(--gold-light); text-decoration: none; }
-
-    @media (max-width: 768px) { .main { grid-template-columns: 1fr; } .nav-links { display: none; } }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.4rem;
-      z-index: 300;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: #b8c8e0;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none;
-      background: var(--navy-mid);
-      border-bottom: 3px solid var(--gold);
-      padding: 1rem 1.5rem;
-    }
-    .mobile-menu.open { display: block; }
-    .mobile-menu a {
-      display: block;
-      color: #b8c8e0;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--white); }
-    .mobile-menu .mobile-section-label {
-      display: block;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      padding: 0.75rem 0 0.25rem;
-      pointer-events: none;
-    }
-    @media (max-width: 768px) {
-      .hamburger { display: flex; }
-      .nav-links { display: none !important; }
-    }
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
   </style>
 </head>
 <body>
@@ -131,12 +96,10 @@
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
-  <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
       <li class="has-dropdown">
-        <a href="#" onclick="toggleDropdown(event,this)"  class="active">Research</a>
+        <a href="#" onclick="toggleDropdown(event,this)" class="active">Research</a>
         <div class="dropdown">
           <span class="dropdown-label">Current Projects</span>
           <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
@@ -165,82 +128,158 @@
 <div class="page-header">
   <div class="page-header-inner">
     <p class="breadcrumb"><a href="index.html">Home</a> › Research › Current Projects</p>
-    <h1>Foreign Direct Investment Networks<br>&amp; Climate Adaptability</h1>
-    <p class="subtitle">Examining how FDI network position shapes countries' capacity to adapt to climate change</p>
+    <h1>Core Capital Dependency &amp; Climate Adaptability</h1>
+    <p class="subtitle">A longitudinal network analysis of foreign direct investment and climate readiness across 142 countries, 2009 to 2023</p>
     <span class="status-badge">Work in Progress</span>
   </div>
 </div>
 
-<!-- COPYRIGHT BANNER -->
-<div style="background:#f0ebe0; border-top: 1px solid #d0c9b8; border-bottom: 1px solid #d0c9b8; padding: 0.6rem 2rem; text-align:center;">
-  <p style="font-size:0.75rem; color:#5a5a5a; margin:0;">&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials presented on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+<div class="copyright-banner">
+  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
 </div>
 
 <div class="main">
-  <main>
+<main>
 
-    <section>
-      <h2 class="section-title">Project Overview</h2>
-      <p>
-        [Description coming soon. This section will introduce the theoretical motivation for linking FDI network centrality to climate adaptability outcomes across countries.]
-      </p>
-      <p>
-        [Additional context on how core-periphery FDI structures shape the distribution of resources available for climate adaptation will be added here.]
-      </p>
-    </section>
+  <!-- OVERVIEW -->
+  <section>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">1,961</span><span class="stat-label">Country-Year Observations</span></div>
+      <div class="stat-box"><span class="stat-num">142</span><span class="stat-label">Countries</span></div>
+      <div class="stat-box"><span class="stat-num">15</span><span class="stat-label">Years (2009 to 2023)</span></div>
+      <div class="stat-box"><span class="stat-num">-3.97</span><span class="stat-label">Effect on Climate Readiness</span></div>
+    </div>
+    <p>This project addresses a longstanding debate in the sociology of development: does foreign direct investment help or harm receiving nations? Rather than treating all FDI as equivalent, this study develops a new network-based index — the Core Capital Dependency Index — that captures where investment comes from, how central the sender is in the global economy, and how much a receiving country depends on such capital relative to its own outward investments. The index is then used to explain cross-national variation in climate adaptability across 142 countries from 2009 to 2023.</p>
+    <p>Network data come from the IMF's Direct Investment Positions by Counterpart Economy (DIPCE) dataset, which covers 176 countries across 30,800 bilateral dyads. Climate outcomes are measured using the Notre Dame Global Adaptation Initiative (ND-GAIN) index and its two sub-indices of vulnerability and readiness. Results from growth curve panel models show that dependence on capital from core economies significantly reduces climate readiness and overall adaptability, while leaving vulnerability largely unaffected.</p>
+  </section>
 
-    <section>
-      <h2 class="section-title">Data &amp; Methods</h2>
-      <p>
-        [This section will describe the FDI network data, climate adaptability indices used, country coverage, time period, and the network-analytic and econometric methods applied.]
-      </p>
-    </section>
+  <!-- INDEX CONSTRUCTION -->
+  <section>
+    <h2 class="section-title">The Core Capital Dependency Index</h2>
+    <p>The central methodological contribution of this project is a dynamic and relational measure of FDI that simultaneously accounts for the source of foreign capital, the receiver's structural position in the world investment network, and its degree of reliance on foreign capital relative to its own outward investments. The index is derived from IMF bilateral FDI network data and recomputed for each country in each year.</p>
 
-    <section>
-      <h2 class="section-title">Interactive FDI Network Map</h2>
-      <div class="placeholder-box map-placeholder">
-        <div class="icon">🌐</div>
-        <strong>Network Map Coming Soon</strong>
-        <p>An interactive visualization of the global FDI network showing core-periphery structure and climate adaptability scores will be displayed here.</p>
+    <div class="index-card">
+      <h4>Step-by-Step Construction</h4>
+
+      <div class="formula-step">
+        <span class="step-num">1</span>
+        <div class="formula-text">
+          <strong>Coreness Score.</strong> For each year, countries are ranked by their total outward FDI positions. The rank is then normalized to produce a coreness score between 0 and 1, where 1 = most core (largest outward investor):<br>
+          <span class="formula-eq">Core&#7522;&#8348; = (N&#8348; &minus; rank&#7522;&#8348;) / (N&#8348; &minus; 1)</span>
+        </div>
       </div>
-    </section>
 
-    <section>
-      <h2 class="section-title">Preliminary Findings</h2>
-      <div class="placeholder-box chart-placeholder">
-        <div class="icon">📊</div>
-        <strong>Charts &amp; Findings Coming Soon</strong>
-        <p>Key results and interactive visualizations will be added here as the project progresses.</p>
+      <div class="formula-step">
+        <span class="step-num">2</span>
+        <div class="formula-text">
+          <strong>Capital Composition Score.</strong> For each receiver country, the share of inward FDI coming from each sender is computed, then weighted by the sender's coreness. This scores higher when a country's inflows come predominantly from more core-like economies:<br>
+          <span class="formula-eq">S&#7522;&#11388;&#8348; = In&#7522;&#11388;&#8348; / In&#7522;&#8348; &nbsp;&nbsp; Comp&#7522;&#8348; = &Sigma; S&#7522;&#11388;&#8348; &times; Core&#11388;&#8348;</span>
+        </div>
       </div>
-    </section>
 
-  </main>
+      <div class="formula-step">
+        <span class="step-num">3</span>
+        <div class="formula-text">
+          <strong>Reliance Ratio.</strong> Dependence is conceptualized as reliance on incoming capital relative to a country's own outward investment capacity:<br>
+          <span class="formula-eq">&rho;&#7522;&#8348; = In&#7522;&#8348; / (In&#7522;&#8348; + Out&#7522;&#8348;)</span>
+        </div>
+      </div>
 
-  <aside style="position:sticky; top:80px;">
-    <div class="card">
-      <p class="card-title">Project Details</p>
-      <div class="info-row"><span class="info-label">Status</span><span class="info-val">In Progress</span></div>
-      <div class="info-row"><span class="info-label">Level of Analysis</span><span class="info-val">Cross-national</span></div>
-      <div class="info-row"><span class="info-label">Method</span><span class="info-val">Network Analysis</span></div>
-      <div class="info-row"><span class="info-label">Outcome</span><span class="info-val">Climate Adaptability</span></div>
+      <div class="formula-step">
+        <span class="step-num">4</span>
+        <div class="formula-text">
+          <strong>Core Capital Dependency Index.</strong> Combining the above, the final index scores higher when a country is more reliant on capital from core-like senders and less central in the network itself. By multiplying by (1 &minus; Core&#7522;&#8348;), the index penalizes countries that are themselves core actors and rewards peripheral receivers:<br>
+          <span class="formula-eq">Dependency&#7522;&#8348; = Comp&#7522;&#8348; &times; &rho;&#7522;&#8348; &times; (1 &minus; Core&#7522;&#8348;)</span>
+        </div>
+      </div>
     </div>
+    <p>The index ranges from 0 to 1. Countries of the Global South — which tend to have high inward FDI from core economies and limited outward investment — consistently score higher, while core economies such as the US, Germany, and Japan score near zero. This makes the index a meaningful and dynamic measure of structural dependency in the global investment network.</p>
+  </section>
 
-    <div class="card">
-      <p class="card-title">Keywords</p>
-      <span class="tag">Foreign Direct Investment</span>
-      <span class="tag">Climate Adaptability</span>
-      <span class="tag">Network Analysis</span>
-      <span class="tag">Core-Periphery</span>
-      <span class="tag">Global Stratification</span>
-      <span class="tag">Environmental Sociology</span>
+  <!-- MAP -->
+  <section>
+    <h2 class="section-title">Interactive Maps (2023)</h2>
+    <p>The maps below show the geographic distribution of the Core Capital Dependency Index and the three ND-GAIN climate outcome variables across countries in 2023. Use the buttons to switch between variables. Hover over any country for details.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="map-title-text">Core Capital Dependency Index (2023)</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showMap('dep','Core Capital Dependency (2023)','YlOrRd',false,this)">Dependency</button>
+          <button class="viz-btn" onclick="showMap('gain','ND-GAIN Overall Score (2023)','RdYlGn',false,this)">ND-GAIN</button>
+          <button class="viz-btn" onclick="showMap('read','Climate Readiness (2023)','Blues',false,this)">Readiness</button>
+          <button class="viz-btn" onclick="showMap('vuln','Climate Vulnerability (2023)','RdBu_r',false,this)">Vulnerability</button>
+        </div>
+      </div>
+      <div id="map-div" style="height:440px;"></div>
+      <div class="viz-note">Data: IMF DIPCE (2025) for dependency; ND-GAIN (2025) for climate outcomes. Hover for country values.</div>
     </div>
+  </section>
 
-    <div class="card">
-      <p class="card-title">Related Publication</p>
-      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.6;">Hekmatpour (2024). Foreign direct investment, sectoral distribution and income inequality in developed and developing economies. <em>International Journal of Sociology</em> 54(3).</p>
-      <a href="publications.html" style="font-size:0.8rem; color:var(--navy-light); text-decoration:none; font-weight:600;">View all publications →</a>
+  <!-- COEF PLOT -->
+  <section>
+    <h2 class="section-title">Regression Results</h2>
+    <p>The figure below shows the average marginal effect of Core Capital Dependency on the three ND-GAIN outcomes from growth curve models with random intercepts and slopes. Error bars represent 95% confidence intervals. Core capital dependency has a significant negative effect on climate readiness and overall adaptability, but not on vulnerability.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title">Figure. Average Marginal Effects of Core Capital Dependency on Climate Outcomes</span>
+      </div>
+      <div id="coef-div" style="height:260px;"></div>
+      <div class="viz-note">N = 1,961 country-year observations, 142 countries, 2009 to 2023. Growth curve models with random intercepts and slopes. Robust standard errors in parentheses. * p &lt; .05</div>
     </div>
-  </aside>
+  </section>
+
+  <!-- KEY FINDINGS -->
+  <section>
+    <h2 class="section-title">Key Findings</h2>
+    <p>Core capital dependency significantly reduces climate readiness (β = -3.97, p &lt; .05) and overall ND-GAIN score (β = -2.08, p &lt; .05), but has no significant effect on climate vulnerability. This distinction is theoretically important: it suggests that FDI dependency from core economies does not directly increase countries' physical or biophysical exposure to climate hazards, but it significantly undermines their institutional, economic, and social capacity to respond to and adapt to those hazards.</p>
+    <p>Notably, for readiness and the overall ND-GAIN index, core capital dependency is the only significant predictor in the full model — outperforming GDP per capita, trade openness, CO2 emissions, and other controls. This underscores the importance of the relational and structural dimension of FDI captured by the new index, as opposed to the simple volume or stock measures used in most prior research.</p>
+    <p>These results contribute to a growing body of scholarship calling for more nuanced measurement of FDI. By simultaneously accounting for the source of capital, the coreness of the sender, and the receiver's structural position in the global investment network, the Core Capital Dependency Index offers a more theoretically grounded and empirically powerful tool for studying the social consequences of global investment.</p>
+  </section>
+
+</main>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="card">
+    <p class="card-title">Project Details</p>
+    <div class="info-row"><span class="info-label">Status</span><span class="info-val">In Progress</span></div>
+    <div class="info-row"><span class="info-label">Unit of Analysis</span><span class="info-val">Country-Year</span></div>
+    <div class="info-row"><span class="info-label">Time Period</span><span class="info-val">2009 to 2023</span></div>
+    <div class="info-row"><span class="info-label">Countries</span><span class="info-val">142</span></div>
+    <div class="info-row"><span class="info-label">Observations</span><span class="info-val">1,961</span></div>
+    <div class="info-row"><span class="info-label">Estimator</span><span class="info-val">Growth Curve Model</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Key Results</p>
+    <div class="finding"><span class="finding-icon">-</span><span class="finding-text">Reduces climate readiness (β = -3.97, p &lt; .05)</span></div>
+    <div class="finding"><span class="finding-icon">-</span><span class="finding-text">Reduces overall ND-GAIN (β = -2.08, p &lt; .05)</span></div>
+    <div class="finding"><span class="finding-icon">~</span><span class="finding-text">No significant effect on climate vulnerability</span></div>
+    <div class="finding"><span class="finding-icon">!</span><span class="finding-text">Only significant predictor for readiness and ND-GAIN in full model</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Data Sources</p>
+    <span class="tag">IMF DIPCE 2025</span>
+    <span class="tag">ND-GAIN Index</span>
+    <span class="tag">World Bank</span>
+    <span class="tag">Global Carbon Budget</span>
+    <span class="tag">Ember / Energy Institute</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Keywords</p>
+    <span class="tag">FDI</span>
+    <span class="tag">Network Analysis</span>
+    <span class="tag">Climate Adaptation</span>
+    <span class="tag">World Systems</span>
+    <span class="tag">Growth Curve Model</span>
+    <span class="tag">Global South</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Related Publication</p>
+    <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">Hekmatpour (2024). Foreign Direct Investment, Sectoral Distribution and Income Inequality. <em>International Journal of Sociology</em> 54(3).</p>
+    <a href="publications.html" style="font-size:0.79rem;color:var(--navy-light);text-decoration:none;font-weight:600;">View all publications →</a>
+  </div>
+</aside>
 </div>
 
 <footer>
@@ -248,22 +287,113 @@
 </footer>
 
 <script>
-  function toggleMobile(btn) {
-    btn.classList.toggle("open");
-    document.getElementById("mobileMenu").classList.toggle("open");
-  }
-  function toggleDropdown(e, el) {
-    e.preventDefault();
-    const li = el.parentElement;
-    const isOpen = li.classList.contains('open');
-    document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
-    if (!isOpen) li.classList.add('open');
-  }
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.has-dropdown')) {
-      document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
-    }
+function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
+
+// EMBEDDED DATA
+const D = {"code":["AFG","AGO","ALB","ARE","ARG","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLR","BLZ","BOL","BRA","BRB","BTN","BWA","CAN","CHE","CHL","CHN","CMR","COD","COG","COL","COM","CPV","CRI","CUB","CYP","CZE","DEU","DJI","DMA","DNK","DOM","DZA","ECU","EGY","ERI","ESP","EST","ETH","FIN","FJI","FRA","GAB","GBR","GEO","GHA","GIN","GNB","GNQ","GRC","GRD","GTM","GUY","HND","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KHM","KIR","KWT","LAO","LBN","LBR","LBY","LCA","LKA","LSO","LUX","MAR","MCO","MDA","MDG","MDV","MEX","MKD","MLI","MLT","MMR","MNG","MRT","MUS","MWI","MYS","NAM","NER","NGA","NIC","NLD","NOR","NPL","NRU","NZL","OMN","PAK","PAN","PER","PHL","PLW","PNG","POL","PRK","PRT","PRY","QAT","ROU","RUS","RWA","SAU","SEN","SGP","SLE","SLV","SMR","SRB","SUR","SVK","SVN","SWE","SWZ","SYR","TCD","TGO","THA","TJK","TKM","TON","TTO","TUN","TZA","UGA","UKR","URY","USA","UZB","VCT","VEN","VNM","YEM","ZAF","ZMB","ZWE"],"name":["Afghanistan","Angola","Albania","United Arab Emirates","Argentina","Australia","Austria","Azerbaijan","Burundi","Belgium","Benin","Burkina Faso","Bangladesh","Bulgaria","Bahrain","Bahamas","Bosnia and Herzegovina","Belarus","Belize","Bolivia, Plurinational State of","Brazil","Barbados","Bhutan","Botswana","Canada","Switzerland","Chile","China","Cameroon","Congo, the Democratic Republic o","Congo","Colombia","Comoros","Cape Verde","Costa Rica","Cuba","Cyprus","Czech Republic","Germany","Djibouti","Dominica","Denmark","Dominican Republic","Algeria","Ecuador","Egypt","Eritrea","Spain","Estonia","Ethiopia","Finland","Fiji","France","Gabon","United Kingdom","Georgia","Ghana","Guinea","Guinea-Bissau","Equatorial Guinea","Greece","Grenada","Guatemala","Guyana","Honduras","Haiti","Hungary","Indonesia","India","Ireland","Iran, Islamic Republic of","Iraq","Iceland","Israel","Italy","Jamaica","Jordan","Japan","Kazakhstan","Kenya","Cambodia","Kiribati","Kuwait","Lao People's Democratic Republic","Lebanon","Liberia","Libyan Arab Jamahiriya","Saint Lucia","Sri Lanka","Lesotho","Luxembourg","Morocco","Monaco","Moldova, Republic of","Madagascar","Maldives","Mexico","Macedonia","Mali","Malta","Myanmar","Mongolia","Mauritania","Mauritius","Malawi","Malaysia","Namibia","Niger","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","New Zealand","Oman","Pakistan","Panama","Peru","Philippines","Palau","Papua New Guinea","Poland","Korea, Democratic People's Repub","Portugal","Paraguay","Qatar","Romania","Russian Federation","Rwanda","Saudi Arabia","Senegal","Singapore","Sierra Leone","El Salvador","San Marino","Serbia","Suriname","Slovakia","Slovenia","Sweden","Swaziland","Syrian Arab Republic","Chad","Togo","Thailand","Tajikistan","Turkmenistan","Tonga","Trinidad and Tobago","Tunisia","Tanzania, United Republic of","Uganda","Ukraine","Uruguay","United States","Uzbekistan","Saint Vincent and the Grenadines","Venezuela, Bolivarian Republic o","Viet Nam","Yemen","South Africa","Zambia","Zimbabwe"],"dep":[0.10499999672174454,0.2619999945163727,0.5220000147819519,0.06199999898672104,0.20000000298023224,0.05400000140070915,0.0430000014603138,0.08399999886751175,0.6449999809265137,0.026000000536441803,0.625,0.5820000171661377,0.43299999833106995,0.2879999876022339,0.3190000057220459,0.12200000137090683,0.527999997138977,0.24500000476837158,0.30799999833106995,0.4440000057220459,0.14300000667572021,0.14300000667572021,0.9350000023841858,0.3269999921321869,0.017999999225139618,0.017000000923871994,0.14399999380111694,0.05000000074505806,0.7200000286102295,0.7689999938011169,0.6629999876022339,0.18700000643730164,0.06499999761581421,0.0949999988079071,0.30000001192092896,0.1770000010728836,0.0430000014603138,0.1469999998807907,0.00800000037997961,0.11299999803304672,0.703000009059906,0.04500000178813934,0.5019999742507935,0.38100001215934753,0.4410000145435333,0.3529999852180481,0.8650000095367432,0.03500000014901161,0.2160000056028366,0.6819999814033508,0.06700000166893005,0.7110000252723694,0.014000000432133675,0.5070000290870667,0.008999999612569809,0.5519999861717224,0.5519999861717224,0.7329999804496765,0.5519999861717224,0.8019999861717224,0.1889999955892563,0.10400000214576721,0.2630000114440918,0.2669999897480011,0.3160000145435333,0.9330000281333923,0.08799999952316284,0.1340000033378601,0.12200000137090683,0.026000000536441803,0.2639999985694885,0.7329999804496765,0.21699999272823334,0.10499999672174454,0.03799999877810478,0.4429999887943268,0.48500001430511475,0.003000000026077032,0.2329999953508377,0.289000004529953,0.48500001430511475,0.8880000114440918,0.03500000014901161,0.6990000009536743,0.10899999737739563,0.22300000488758087,0.27000001072883606,0.28299999237060547,0.13899999856948853,0.5960000157356262,0.004000000189989805,0.26600000262260437,0.13899999856948853,0.6010000109672546,0.4650000035762787,0.5559999942779541,0.10400000214576721,0.5479999780654907,0.6110000014305115,0.050999999046325684,0.39100000262260437,0.8140000104904175,0.6940000057220459,0.041999999433755875,0.6470000147819519,0.07800000160932541,0.5569999814033508,0.7570000290870667,0.29899999499320984,0.3889999985694885,0.003000000026077032,0.05000000074505806,0.6899999976158142,0.8019999861717224,0.22699999809265137,0.26600000262260437,0.4269999861717224,0.17000000178813934,0.44699999690055847,0.2709999978542328,0.9760000109672546,0.671999990940094,0.21400000154972076,0.3959999978542328,0.1379999965429306,0.49799999594688416,0.05900000035762787,0.7300000190734863,0.09099999815225601,0.4269999861717224,0.09799999743700027,0.4740000069141388,0.04800000041723251,0.4309999942779541,0.2879999876022339,0.11900000274181366,0.3630000054836273,0.3970000147819519,0.23100000619888306,0.2630000114440918,0.03700000047683716,0.296999990940094,0.019999999552965164,0.7749999761581421,0.41600000858306885,0.11500000208616257,0.8080000281333923,0.8629999756813049,0.4950000047683716,0.3499999940395355,0.46399998664855957,0.6119999885559082,0.7070000171661377,0.2709999978542328,0.20200000703334808,0.0,0.8519999980926514,0.13899999856948853,0.36500000953674316,0.43299999833106995,0.7929999828338623,0.09399999678134918,0.6439999938011169,0.4009999930858612],"gain":[32.77000045776367,37.040000915527344,49.75,59.95000076293945,48.09000015258789,69.19999694824219,67.94000244140625,48.33000183105469,32.880001068115234,62.84000015258789,38.0,38.38999938964844,32.86000061035156,53.2400016784668,52.779998779296875,50.189998626708984,48.900001525878906,56.34000015258789,42.15999984741211,40.189998626708984,47.15999984741211,61.93000030517578,50.380001068115234,49.119998931884766,68.55000305175781,72.88999938964844,60.060001373291016,58.099998474121094,36.720001220703125,32.65999984741211,32.790000915527344,47.029998779296875,35.54999923706055,51.869998931884766,53.040000915527344,44.70000076293945,55.959999084472656,62.88999938964844,69.61000061035156,39.560001373291016,51.72999954223633,72.75,43.66999816894531,47.689998626708984,42.099998474121094,44.869998931884766,29.530000686645508,60.08000183105469,64.25,38.709999084472656,74.79000091552734,50.65999984741211,67.19999694824219,39.959999084472656,69.8499984741211,58.61000061035156,43.66999816894531,37.5,30.959999084472656,39.040000915527344,58.04999923706055,55.959999084472656,40.97999954223633,43.72999954223633,37.95000076293945,33.20000076293945,54.599998474121094,45.869998931884766,43.529998779296875,64.05999755859375,48.209999084472656,42.47999954223633,68.4000015258789,62.310001373291016,58.79999923706055,47.41999816894531,51.04999923706055,65.37999725341797,58.029998779296875,38.02000045776367,36.72999954223633,42.81999969482422,53.880001068115234,39.279998779296875,42.529998779296875,34.97999954223633,43.2599983215332,52.5,43.95000076293945,39.869998931884766,67.66000366210938,50.720001220703125,NaN,50.75,32.959999084472656,43.02000045776367,45.77000045776367,52.470001220703125,34.81999969482422,55.880001068115234,36.13999938964844,52.02000045776367,36.86000061035156,55.529998779296875,34.79999923706055,55.369998931884766,44.61000061035156,34.630001068115234,37.060001373291016,38.279998779296875,66.66000366210938,76.79000091552734,41.95000076293945,52.56999969482422,70.02999877929688,52.25,37.88999938964844,45.630001068115234,46.189998626708984,43.38999938964844,45.13999938964844,35.2400016784668,60.459999084472656,40.56999969482422,61.47999954223633,45.59000015258789,58.040000915527344,51.45000076293945,56.63999938964844,43.56999969482422,57.869998931884766,40.380001068115234,70.79000091552734,33.7599983215332,43.959999084472656,NaN,48.77000045776367,44.349998474121094,55.16999816894531,62.849998474121094,71.0999984741211,40.86000061035156,35.70000076293945,24.989999771118164,41.13999938964844,49.880001068115234,45.869998931884766,39.83000183105469,39.27000045776367,46.04999923706055,51.25,38.43000030517578,34.41999816894531,51.15999984741211,58.0099983215332,66.44999694824219,51.119998931884766,53.0,39.06999969482422,46.0099983215332,34.2400016784668,46.599998474121094,40.58000183105469,34.029998779296875],"vuln":[0.5879999995231628,0.5059999823570251,0.3799999952316284,0.382999986410141,0.382999986410141,0.3160000145435333,0.29499998688697815,0.40400001406669617,0.5529999732971191,0.33500000834465027,0.5709999799728394,0.5210000276565552,0.5680000185966492,0.3540000021457672,0.4359999895095825,0.4580000042915344,0.34700000286102295,0.3230000138282776,0.46700000762939453,0.45100000500679016,0.36899998784065247,0.3709999918937683,0.5149999856948853,0.4320000112056732,0.28200000524520874,0.25099998712539673,0.3319999873638153,0.38199999928474426,0.4860000014305115,0.5609999895095825,0.5220000147819519,0.4050000011920929,0.5410000085830688,0.41999998688697815,0.37599998712539673,0.4410000145435333,0.35899999737739563,0.2639999985694885,0.3009999990463257,0.5019999742507935,0.4390000104904175,0.34700000286102295,0.43299999833106995,0.367000013589859,0.460999995470047,0.41100001335144043,0.5920000076293945,0.3050000071525574,0.33399999141693115,0.5220000147819519,0.2800000011920929,0.453000009059906,0.30399999022483826,0.4359999895095825,0.2879999876022339,0.39399999380111694,0.4480000138282776,0.5289999842643738,0.6129999756813049,0.4099999964237213,0.3370000123977661,0.382999986410141,0.4339999854564667,0.4300000071525574,0.4449999928474426,0.5090000033378601,0.3529999852180481,0.4300000071525574,0.48500001430511475,0.3160000145435333,0.37599998712539673,0.4359999895095825,0.32199999690055847,0.289000004529953,0.34200000762939453,0.421999990940094,0.3659999966621399,0.36899998784065247,0.3160000145435333,0.5,0.48100000619888306,0.5569999814033508,0.3619999885559082,0.4860000014305115,0.39899998903274536,0.5379999876022339,0.41600000858306885,0.375,0.4749999940395355,0.47200000286102295,0.3109999895095825,0.36800000071525574,NaN,0.39399999380111694,0.5580000281333923,0.550000011920929,0.3869999945163727,0.3720000088214874,0.5759999752044678,0.3199999928474426,0.5139999985694885,0.36500000953674316,0.578000009059906,0.41200000047683716,0.5490000247955322,0.367000013589859,0.45399999618530273,0.6330000162124634,0.48100000619888306,0.44600000977516174,0.3540000021457672,0.25600001215934753,0.49000000953674316,0.5090000033378601,0.30399999022483826,0.41999998688697815,0.5149999856948853,0.4059999883174896,0.4090000092983246,0.4440000057220459,0.5130000114440918,0.550000011920929,0.3059999942779541,0.46000000834465027,0.3179999887943268,0.3720000088214874,0.35100001096725464,0.41200000047683716,0.3240000009536743,0.5669999718666077,0.40799999237060547,0.5350000262260437,0.3889999985694885,0.597000002861023,0.42500001192092896,NaN,0.421999990940094,0.40400001406669617,0.36000001430511475,0.3140000104904175,0.31700000166893005,0.4480000138282776,0.4860000014305115,0.6399999856948853,0.503000020980835,0.4350000023841858,0.35600000619888306,0.3720000088214874,0.6069999933242798,0.3709999918937683,0.3790000081062317,0.515999972820282,0.5360000133514404,0.36500000953674316,0.375,0.31200000643730164,0.35899999737739563,0.4309999942779541,0.37299999594688416,0.46799999475479126,0.5339999794960022,0.39500001072883606,0.48500001430511475,0.49799999594688416],"read":[0.24300000071525574,0.24699999392032623,0.375,0.5820000171661377,0.3449999988079071,0.699999988079071,0.6539999842643738,0.3709999918937683,0.210999995470047,0.5920000076293945,0.3310000002384186,0.289000004529953,0.22599999606609344,0.4189999997615814,0.4909999966621399,0.4620000123977661,0.3240000009536743,0.44999998807907104,0.3100000023841858,0.2549999952316284,0.31200000643730164,0.6100000143051147,0.5230000019073486,0.41499999165534973,0.652999997138977,0.7089999914169312,0.5329999923706055,0.5440000295639038,0.2199999988079071,0.21400000154972076,0.17800000309944153,0.34599998593330383,0.25200000405311584,0.4580000042915344,0.43700000643730164,0.33500000834465027,0.4779999852180481,0.5220000147819519,0.6940000057220459,0.2930000126361847,0.4740000069141388,0.8019999861717224,0.3059999942779541,0.32100000977516174,0.30300000309944153,0.3089999854564667,0.18199999630451202,0.5059999823570251,0.6190000176429749,0.29600000381469727,0.7760000228881836,0.4659999907016754,0.6480000019073486,0.23600000143051147,0.6850000023841858,0.5659999847412109,0.32100000977516174,0.27900001406669617,0.23199999332427979,0.19099999964237213,0.49799999594688416,0.5019999742507935,0.2540000081062317,0.3050000071525574,0.20399999618530273,0.17399999499320984,0.4449999928474426,0.3479999899864197,0.35499998927116394,0.597000002861023,0.3409999907016754,0.28600001335144043,0.6899999976158142,0.5350000262260437,0.5180000066757202,0.3700000047683716,0.3869999945163727,0.6769999861717224,0.47600001096725464,0.26100000739097595,0.2150000035762787,0.4129999876022339,0.4390000104904175,0.2709999978542328,0.25,0.23800000548362732,0.2809999883174896,0.42500001192092896,0.3540000021457672,0.26899999380111694,0.6650000214576721,0.382999986410141,0.6589999794960022,0.4090000092983246,0.21699999272823334,0.41100001335144043,0.3019999861717224,0.421999990940094,0.2720000147819519,0.43700000643730164,0.2370000034570694,0.4059999883174896,0.3160000145435333,0.5220000147819519,0.24500000476837158,0.4740000069141388,0.34599998593330383,0.32600000500679016,0.22200000286102295,0.210999995470047,0.6869999766349792,0.7910000085830688,0.32899999618530273,0.5600000023841858,0.7049999833106995,0.4650000035762787,0.27300000190734863,0.3190000057220459,0.3330000042915344,0.31200000643730164,0.41499999165534973,0.2540000081062317,0.5149999856948853,0.2720000147819519,0.5479999780654907,0.2840000092983246,0.5120000243186951,0.4410000145435333,0.4560000002384186,0.4390000104904175,0.5659999847412109,0.34200000762939453,0.8040000200271606,0.2720000147819519,0.3050000071525574,0.6340000033378601,0.3970000147819519,0.29100000858306885,0.46399998664855957,0.5709999799728394,0.7390000224113464,0.26499998569488525,0.20000000298023224,0.13899999856948853,0.32600000500679016,0.4320000112056732,0.27399998903274536,0.1679999977350235,0.3919999897480011,0.2919999957084656,0.40400001406669617,0.2849999964237213,0.2240000069141388,0.3880000114440918,0.5350000262260437,0.640999972820282,0.38100001215934753,0.4909999966621399,0.1550000011920929,0.3880000114440918,0.21899999678134918,0.3269999921321869,0.29600000381469727,0.17900000512599945]};
+
+const VAR_LABELS = {
+  dep: 'Core Capital Dependency',
+  gain: 'ND-GAIN Overall Score',
+  read: 'Climate Readiness',
+  vuln: 'Climate Vulnerability'
+};
+
+function showMap(varKey, title, colorscale, reverse, btn) {
+  document.querySelectorAll('.viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('map-title-text').textContent = title;
+
+  const vals = D[varKey];
+  const text = D.code.map((c,i) =>
+    `<b>${D.name[i]}</b><br>${VAR_LABELS[varKey]}: ${vals[i] != null ? (+vals[i]).toFixed(3) : 'N/A'}` +
+    (varKey !== 'dep' ? '' : `<br>ND-GAIN: ${D.gain[i] != null ? (+D.gain[i]).toFixed(1) : 'N/A'}`)
+  );
+
+  const trace = {
+    type: 'choropleth',
+    locationmode: 'ISO-3',
+    locations: D.code,
+    z: vals,
+    text: text,
+    hovertemplate: '%{text}<extra></extra>',
+    colorscale: colorscale,
+    reversescale: reverse,
+    marker: { line: { color: 'white', width: 0.5 } },
+    colorbar: { thickness: 14, len: 0.8, tickfont: { size: 10 } }
+  };
+
+  const layout = {
+    geo: {
+      showframe: false,
+      showcoastlines: true,
+      coastlinecolor: '#aaa',
+      showland: true,
+      landcolor: '#e8eef4',
+      showocean: true,
+      oceancolor: '#d4e5f5',
+      projection: { type: 'natural earth' }
+    },
+    margin: { t: 0, b: 0, l: 0, r: 0 },
+    paper_bgcolor: '#ffffff',
+    height: 440,
+  };
+
+  Plotly.react('map-div', [trace], layout, {
+    responsive: true,
+    displayModeBar: false,
+    scrollZoom: false
   });
+}
+
+function drawCoef() {
+  const labels = ['Climate Vulnerability', 'Climate Readiness*', 'ND-GAIN Overall*'];
+  const betas  = [-0.079, -3.969, -2.080];
+  const ci95   = [0.29*1.96, 1.63*1.96, 0.91*1.96];
+  const colors = ['#aaa', '#c0392b', '#c0392b'];
+
+  const trace = {
+    type: 'bar',
+    orientation: 'h',
+    x: betas,
+    y: labels,
+    error_x: { type:'data', array:ci95, color:'#555', thickness:1.8, width:6 },
+    marker: { color: colors, opacity: 0.85 },
+    hovertemplate: '<b>%{y}</b><br>β = %{x:.3f}<extra></extra>',
+    text: betas.map(b => b.toFixed(2)),
+    textposition: 'outside',
+    textfont: { size: 11, color: '#333' },
+    cliponaxis: false,
+  };
+
+  const layout = {
+    xaxis: {
+      zeroline: true, zerolinecolor:'#999', zerolinewidth:1.5,
+      gridcolor:'#eee', tickfont:{size:10},
+      title:{text:'Coefficient (ND-GAIN scale units)', font:{size:11,color:'#5a5a5a'}},
+      range: [-8.5, 1.5]
+    },
+    yaxis: { tickfont:{size:11}, automargin:true },
+    margin: {t:15, b:50, l:175, r:80},
+    paper_bgcolor:'#ffffff', plot_bgcolor:'#ffffff',
+    height: 260,
+    shapes:[{type:'line',x0:0,x1:0,y0:-0.5,y1:2.5,line:{color:'#999',width:1.5,dash:'dash'}}],
+    annotations:[{
+      x:-5, y:2.3, text:'Gray = not significant', showarrow:false,
+      font:{size:9,color:'#999'}, xanchor:'left'
+    }]
+  };
+
+  Plotly.newPlot('coef-div', [trace], layout, {responsive:true, displayModeBar:false});
+}
+
+window.addEventListener('load', () => {
+  showMap('dep', 'Core Capital Dependency Index (2023)', 'YlOrRd', false,
+    document.querySelector('.viz-btn'));
+  drawCoef();
+});
 </script>
 </body>
 </html>
