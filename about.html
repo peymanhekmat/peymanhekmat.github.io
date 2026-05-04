@@ -6,16 +6,11 @@
   <title>About — Peyman Hekmatpour, PhD</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;
-      --gold:#b8972a;--gold-light:#d4af50;
-      --cream:#f7f4ef;--cream-dark:#ede9e0;
-      --text:#1c1c1c;--text-muted:#5a5a5a;
-      --white:#ffffff;--border:#d0c9b8;
-    }
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.85;}
+
     nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
     .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
@@ -43,25 +38,157 @@
     .mobile-menu a:hover{color:var(--white);}
     .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
     @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+
     .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
     .page-header-inner{max-width:1100px;margin:0 auto;}
     .page-header .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
     .page-header .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
     .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
     .page-header p{color:#b8c8e0;font-size:0.9rem;}
-    .main{max-width:900px;margin:0 auto;padding:3rem 2rem;}
-    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
-    section{margin-bottom:2.5rem;}
-    section p{font-size:0.96rem;color:var(--text);margin-bottom:0.85rem;}
-    .placeholder-box{background:var(--white);border:2px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;color:var(--text-muted);margin-top:1rem;}
-    .placeholder-box .icon{font-size:2.5rem;margin-bottom:0.75rem;opacity:0.4;}
-    .placeholder-box strong{display:block;font-size:1rem;color:var(--navy);margin-bottom:0.3rem;opacity:0.6;}
-    .placeholder-box p{font-size:0.88rem;margin:0;}
+
+    /* NARRATIVE CONTAINER */
+    .narrative{max-width:860px;margin:0 auto;padding:4rem 2rem 5rem;}
+
+    /* Year label */
+    .year-tag{
+      display:block;
+      clear:both;
+      font-size:0.72rem;
+      font-weight:700;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      border-bottom:2px solid var(--gold);
+      padding-bottom:0.15rem;
+      margin-bottom:1.1rem;
+    }
+
+    /* Body text */
+    .narrative p{
+      font-size:1rem;
+      color:var(--text);
+      margin-bottom:1.2rem;
+      line-height:1.9;
+    }
+
+    /* CIRCLE PHOTO - floats left or right with text wrapping */
+    .circle-float-right{
+      float:right;
+      margin:0 0 1.5rem 2.5rem;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      object-fit:cover;
+      object-position:center top;
+      border:5px solid var(--gold);
+      box-shadow:0 0 0 8px rgba(184,151,42,0.15), 0 8px 32px rgba(0,0,0,0.18);
+      shape-outside:circle(50%);
+    }
+    .circle-float-left{
+      float:left;
+      margin:0 2.5rem 1.5rem 0;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      object-fit:cover;
+      object-position:center top;
+      border:5px solid var(--gold);
+      box-shadow:0 0 0 8px rgba(184,151,42,0.15), 0 8px 32px rgba(0,0,0,0.18);
+      shape-outside:circle(50%);
+    }
+
+    /* Logo circle - smaller, for institution logos */
+    .logo-circle-right{
+      float:right;
+      margin:0 0 1.5rem 2rem;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:contain;
+      background:var(--white);
+      border:4px solid var(--gold);
+      box-shadow:0 0 0 6px rgba(184,151,42,0.12), 0 4px 20px rgba(0,0,0,0.12);
+      padding:16px;
+      shape-outside:circle(50%);
+    }
+    .logo-circle-left{
+      float:left;
+      margin:0 2rem 1.5rem 0;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:contain;
+      background:var(--white);
+      border:4px solid var(--gold);
+      box-shadow:0 0 0 6px rgba(184,151,42,0.12), 0 4px 20px rgba(0,0,0,0.12);
+      padding:16px;
+      shape-outside:circle(50%);
+    }
+
+    /* Clearfix after each chapter */
+    .chapter{margin-bottom:0;}
+    .chapter::after{content:'';display:table;clear:both;}
+
+    /* Divider between chapters */
+    .chapter-divider{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      margin:2.5rem 0;
+      color:var(--gold);
+      font-size:0.75rem;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+    }
+    .chapter-divider::before,.chapter-divider::after{
+      content:'';
+      flex:1;
+      height:1px;
+      background:linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* Pull quote */
+    .pull-quote{
+      font-family:'EB Garamond',serif;
+      font-size:1.18rem;
+      font-style:italic;
+      color:var(--navy-mid);
+      border-left:4px solid var(--gold);
+      padding:0.85rem 1.2rem;
+      margin:1.5rem 0;
+      background:var(--white);
+      border-radius:0 4px 4px 0;
+      line-height:1.65;
+      clear:both;
+    }
+
+    /* Current position card */
+    .position-card{
+      background:var(--navy);
+      color:var(--white);
+      border-radius:6px;
+      padding:1.5rem;
+      margin:2rem 0 0;
+      border-left:4px solid var(--gold);
+      clear:both;
+    }
+    .position-card .pos-title{font-family:'EB Garamond',serif;font-size:1.15rem;color:var(--gold-light);margin-bottom:0.4rem;}
+    .position-card .pos-sub{font-size:0.85rem;color:#b8c8e0;line-height:1.7;}
+
+    /* OSU logo on dark card needs lighter bg */
+    .logo-osu-inline{height:44px;width:auto;margin-bottom:0.75rem;filter:brightness(10);}
+
+    @media(max-width:600px){
+      .circle-float-right,.circle-float-left{float:none;display:block;margin:0 auto 1.5rem;width:200px;height:200px;}
+      .logo-circle-right,.logo-circle-left{float:none;display:block;margin:0 auto 1.5rem;width:130px;height:130px;}
+    }
+
     footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
     footer a{color:var(--gold-light);text-decoration:none;}
   </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
@@ -98,35 +225,85 @@
   <div class="page-header-inner">
     <p class="breadcrumb"><a href="index.html">Home</a> › About</p>
     <h1>About</h1>
-    <p>Background, biography, and academic profile</p>
+    <p>An academic journey from Tehran to Tulsa</p>
   </div>
 </div>
 
-<div class="main">
-  <section>
-    <h2 class="section-title">Biography</h2>
-    <p>[Extended biography coming soon. This section will include a fuller account of academic background, research trajectory, and professional experience.]</p>
-    <div class="placeholder-box">
-      <div class="icon">👤</div>
-      <strong>More Content Coming Soon</strong>
-      <p>Additional biographical details, CV highlights, and academic background will be added here.</p>
+<div class="narrative">
+
+  <!-- CHAPTER 1: ENGINEERING ROOTS -->
+  <div class="chapter">
+    <span class="year-tag">Tehran, Iran · Undergraduate</span>
+    <img src="logo-amirkabir.jpg" alt="Amirkabir University of Technology" class="logo-circle-right"/>
+    <p>Peyman Hekmatpour's academic story begins not in a sociology seminar, but in the lecture halls of one of Iran's most prestigious engineering schools. At Amirkabir University of Technology in Tehran, known widely as the Tehran Polytechnic, he pursued a Bachelor of Science in Material Science, training in the kind of rigorous quantitative reasoning that would later become the methodological backbone of his social science research.</p>
+    <p>But something was pulling him in a different direction. The questions that felt most urgent to him were not about systems or structures in the abstract, but about the people within them. Why are societies organized the way they are? Who benefits, and who gets left behind? Campus life in Tehran was alive with political debate, student organizing, and a deep hunger to understand the forces shaping an entire generation. For Peyman, the classroom and the street were never entirely separate.</p>
+  </div>
+
+  <!-- CHAPTER 2: SHIFT TO SOCIAL SCIENCES -->
+  <div class="chapter">
+    <span class="year-tag">Tehran, Iran · Master's Studies</span>
+    <img src="logo-tehran.png" alt="University of Tehran" class="logo-circle-left"/>
+    <p>The pivot came at graduate school. Peyman made a deliberate and, at the time, unconventional choice: to leave engineering behind and pursue a Master of Arts in Social Science Research at the University of Tehran, one of the oldest and most distinguished universities in the region. The shift was not a rejection of quantitative thinking, but a redirection of it. He brought with him a mathematician's instinct for precision and a growing conviction that the most consequential problems, inequality, power, social change, were ones sociology was best equipped to address.</p>
+    <p>His graduate work in Tehran planted the seeds of the research agenda he would later develop in the United States. He was drawn early to the intersection of culture and material conditions, to the way religion, politics, and economics entangle in shaping people's lives and life chances. He also translated academic texts on universities and neoliberalism for Iranian student audiences, a quiet but meaningful act of intellectual bridging between the global left and the Iranian student movement. These years deepened both his political consciousness and his conviction that scholarly work and civic engagement belong together.</p>
+
+    <div class="pull-quote">The shift from engineering to sociology was not a departure from rigor. It was a redirection of it toward questions that mattered more.</div>
+  </div>
+
+  <!-- CHAPTER 3: OU PhD -->
+  <div class="chapter">
+    <span class="year-tag">University of Oklahoma · 2016 to 2022</span>
+    <img src="grad2.jpg" alt="Peyman Hekmatpour at OU graduation" class="circle-float-right"/>
+    <p>In 2016, Peyman arrived in Norman, Oklahoma, to begin his PhD in Sociology at the University of Oklahoma. It was a long way from Tehran, geographically, culturally, and in some ways intellectually, but the core questions he had carried with him from Iran remained. How do global economic structures reproduce inequality across nations? What role does culture, and particularly religion, play in shaping attitudes toward the environment and political change? And how can quantitative methods be deployed with enough precision to actually answer these questions?</p>
+    <img src="logo-ou.png" alt="University of Oklahoma" class="logo-circle-left" style="margin-top:0.5rem;"/>
+    <p>At OU, he found the tools and the scholarly community to pursue those questions seriously. He developed expertise in advanced econometric modeling, hierarchical linear models, structural equation modeling, and comparative cross-national analysis, building datasets and designing studies that spanned dozens of countries and decades of data. In 2019, he was recognized as the Outstanding Doctoral Student of the Year by the OU Department of Sociology, a reflection not just of his research productivity but of the rigor and originality he brought to the work.</p>
+    <p>His dissertation, completed with support from the Nancy L. Mergler Dissertation Completion Fellowship, examined global environmental inequality through the lens of ecologically unequal exchange theory, tracing how the structure of international trade shapes the distribution of pollution-related mortality across 169 countries. It was published in Environmental Research in 2022.</p>
+  </div>
+
+  <!-- CHAPTER 4: GRADUATION PHOTOS -->
+  <div class="chapter">
+    <img src="grad3.jpg" alt="Peyman at the Spirit of Learning stone, OU campus" class="circle-float-left"/>
+    <p>Commencement in 2022 marked the culmination of six years of sustained work, but also a beginning. The doctoral hood placed around Peyman's shoulders at the ceremony carried the crimson and cream of the University of Oklahoma, colors that had come to mean something real: a community of scholars, a set of intellectual commitments, and a responsibility to carry that work forward.</p>
+    <img src="grad1.jpg" alt="PhD hooding ceremony, University of Oklahoma" class="circle-float-right"/>
+    <p>Standing on the OU campus in full regalia, near the stone that reads "The Spirit of Learning is a Lasting Frontier," he was also looking ahead. The questions that had brought him from Tehran to Norman were not finished questions. They were opening ones.</p>
+  </div>
+
+  <!-- CHAPTER 5: ACTIVISM -->
+  <div class="chapter">
+    <span class="year-tag">Oklahoma · 2019 to present</span>
+    <img src="activism2.jpg" alt="Peyman raising the Iranian flag at an OU campus rally" class="circle-float-right"/>
+    <p>Throughout his years at OU and beyond, Peyman has never seen his scholarly work as separate from civic engagement. In November 2019, as protests erupted across Iran following a sudden 300 percent increase in fuel prices and the government's shutdown of the internet, he helped organize a solidarity rally on the OU campus, one of the first public acts of support for Iranian protesters in Oklahoma. "We don't know what is happening inside the country," he said at the time, reflecting the anxiety of a diaspora cut off from home.</p>
+    <img src="activism3.jpg" alt="Peyman being interviewed by a television crew on the OU campus" class="circle-float-left"/>
+    <p>In 2022, when the killing of Mahsa Amini sparked a nationwide uprising in Iran under the slogan "Woman, Life, Freedom," Peyman was again among the organizers, bringing demonstrators together in Oklahoma City. His voice as an Iranian academic gave local and national media a grounded perspective on events unfolding thousands of miles away, and he was interviewed by television outlets covering the protests in Oklahoma.</p>
+    <img src="activism5.jpg" alt="Peyman speaking to a large crowd at an Iran solidarity rally" class="circle-float-right"/>
+    <p>His activism has continued in the years since. Speaking at rallies and to media, including at a protest near the Oklahoma City National Memorial, he has consistently used his platform to draw attention to the human cost of political repression in Iran. "The government is cracking down on professors with an iron fist," he told reporters at one such event. "They are killing protesters on the streets."</p>
+    <img src="activism1.jpg" alt="Peyman speaking at a Women Life Freedom rally wearing a Freedom for Iran shirt" class="circle-float-left"/>
+    <p>This activism is not peripheral to his academic identity. It is continuous with it. His research on global inequality, environmental burden-sharing, and the political economy of development is animated by the same moral urgency that brings him to the streets of Norman and Oklahoma City.</p>
+  </div>
+
+  <!-- CHAPTER 6: OSU / PRESENT -->
+  <div class="chapter">
+    <span class="year-tag">Oklahoma State University · 2023 to present</span>
+    <img src="logo-osu.png" alt="Oklahoma State University" class="logo-circle-left" style="background:#1a1a1a; padding:20px;"/>
+    <p>In January 2023, Peyman joined the Department of Sociology at Oklahoma State University's Tulsa campus as a Teaching Assistant Professor, a position he continues to hold. The Tulsa campus serves a diverse, working-class urban student population, many of them first-generation college students, many of them working adults balancing coursework with jobs and families. Teaching there is not an abstraction. It is a daily encounter with the very social realities his research tries to illuminate.</p>
+    <p>He has built a teaching portfolio spanning quantitative methods, social stratification, racial and ethnic relations, environmental sociology, and more, taught across online, hyflex, and face-to-face formats. He continues to teach as an adjunct at the University of Oklahoma, where he teaches graduate courses in applied regression analysis, multivariate statistics, ethics in statistical practice, and database design. In 2024, he received the Advancing Undergraduate Research and Creative Activity (AURCA) Award from OSU for his mentorship of undergraduate students in original research projects.</p>
+    <p>His current research continues to push the boundaries of comparative global sociology. One project examines ecologically unequal exchange at the subnational level, mapping how trade structures shape air pollution mortality within and across countries. Another investigates how foreign direct investment network position shapes countries' capacity to adapt to climate change. Outside the academy, he is involved in the Iranian-American community in Oklahoma, working on initiatives to support cultural connection, civic engagement, and resources for Iranian students on F-1 visas.</p>
+    <p>The thread running through all of it, from engineering in Tehran to sociology in Tulsa, is a commitment to understanding how the world is organized and to using that understanding in the service of something larger than any single career or project.</p>
+
+    <div class="position-card">
+      <div class="pos-title">Current Positions</div>
+      <div class="pos-sub">
+        Teaching Assistant Professor · Department of Sociology · Oklahoma State University - Tulsa<br>
+        Adjunct Professor · University of Oklahoma · Departments of Sociology and Statistics
+      </div>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h2 class="section-title">Education</h2>
-    <p>[Education details coming soon.]</p>
-  </section>
-
-  <section>
-    <h2 class="section-title">Academic Positions</h2>
-    <p>[Current and past positions coming soon.]</p>
-  </section>
 </div>
 
 <footer>
   <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
 </footer>
+
 <script>
   function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
   function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
