@@ -196,9 +196,9 @@
         <span class="map-title-text" id="map-title">Net EUE Position (2022)</span>
         <div class="map-btns">
           <button class="map-btn active" onclick="showMap('eue','Net EUE Position (2022)','RdBu',true,this)">Net EUE</button>
-          <button class="map-btn" onclick="showMap('dep','Eco-Intensive Inflow Dependence (2022)','YlOrRd',false,this)">Inflow Dep.</button>
-          <button class="map-btn" onclick="showMap('prod','Eco-Intensive Production Share (2022)','YlOrRd',false,this)">Prod. Share</button>
-          <button class="map-btn" onclick="showMap('thru','Transit &amp; Warehousing Share (2022)','Blues',false,this)">Throughput</button>
+          <button class="map-btn" onclick="showMap('dep','Eco-Intensive Inflow Dependence (2022)','YlOrRd',true,this)">Inflow Dep.</button>
+          <button class="map-btn" onclick="showMap('prod','Eco-Intensive Production Share (2022)','YlOrRd',true,this)">Prod. Share</button>
+          <button class="map-btn" onclick="showMap('thru','Transit &amp; Warehousing Share (2022)','Viridis',false,this)">Throughput</button>
         </div>
       </div>
       <div id="map-div"></div>
@@ -330,7 +330,7 @@ function showMap(varKey, title, colorscale, diverging, btn) {
   Plotly.react('map-div', [trace], layout, {
     responsive: true,
     displayModeBar: false,
-    scrollZoom: false
+    scrollZoom: true
   });
 }
 
