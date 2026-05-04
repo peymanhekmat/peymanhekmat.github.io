@@ -439,6 +439,63 @@
       .nav-links { display: none; }
       .hero-text h1 { font-size: 2rem; }
     }
+
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      z-index: 300;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #b8c8e0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      background: var(--navy-mid);
+      border-bottom: 3px solid var(--gold);
+      padding: 1rem 1.5rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      color: #b8c8e0;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .mobile-section-label {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      padding: 0.75rem 0 0.25rem;
+      pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -447,6 +504,9 @@
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="#"><span>P.</span> Hekmatpour</a>
+  <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li class="has-dropdown">
@@ -464,6 +524,16 @@
     </ul>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="#teaching">Teaching</a>
+  <a href="#awards">Awards</a>
+  <a href="publications.html">Publications</a>
+  <a href="contact.html">Contact</a>
+</div>
 
 <!-- HERO -->
 <header class="hero">
@@ -648,6 +718,10 @@
 </footer>
 
 <script>
+  function toggleMobile(btn) {
+    btn.classList.toggle("open");
+    document.getElementById("mobileMenu").classList.toggle("open");
+  }
   function toggleDropdown(e, el) {
     e.preventDefault();
     const li = el.parentElement;
