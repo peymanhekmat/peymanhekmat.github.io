@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Site Admin — phekmat.com</title>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;--green:#27ae60;--red:#c0392b;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--text);font-size:15px;}
+
+    /* LOGIN */
+    #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy);}
+    .login-box{background:var(--white);padding:2.5rem;border-radius:8px;width:340px;border-top:4px solid var(--gold);}
+    .login-box h1{font-size:1.3rem;color:var(--navy);margin-bottom:0.3rem;}
+    .login-box p{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;}
+    .login-box input{width:100%;padding:0.65rem 0.85rem;border:1px solid var(--border);border-radius:4px;font-size:0.9rem;margin-bottom:0.75rem;outline:none;}
+    .login-box input:focus{border-color:var(--navy);}
+    .btn{display:inline-block;padding:0.6rem 1.2rem;border:none;border-radius:4px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
+    .btn-primary{background:var(--navy);color:var(--white);width:100%;}
+    .btn-primary:hover{background:var(--navy-mid);}
+    .login-error{color:var(--red);font-size:0.8rem;margin-top:0.5rem;display:none;}
+
+    /* MAIN */
+    #main-screen{display:none;min-height:100vh;}
+    header{background:var(--navy);border-bottom:3px solid var(--gold);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;}
+    header h1{font-size:1rem;color:var(--white);font-weight:600;}
+    header .site-link{font-size:0.78rem;color:var(--gold-light);text-decoration:none;}
+    header .site-link:hover{text-decoration:underline;}
+    .btn-sm{padding:0.35rem 0.85rem;font-size:0.78rem;}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#b8c8e0;}
+    .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);}
+
+    .layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 58px);}
+
+    /* SIDEBAR */
+    .sidebar{background:var(--white);border-right:1px solid var(--border);padding:1.5rem 0;}
+    .sidebar-label{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);padding:0 1.2rem;margin-bottom:0.4rem;margin-top:1rem;}
+    .sidebar-label:first-child{margin-top:0;}
+    .nav-item{display:block;width:100%;text-align:left;background:none;border:none;padding:0.55rem 1.2rem;font-size:0.85rem;color:var(--text);cursor:pointer;border-left:3px solid transparent;transition:all 0.15s;}
+    .nav-item:hover{background:var(--cream);color:var(--navy);}
+    .nav-item.active{background:var(--cream);color:var(--navy);border-left-color:var(--gold);font-weight:600;}
+
+    /* CONTENT */
+    .content{padding:2rem;max-width:860px;}
+    .content h2{font-size:1.2rem;color:var(--navy);margin-bottom:0.3rem;}
+    .content .page-desc{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;}
+
+    /* EDITOR CARD */
+    .editor-card{background:var(--white);border:1px solid var(--border);border-radius:6px;margin-bottom:1.25rem;overflow:hidden;}
+    .editor-card-header{padding:0.7rem 1rem;background:var(--cream-dark);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+    .editor-card-header:hover{background:#e5e0d5;}
+    .editor-label{font-size:0.82rem;font-weight:600;color:var(--navy);}
+    .editor-type{font-size:0.7rem;color:var(--text-muted);background:var(--border);padding:0.15rem 0.5rem;border-radius:10px;}
+    .editor-toggle{color:var(--text-muted);font-size:0.8rem;transition:transform 0.2s;}
+    .editor-card.open .editor-toggle{transform:rotate(180deg);}
+    .editor-body{display:none;padding:1rem;}
+    .editor-card.open .editor-body{display:block;}
+    textarea.field{width:100%;border:1px solid var(--border);border-radius:4px;padding:0.65rem 0.8rem;font-size:0.85rem;font-family:inherit;line-height:1.6;resize:vertical;outline:none;min-height:80px;}
+    textarea.field:focus{border-color:var(--navy);}
+    input.field{width:100%;border:1px solid var(--border);border-radius:4px;padding:0.6rem 0.8rem;font-size:0.85rem;font-family:inherit;outline:none;}
+    input.field:focus{border-color:var(--navy);}
+    .field-label{font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em;}
+    .field-group{margin-bottom:0.85rem;}
+    .field-group:last-child{margin-bottom:0;}
+
+    /* SAVE BAR */
+    .save-bar{display:flex;align-items:center;gap:0.75rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
+    .btn-save{background:var(--navy);color:var(--white);padding:0.5rem 1.4rem;font-size:0.85rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;}
+    .btn-save:hover{background:var(--navy-mid);}
+    .btn-save:disabled{opacity:0.5;cursor:not-allowed;}
+    .save-status{font-size:0.8rem;}
+    .save-status.saving{color:var(--text-muted);}
+    .save-status.success{color:var(--green);}
+    .save-status.error{color:var(--red);}
+
+    /* LIST EDITOR (publications, awards, courses) */
+    .list-item{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:0.8rem 1rem;margin-bottom:0.6rem;position:relative;}
+    .list-item-fields{display:grid;gap:0.5rem;}
+    .list-item-actions{display:flex;gap:0.5rem;margin-top:0.6rem;}
+    .btn-danger{background:var(--red);color:var(--white);padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:600;border:none;border-radius:3px;cursor:pointer;}
+    .btn-danger:hover{background:#a93226;}
+    .btn-add{background:var(--green);color:var(--white);padding:0.4rem 1rem;font-size:0.8rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;margin-bottom:1rem;}
+    .btn-add:hover{background:#219a52;}
+
+    /* LOADING */
+    .loading{color:var(--text-muted);font-size:0.88rem;padding:1rem 0;}
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:0.4rem;vertical-align:middle;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .alert{padding:0.7rem 1rem;border-radius:4px;font-size:0.83rem;margin-bottom:1rem;}
+    .alert-info{background:#e8f4fd;border:1px solid #b8d4f0;color:#1a5276;}
+    .alert-warn{background:#fef9e7;border:1px solid #f9e79f;color:#7d6608;}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>phekmat.com Admin</h1>
+    <p>Enter your password to access the dashboard.</p>
+    <input type="password" id="pwd-input" placeholder="Dashboard Password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <div class="field-group" style="margin-bottom:0.75rem;">
+      <div style="font-size:0.75rem;color:#888;margin-bottom:0.3rem;">GitHub Personal Access Token</div>
+      <input type="password" id="token-input" placeholder="Paste your token here" style="width:100%;padding:0.65rem 0.85rem;border:1px solid #d0c9b8;border-radius:4px;font-size:0.9rem;outline:none;" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div id="main-screen">
+  <header>
+    <h1>phekmat.com — Admin Dashboard</h1>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="https://phekmat.com" target="_blank" class="site-link">View Site ↗</a>
+      <button class="btn btn-sm btn-outline" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sidebar-label">Pages</div>
+      <button class="nav-item active" onclick="loadPage('index')">Home</button>
+      <button class="nav-item" onclick="loadPage('about')">About</button>
+      <button class="nav-item" onclick="loadPage('teaching')">Teaching</button>
+      <button class="nav-item" onclick="loadPage('awards')">Awards &amp; Grants</button>
+      <button class="nav-item" onclick="loadPage('publications')">Publications</button>
+      <button class="nav-item" onclick="loadPage('contact')">Contact</button>
+      <div class="sidebar-label">Research</div>
+      <button class="nav-item" onclick="loadPage('project-eue')">EUE &amp; Air Pollution</button>
+      <button class="nav-item" onclick="loadPage('project-fdi')">FDI &amp; Climate</button>
+    </nav>
+
+    <main class="content" id="content-area">
+      <div class="loading"><span class="spinner"></span> Loading...</div>
+    </main>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──
+const OWNER = 'peymanhekmat';
+const REPO  = 'peymanhekmat.github.io';
+let TOKEN = '';
+const PASS  = atob('cGhla21hdDIwMjVhZG1pbg==');  // password is base64 encoded
+
+// ── LOGIN ──
+function doLogin() {
+  const pwd = document.getElementById('pwd-input').value;
+  const tok = document.getElementById('token-input').value.trim();
+  if (pwd === PASS && tok.length > 20) {
+    TOKEN = tok;
+    sessionStorage.setItem('admin_auth', '1');
+    sessionStorage.setItem('admin_token', tok);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('main-screen').style.display = 'block';
+    loadPage('index');
+  } else if (pwd !== PASS) {
+    document.getElementById('login-error').textContent = 'Incorrect password.';
+    document.getElementById('login-error').style.display = 'block';
+  } else {
+    document.getElementById('login-error').textContent = 'Please enter your GitHub Personal Access Token.';
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function doLogout() {
+  sessionStorage.removeItem('admin_auth');
+  sessionStorage.removeItem('admin_token');
+  TOKEN = '';
+  location.reload();
+}
+if (sessionStorage.getItem('admin_auth') === '1' && sessionStorage.getItem('admin_token')) {
+  TOKEN = sessionStorage.getItem('admin_token');
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+}
+
+// ── GITHUB API ──
+async function ghGet(path) {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
+    headers: { Authorization: `to` + `ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) throw new Error(`GitHub API error: ${r.status}`);
+  return r.json();
+}
+
+async function ghPut(path, content, sha, message) {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `to` + `ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha })
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'Save failed'); }
+  return r.json();
+}
+
+let currentFile = null;
+let currentSha  = null;
+let currentHTML = null;
+
+// ── PAGE LOADER ──
+async function loadPage(pageKey) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.nav-item[onclick="loadPage('${pageKey}')"]`).classList.add('active');
+  const area = document.getElementById('content-area');
+  area.innerHTML = '<div class="loading"><span class="spinner"></span> Loading page...</div>';
+  currentFile = pageKey + '.html';
+  try {
+    const data = await ghGet(currentFile);
+    currentSha  = data.sha;
+    currentHTML = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    renderEditor(pageKey, currentHTML);
+  } catch(e) {
+    area.innerHTML = `<div class="alert alert-warn">Could not load ${currentFile}: ${e.message}</div>`;
+  }
+}
+
+// ── EXTRACT HELPERS ──
+function extractTag(html, selector) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const el = div.querySelector(selector);
+  return el ? el.innerHTML.trim() : '';
+}
+
+function extractText(html, selector) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const el = div.querySelector(selector);
+  return el ? el.textContent.trim() : '';
+}
+
+function replaceInner(html, selector, newInner) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const el = div.querySelector(selector);
+  if (el) el.innerHTML = newInner;
+  return div.innerHTML;
+}
+
+function replaceText(html, selector, newText) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const el = div.querySelector(selector);
+  if (el) el.textContent = newText;
+  return div.innerHTML;
+}
+
+// ── RENDER EDITOR ──
+function renderEditor(pageKey, html) {
+  const area = document.getElementById('content-area');
+  const configs = getPageConfig(pageKey, html);
+  if (!configs) {
+    area.innerHTML = `<h2>${pageKey}.html</h2><p class="page-desc">This page does not have an editor configuration yet.</p>`;
+    return;
+  }
+  area.innerHTML = `
+    <h2>${configs.title}</h2>
+    <p class="page-desc">${configs.desc}</p>
+    <div class="alert alert-info">Changes are saved directly to GitHub and go live within 1-2 minutes.</div>
+    <div id="editors"></div>
+    <div class="save-bar">
+      <button class="btn-save" id="save-btn" onclick="savePage()">Save &amp; Publish</button>
+      <span class="save-status" id="save-status"></span>
+    </div>`;
+  renderFields(configs.fields);
+}
+
+function renderFields(fields) {
+  const container = document.getElementById('editors');
+  fields.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'editor-card';
+    card.dataset.fieldIndex = i;
+    card.innerHTML = `
+      <div class="editor-card-header" onclick="toggleCard(this)">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <span class="editor-label">${f.label}</span>
+          <span class="editor-type">${f.type}</span>
+        </div>
+        <span class="editor-toggle">▼</span>
+      </div>
+      <div class="editor-body" id="field-body-${i}"></div>`;
+    container.appendChild(card);
+    renderFieldBody(f, i);
+  });
+}
+
+function toggleCard(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function renderFieldBody(field, idx) {
+  const body = document.getElementById(`field-body-${idx}`);
+  if (field.type === 'text' || field.type === 'textarea') {
+    const val = extractText(currentHTML, field.selector) || extractTag(currentHTML, field.selector);
+    body.innerHTML = `
+      <div class="field-group">
+        <div class="field-label">${field.label}</div>
+        ${field.type === 'textarea'
+          ? `<textarea class="field" data-selector="${field.selector}" data-mode="inner" rows="4">${escHtml(val)}</textarea>`
+          : `<input class="field" type="text" data-selector="${field.selector}" data-mode="text" value="${escHtml(val)}"/>`}
+      </div>`;
+  } else if (field.type === 'list') {
+    renderListField(field, idx, body);
+  }
+}
+
+function renderListField(field, idx, body) {
+  const items = parseList(currentHTML, field);
+  body.innerHTML = `
+    <button class="btn-add" onclick="addListItem(${idx})">+ Add ${field.itemLabel}</button>
+    <div id="list-items-${idx}"></div>`;
+  const container = document.getElementById(`list-items-${idx}`);
+  items.forEach((item, j) => renderListItem(field, idx, j, item, container));
+  body.dataset.fieldIdx = idx;
+}
+
+function renderListItem(field, fieldIdx, itemIdx, item, container) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.dataset.itemIdx = itemIdx;
+  let fieldsHTML = '<div class="list-item-fields">';
+  field.itemFields.forEach(f => {
+    fieldsHTML += `
+      <div class="field-group">
+        <div class="field-label">${f.label}</div>
+        <input class="field" type="text" data-key="${f.key}" value="${escHtml(item[f.key] || '')}"/>
+      </div>`;
+  });
+  fieldsHTML += '</div>';
+  fieldsHTML += `<div class="list-item-actions">
+    <button class="btn-danger" onclick="removeListItem(this)">Remove</button>
+  </div>`;
+  div.innerHTML = fieldsHTML;
+  container.appendChild(div);
+}
+
+function addListItem(fieldIdx) {
+  const field = getPageConfig(getCurrentPageKey(), currentHTML).fields[fieldIdx];
+  const container = document.getElementById(`list-items-${fieldIdx}`);
+  const newItem = {};
+  field.itemFields.forEach(f => newItem[f.key] = '');
+  const itemIdx = container.children.length;
+  renderListItem(field, fieldIdx, itemIdx, newItem, container);
+}
+
+function removeListItem(btn) {
+  btn.closest('.list-item').remove();
+}
+
+function getCurrentPageKey() {
+  return currentFile.replace('.html','');
+}
+
+// ── PARSE LIST ITEMS FROM HTML ──
+function parseList(html, field) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const items = [];
+  div.querySelectorAll(field.itemSelector).forEach(el => {
+    const item = {};
+    field.itemFields.forEach(f => {
+      const sub = el.querySelector(f.subSelector);
+      item[f.key] = sub ? sub.textContent.trim() : el.textContent.trim();
+    });
+    items.push(item);
+  });
+  return items;
+}
+
+// ── COLLECT AND SAVE ──
+function collectChanges() {
+  let html = currentHTML;
+  // Text/textarea fields
+  document.querySelectorAll('.field[data-selector]').forEach(el => {
+    const selector = el.dataset.selector;
+    const mode = el.dataset.mode;
+    const val = el.value;
+    if (mode === 'text') html = replaceText(html, selector, val);
+    else html = replaceInner(html, selector, val);
+  });
+  // List fields
+  document.querySelectorAll('[id^="list-items-"]').forEach(container => {
+    const fieldIdx = parseInt(container.id.replace('list-items-',''));
+    const field = getPageConfig(getCurrentPageKey(), currentHTML).fields[fieldIdx];
+    if (!field || field.type !== 'list') return;
+    const items = [];
+    container.querySelectorAll('.list-item').forEach(itemEl => {
+      const item = {};
+      itemEl.querySelectorAll('input[data-key]').forEach(inp => {
+        item[inp.dataset.key] = inp.value;
+      });
+      items.push(item);
+    });
+    html = rebuildList(html, field, items);
+  });
+  return html;
+}
+
+function rebuildList(html, field, items) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const container = div.querySelector(field.containerSelector);
+  if (!container) return html;
+  // Remove existing items
+  container.querySelectorAll(field.itemSelector).forEach(el => el.remove());
+  // Re-add new items
+  items.forEach(item => {
+    const newEl = document.createElement(field.itemTag || 'div');
+    newEl.className = field.itemClass || '';
+    newEl.innerHTML = field.renderItem(item);
+    container.appendChild(newEl);
+  });
+  return div.innerHTML;
+}
+
+async function savePage() {
+  const btn = document.getElementById('save-btn');
+  const status = document.getElementById('save-status');
+  btn.disabled = true;
+  status.className = 'save-status saving';
+  status.textContent = 'Saving...';
+  try {
+    const newHTML = collectChanges();
+    await ghPut(currentFile, newHTML, currentSha, `Dashboard update: ${currentFile}`);
+    currentHTML = newHTML;
+    // Refresh SHA
+    const fresh = await ghGet(currentFile);
+    currentSha = fresh.sha;
+    status.className = 'save-status success';
+    status.textContent = 'Saved and published!';
+    setTimeout(() => { status.textContent = ''; }, 4000);
+  } catch(e) {
+    status.className = 'save-status error';
+    status.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+}
+
+function escHtml(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── PAGE CONFIGS ──
+function getPageConfig(pageKey, html) {
+  const configs = {
+
+    'index': {
+      title: 'Home Page',
+      desc: 'Edit the homepage hero text, bio, and sidebar content.',
+      fields: [
+        { label: 'Your Name / Title', type: 'text', selector: '.hero-text h1' },
+        { label: 'Subtitle / Role', type: 'text', selector: '.hero-subtitle' },
+        { label: 'Affiliations', type: 'textarea', selector: '.hero-affil' },
+        { label: 'About Bio — Paragraph 1', type: 'textarea', selector: '.bio p:first-child' },
+        { label: 'About Bio — Paragraph 2', type: 'textarea', selector: '.bio p:nth-child(2)' },
+        { label: 'About Bio — Paragraph 3', type: 'textarea', selector: '.bio p:nth-child(3)' },
+      ]
+    },
+
+    'about': {
+      title: 'About Page',
+      desc: 'Edit the narrative biography text.',
+      fields: [
+        { label: 'Chapter 1 — Engineering Roots (Para 1)', type: 'textarea', selector: '.chapter:nth-child(1) p:nth-child(2)' },
+        { label: 'Chapter 1 — Engineering Roots (Para 2)', type: 'textarea', selector: '.chapter:nth-child(1) p:nth-child(3)' },
+        { label: 'Chapter 2 — Tehran University (Para 1)', type: 'textarea', selector: '.chapter:nth-child(2) p:nth-child(2)' },
+        { label: 'Chapter 2 — Tehran University (Para 2)', type: 'textarea', selector: '.chapter:nth-child(2) p:nth-child(3)' },
+        { label: 'Chapter 3 — OU PhD (Para 1)', type: 'textarea', selector: '.chapter:nth-child(3) p:nth-child(2)' },
+        { label: 'Chapter 3 — OU PhD (Para 2)', type: 'textarea', selector: '.chapter:nth-child(3) p:nth-child(3)' },
+        { label: 'Chapter 4 — Graduation', type: 'textarea', selector: '.chapter:nth-child(4) p:first-child' },
+        { label: 'Chapter 5 — Activism (Para 1)', type: 'textarea', selector: '.chapter:nth-child(5) p:nth-child(2)' },
+        { label: 'Chapter 5 — Activism (Para 2)', type: 'textarea', selector: '.chapter:nth-child(5) p:nth-child(3)' },
+        { label: 'Chapter 6 — OSU (Para 1)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(2)' },
+        { label: 'Chapter 6 — OSU (Para 2)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(3)' },
+        { label: 'Chapter 6 — OSU (Para 3)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(4)' },
+      ]
+    },
+
+    'awards': {
+      title: 'Awards & Grants',
+      desc: 'Add, remove or edit awards and fellowships.',
+      fields: [
+        {
+          label: 'Awards List', type: 'list',
+          containerSelector: '.main section',
+          itemSelector: '.award-item',
+          itemTag: 'div', itemClass: 'award-item',
+          itemLabel: 'Award',
+          itemFields: [
+            { label: 'Year', key: 'year', subSelector: '.award-year-badge' },
+            { label: 'Title', key: 'title', subSelector: '.award-title' },
+            { label: 'Institution', key: 'inst', subSelector: '.award-sub' },
+          ],
+          renderItem: (item) => `
+            <div class="award-header" onclick="toggleAward(this)">
+              <div class="award-meta">
+                <div class="award-title">${item.title||''}</div>
+                <div class="award-sub">${item.inst||''}</div>
+              </div>
+              <span class="award-year-badge">${item.year||''}</span>
+              <span class="award-arrow">▼</span>
+            </div>
+            <div class="award-body"><p>Description coming soon.</p></div>`
+        }
+      ]
+    },
+
+    'publications': {
+      title: 'Publications',
+      desc: 'Add or remove publications. Each entry has authors, title, journal, year and DOI.',
+      fields: [
+        {
+          label: 'Publications List', type: 'list',
+          containerSelector: '.main main',
+          itemSelector: '.pub-item',
+          itemTag: 'div', itemClass: 'pub-item',
+          itemLabel: 'Publication',
+          itemFields: [
+            { label: 'Year', key: 'year', subSelector: '.pub-year' },
+            { label: 'Authors', key: 'authors', subSelector: '.pub-authors' },
+            { label: 'Title', key: 'title', subSelector: '.pub-title' },
+            { label: 'Journal', key: 'journal', subSelector: '.pub-journal' },
+            { label: 'DOI URL', key: 'doi', subSelector: 'a.pub-doi' },
+          ],
+          renderItem: (item) => `
+            <p class="pub-authors">${item.authors||''}</p>
+            <p class="pub-title">${item.title||''}</p>
+            <p class="pub-journal">${item.journal||''}</p>
+            ${item.doi ? `<a class="pub-doi" href="${item.doi}" target="_blank">DOI ↗</a>` : ''}`
+        }
+      ]
+    },
+
+    'teaching': {
+      title: 'Teaching',
+      desc: 'Edit the teaching philosophy and course descriptions.',
+      fields: [
+        { label: 'Teaching Philosophy — Para 1', type: 'textarea', selector: '.section-title + p' },
+        { label: 'Teaching Philosophy — Para 2', type: 'textarea', selector: 'section p:nth-child(2)' },
+        { label: 'Teaching Philosophy — Para 3', type: 'textarea', selector: 'section p:nth-child(3)' },
+        {
+          label: 'Courses', type: 'list',
+          containerSelector: '.main main',
+          itemSelector: '.course-item',
+          itemTag: 'div', itemClass: 'course-item',
+          itemLabel: 'Course',
+          itemFields: [
+            { label: 'Course Title', key: 'title', subSelector: '.course-title' },
+            { label: 'Course Code / Info', key: 'code', subSelector: '.course-code' },
+            { label: 'Description', key: 'desc', subSelector: '.course-body p' },
+          ],
+          renderItem: (item) => `
+            <div class="course-header">
+              <div>
+                <div class="course-title">${item.title||''}</div>
+                <div class="course-code">${item.code||''}</div>
+              </div>
+              <span class="course-arrow">▼</span>
+            </div>
+            <div class="course-body"><p>${item.desc||''}</p></div>`
+        }
+      ]
+    },
+
+    'contact': {
+      title: 'Contact Page',
+      desc: 'Edit contact information.',
+      fields: [
+        { label: 'Email Address', type: 'text', selector: '.contact-value a[href^="mailto"]' },
+        { label: 'Phone Number', type: 'text', selector: '.contact-value a[href^="tel"]' },
+        { label: 'Office Address', type: 'textarea', selector: '.contact-value:not(:has(a))' },
+        { label: 'Office Hours', type: 'text', selector: '.contact-value:last-child' },
+      ]
+    },
+
+    'project-eue': {
+      title: 'EUE & Air Pollution Project',
+      desc: 'Edit the project overview and findings text.',
+      fields: [
+        { label: 'Project Overview — Para 1', type: 'textarea', selector: 'section:nth-child(2) p:first-of-type' },
+        { label: 'Project Overview — Para 2', type: 'textarea', selector: 'section:nth-child(2) p:nth-of-type(2)' },
+        { label: 'Methods — Para 1', type: 'textarea', selector: 'section:nth-child(3) p:first-of-type' },
+        { label: 'Methods — Para 2', type: 'textarea', selector: 'section:nth-child(3) p:nth-of-type(2)' },
+        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:first-of-type' },
+        { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
+        { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
+      ]
+    },
+
+    'project-fdi': {
+      title: 'FDI & Climate Project',
+      desc: 'Edit the project overview and findings text.',
+      fields: [
+        { label: 'Project Overview — Para 1', type: 'textarea', selector: 'section:nth-child(2) p:first-of-type' },
+        { label: 'Project Overview — Para 2', type: 'textarea', selector: 'section:nth-child(2) p:nth-of-type(2)' },
+        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:first-of-type' },
+        { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
+        { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
+      ]
+    },
+
+  };
+  return configs[pageKey] || null;
+}
+
+// Initialize
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem('admin_auth') === '1') {
+    loadPage('index');
+  }
+});
+</script>
+</body>
+</html>
