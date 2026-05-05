@@ -404,52 +404,44 @@ function collectPubs() {
 }
 
 function rebuildPubsHTML(html, pubs) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const main = div.querySelector('.main main') || div.querySelector('main');
-  if (!main) return html;
-
-  // Remove all year-blocks
-  main.querySelectorAll('.year-block').forEach(b => b.remove());
-
-  // Group pubs by year
+  // Use regex to cleanly replace everything between <main> tags
+  // First build the new year-blocks HTML string
   const byYear = {};
   pubs.forEach(p => {
-    const y = p.year || 'N/A';
+    const y = (p.year || 'N/A').trim();
     if (!byYear[y]) byYear[y] = [];
     byYear[y].push(p);
   });
 
-  // Sort years descending
-  const years = Object.keys(byYear).sort((a,b) => b - a);
+  const years = Object.keys(byYear).sort((a,b) => parseInt(b) - parseInt(a));
 
+  let blocksHTML = '';
   years.forEach(year => {
-    const block = document.createElement('div');
-    block.className = 'year-block';
-    block.innerHTML = `<div class="year-label">${year}</div>`;
+    blocksHTML += `\n    <div class="year-block">\n      <div class="year-label">${year}</div>\n`;
     byYear[year].forEach(p => {
-      const pubDiv = document.createElement('div');
-      pubDiv.className = 'pub-item';
-      pubDiv.innerHTML = `
+      const authDisplay = (p.authors||'').replace(/Peyman Hekmatpour/g, '<strong>Peyman Hekmatpour</strong>');
+      blocksHTML += `      <div class="pub-item">
         <div class="pub-header" onclick="toggleAbstract(this)">
           <div class="pub-main">
-            <p class="pub-authors">${p.authors||''}</p>
+            <p class="pub-authors">${authDisplay}</p>
             <p class="pub-title">${p.title||''}</p>
             <p class="pub-journal">${p.journal||''}</p>
             <div class="pub-footer">
               ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>` : ''}
-              ${p.abstract ? `<span class="abstract-hint">Click to view abstract</span>` : ''}
+              ${p.abstract ? '<span class="abstract-hint">Click to view abstract</span>' : ''}
             </div>
           </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        ${p.abstract ? `<div class="pub-abstract" style="display:none;"><div class="abstract-label">Abstract</div><div class="pub-abstract-text"><p>${p.abstract}</p></div></div>` : ''}`;
-      block.appendChild(pubDiv);
+        ${p.abstract ? `<div class="pub-abstract"><p class="abstract-label">Abstract</p><p>${p.abstract}</p></div>` : ''}
+      </div>\n`;
     });
-    main.appendChild(block);
+    blocksHTML += `    </div>\n`;
   });
 
-  return div.innerHTML;
+  // Replace all content inside <main>...</main> cleanly using regex
+  const newMain = `<main>\n${blocksHTML}  </main>`;
+  return html.replace(/<main>[\s\S]*?<\/main>/, newMain);
 }
 
 function renderListField(field, idx, body) {
