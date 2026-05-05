@@ -296,7 +296,10 @@ function toggleCard(header) {
 function renderFieldBody(field, idx) {
   const body = document.getElementById(`field-body-${idx}`);
   if (field.type === 'text' || field.type === 'textarea') {
-    const val = extractText(currentHTML, field.selector) || extractTag(currentHTML, field.selector);
+    // Use innerHTML for textarea (preserves <br>, <strong> etc), textContent for plain input
+    const val = field.type === 'textarea'
+      ? extractTag(currentHTML, field.selector)
+      : extractText(currentHTML, field.selector);
     body.innerHTML = `
       <div class="field-group">
         <div class="field-label">${field.label}</div>
@@ -306,7 +309,147 @@ function renderFieldBody(field, idx) {
       </div>`;
   } else if (field.type === 'list') {
     renderListField(field, idx, body);
+  } else if (field.type === 'publications') {
+    renderPublications(body);
   }
+}
+
+// ── PUBLICATIONS EDITOR ──
+function parsePubs(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const pubs = [];
+  div.querySelectorAll('.year-block').forEach(block => {
+    const year = block.querySelector('.year-label') ? block.querySelector('.year-label').textContent.trim() : '';
+    block.querySelectorAll('.pub-item').forEach(item => {
+      const authEl = item.querySelector('.pub-authors');
+      const authors = authEl ? authEl.textContent.trim() : '';
+      const title = item.querySelector('.pub-title') ? item.querySelector('.pub-title').textContent.trim() : '';
+      const journal = item.querySelector('.pub-journal') ? item.querySelector('.pub-journal').textContent.trim() : '';
+      const doiEl = item.querySelector('a.pub-doi');
+      const doi = doiEl ? doiEl.getAttribute('href') : '';
+      const abstractEl = item.querySelector('.pub-abstract-text') || item.querySelector('.abstract-body p');
+      const abstract = abstractEl ? abstractEl.textContent.trim() : '';
+      pubs.push({ year, authors, title, journal, doi, abstract });
+    });
+  });
+  return pubs;
+}
+
+function renderPublications(body) {
+  const pubs = parsePubs(currentHTML);
+  body.innerHTML = `<button class="btn-add" onclick="addPub()">+ Add Publication</button><div id="pub-list"></div>`;
+  const list = document.getElementById('pub-list');
+  pubs.forEach((p, i) => renderPubItem(p, i, list));
+}
+
+function renderPubItem(p, i, container) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.dataset.pubIdx = i;
+  div.innerHTML = `
+    <div class="list-item-fields">
+      <div style="display:grid;grid-template-columns:100px 1fr;gap:0.5rem;">
+        <div class="field-group">
+          <div class="field-label">Year</div>
+          <input class="field" type="text" data-key="year" value="${escHtml(p.year)}"/>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Authors</div>
+          <input class="field" type="text" data-key="authors" value="${escHtml(p.authors)}"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Title</div>
+        <input class="field" type="text" data-key="title" value="${escHtml(p.title)}"/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+        <div class="field-group">
+          <div class="field-label">Journal</div>
+          <input class="field" type="text" data-key="journal" value="${escHtml(p.journal)}"/>
+        </div>
+        <div class="field-group">
+          <div class="field-label">DOI URL</div>
+          <input class="field" type="text" data-key="doi" value="${escHtml(p.doi)}"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Abstract</div>
+        <textarea class="field" data-key="abstract" rows="3">${escHtml(p.abstract)}</textarea>
+      </div>
+    </div>
+    <div class="list-item-actions">
+      <button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button>
+    </div>`;
+  container.appendChild(div);
+}
+
+function addPub() {
+  const list = document.getElementById('pub-list');
+  const i = list.children.length;
+  renderPubItem({ year:'', authors:'', title:'', journal:'', doi:'', abstract:'' }, i, list);
+  list.lastElementChild.scrollIntoView({ behavior:'smooth' });
+}
+
+function collectPubs() {
+  const items = [];
+  document.querySelectorAll('#pub-list .list-item').forEach(el => {
+    const item = {};
+    el.querySelectorAll('[data-key]').forEach(inp => {
+      item[inp.dataset.key] = inp.value || inp.textContent;
+    });
+    items.push(item);
+  });
+  return items;
+}
+
+function rebuildPubsHTML(html, pubs) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const main = div.querySelector('.main main') || div.querySelector('main');
+  if (!main) return html;
+
+  // Remove all year-blocks
+  main.querySelectorAll('.year-block').forEach(b => b.remove());
+
+  // Group pubs by year
+  const byYear = {};
+  pubs.forEach(p => {
+    const y = p.year || 'N/A';
+    if (!byYear[y]) byYear[y] = [];
+    byYear[y].push(p);
+  });
+
+  // Sort years descending
+  const years = Object.keys(byYear).sort((a,b) => b - a);
+
+  years.forEach(year => {
+    const block = document.createElement('div');
+    block.className = 'year-block';
+    block.innerHTML = `<div class="year-label">${year}</div>`;
+    byYear[year].forEach(p => {
+      const pubDiv = document.createElement('div');
+      pubDiv.className = 'pub-item';
+      pubDiv.innerHTML = `
+        <div class="pub-header" onclick="toggleAbstract(this)">
+          <div class="pub-main">
+            <p class="pub-authors">${p.authors||''}</p>
+            <p class="pub-title">${p.title||''}</p>
+            <p class="pub-journal">${p.journal||''}</p>
+            <div class="pub-footer">
+              ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>` : ''}
+              ${p.abstract ? `<span class="abstract-hint">Click to view abstract</span>` : ''}
+            </div>
+          </div>
+          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        ${p.abstract ? `<div class="pub-abstract" style="display:none;"><div class="abstract-label">Abstract</div><div class="pub-abstract-text"><p>${p.abstract}</p></div></div>` : ''}`;
+      block.appendChild(pubDiv);
+    });
+    main.appendChild(block);
+  });
+
+  return div.innerHTML;
 }
 
 function renderListField(field, idx, body) {
@@ -398,6 +541,11 @@ function collectChanges() {
     });
     html = rebuildList(html, field, items);
   });
+  // Publications
+  if (document.getElementById('pub-list')) {
+    const pubs = collectPubs();
+    html = rebuildPubsHTML(html, pubs);
+  }
   return html;
 }
 
@@ -453,12 +601,11 @@ function getPageConfig(pageKey, html) {
       title: 'Home Page',
       desc: 'Edit the homepage hero text, bio, and sidebar content.',
       fields: [
-        { label: 'Your Name / Title', type: 'text', selector: '.hero-text h1' },
         { label: 'Subtitle / Role', type: 'text', selector: '.hero-subtitle' },
-        { label: 'Affiliations', type: 'textarea', selector: '.hero-affil' },
-        { label: 'About Bio — Paragraph 1', type: 'textarea', selector: '.bio p:first-child' },
-        { label: 'About Bio — Paragraph 2', type: 'textarea', selector: '.bio p:nth-child(2)' },
-        { label: 'About Bio — Paragraph 3', type: 'textarea', selector: '.bio p:nth-child(3)' },
+        { label: 'Affiliations (use <br> for line breaks)', type: 'textarea', selector: '.hero-affil' },
+        { label: 'About Bio — Paragraph 1', type: 'textarea', selector: '.bio p:nth-of-type(1)' },
+        { label: 'About Bio — Paragraph 2', type: 'textarea', selector: '.bio p:nth-of-type(2)' },
+        { label: 'About Bio — Paragraph 3', type: 'textarea', selector: '.bio p:nth-of-type(3)' },
       ]
     },
 
@@ -466,18 +613,22 @@ function getPageConfig(pageKey, html) {
       title: 'About Page',
       desc: 'Edit the narrative biography text.',
       fields: [
-        { label: 'Chapter 1 — Engineering Roots (Para 1)', type: 'textarea', selector: '.chapter:nth-child(1) p:nth-child(2)' },
-        { label: 'Chapter 1 — Engineering Roots (Para 2)', type: 'textarea', selector: '.chapter:nth-child(1) p:nth-child(3)' },
-        { label: 'Chapter 2 — Tehran University (Para 1)', type: 'textarea', selector: '.chapter:nth-child(2) p:nth-child(2)' },
-        { label: 'Chapter 2 — Tehran University (Para 2)', type: 'textarea', selector: '.chapter:nth-child(2) p:nth-child(3)' },
-        { label: 'Chapter 3 — OU PhD (Para 1)', type: 'textarea', selector: '.chapter:nth-child(3) p:nth-child(2)' },
-        { label: 'Chapter 3 — OU PhD (Para 2)', type: 'textarea', selector: '.chapter:nth-child(3) p:nth-child(3)' },
-        { label: 'Chapter 4 — Graduation', type: 'textarea', selector: '.chapter:nth-child(4) p:first-child' },
-        { label: 'Chapter 5 — Activism (Para 1)', type: 'textarea', selector: '.chapter:nth-child(5) p:nth-child(2)' },
-        { label: 'Chapter 5 — Activism (Para 2)', type: 'textarea', selector: '.chapter:nth-child(5) p:nth-child(3)' },
-        { label: 'Chapter 6 — OSU (Para 1)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(2)' },
-        { label: 'Chapter 6 — OSU (Para 2)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(3)' },
-        { label: 'Chapter 6 — OSU (Para 3)', type: 'textarea', selector: '.chapter:nth-child(6) p:nth-child(4)' },
+        { label: 'Amirkabir — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(1) p:nth-of-type(1)' },
+        { label: 'Amirkabir — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(1) p:nth-of-type(2)' },
+        { label: 'Tehran University — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(2) p:nth-of-type(1)' },
+        { label: 'Tehran University — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(2) p:nth-of-type(2)' },
+        { label: 'OU PhD — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(1)' },
+        { label: 'OU PhD — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(2)' },
+        { label: 'OU PhD — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(3)' },
+        { label: 'Graduation — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(4) p:nth-of-type(1)' },
+        { label: 'Graduation — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(4) p:nth-of-type(2)' },
+        { label: 'Activism — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(1)' },
+        { label: 'Activism — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(2)' },
+        { label: 'Activism — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(3)' },
+        { label: 'Activism — Para 4', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(4)' },
+        { label: 'OSU — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(1)' },
+        { label: 'OSU — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(2)' },
+        { label: 'OSU — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(3)' },
       ]
     },
 
@@ -512,27 +663,9 @@ function getPageConfig(pageKey, html) {
 
     'publications': {
       title: 'Publications',
-      desc: 'Add or remove publications. Each entry has authors, title, journal, year and DOI.',
+      desc: 'Add, edit or remove publications. Changes go live within 1-2 minutes.',
       fields: [
-        {
-          label: 'Publications List', type: 'list',
-          containerSelector: '.main main',
-          itemSelector: '.pub-item',
-          itemTag: 'div', itemClass: 'pub-item',
-          itemLabel: 'Publication',
-          itemFields: [
-            { label: 'Year', key: 'year', subSelector: '.pub-year' },
-            { label: 'Authors', key: 'authors', subSelector: '.pub-authors' },
-            { label: 'Title', key: 'title', subSelector: '.pub-title' },
-            { label: 'Journal', key: 'journal', subSelector: '.pub-journal' },
-            { label: 'DOI URL', key: 'doi', subSelector: 'a.pub-doi' },
-          ],
-          renderItem: (item) => `
-            <p class="pub-authors">${item.authors||''}</p>
-            <p class="pub-title">${item.title||''}</p>
-            <p class="pub-journal">${item.journal||''}</p>
-            ${item.doi ? `<a class="pub-doi" href="${item.doi}" target="_blank">DOI ↗</a>` : ''}`
-        }
+        { label: 'Publications', type: 'publications' }
       ]
     },
 
@@ -571,22 +704,23 @@ function getPageConfig(pageKey, html) {
       title: 'Contact Page',
       desc: 'Edit contact information.',
       fields: [
-        { label: 'Email Address', type: 'text', selector: '.contact-value a[href^="mailto"]' },
-        { label: 'Phone Number', type: 'text', selector: '.contact-value a[href^="tel"]' },
-        { label: 'Office Address', type: 'textarea', selector: '.contact-value:not(:has(a))' },
-        { label: 'Office Hours', type: 'text', selector: '.contact-value:last-child' },
+        { label: 'Email Address', type: 'text', selector: 'a[href^="mailto"]' },
+        { label: 'Phone Number', type: 'text', selector: 'a[href^="tel"]' },
+        { label: 'Office Address (use <br> for line breaks)', type: 'textarea', selector: '.contact-row:nth-of-type(3) .contact-value' },
+        { label: 'Office Hours', type: 'text', selector: '.contact-row:nth-of-type(4) .contact-value' },
       ]
     },
 
     'project-eue': {
       title: 'EUE & Air Pollution Project',
-      desc: 'Edit the project overview and findings text.',
+      desc: 'Edit the project overview, methods and findings text.',
       fields: [
-        { label: 'Project Overview — Para 1', type: 'textarea', selector: 'section:nth-child(2) p:first-of-type' },
-        { label: 'Project Overview — Para 2', type: 'textarea', selector: 'section:nth-child(2) p:nth-of-type(2)' },
-        { label: 'Methods — Para 1', type: 'textarea', selector: 'section:nth-child(3) p:first-of-type' },
-        { label: 'Methods — Para 2', type: 'textarea', selector: 'section:nth-child(3) p:nth-of-type(2)' },
-        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:first-of-type' },
+        { label: 'Overview — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
+        { label: 'Overview — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
+        { label: 'Network Measures — Intro Para 1', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(1)' },
+        { label: 'Network Measures — Intro Para 2', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(2)' },
+        { label: 'Network Measures — Closing Para', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(3)' },
+        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(1)' },
         { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
         { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
       ]
@@ -594,11 +728,13 @@ function getPageConfig(pageKey, html) {
 
     'project-fdi': {
       title: 'FDI & Climate Project',
-      desc: 'Edit the project overview and findings text.',
+      desc: 'Edit the project overview, index description and findings text.',
       fields: [
-        { label: 'Project Overview — Para 1', type: 'textarea', selector: 'section:nth-child(2) p:first-of-type' },
-        { label: 'Project Overview — Para 2', type: 'textarea', selector: 'section:nth-child(2) p:nth-of-type(2)' },
-        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:first-of-type' },
+        { label: 'Overview — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
+        { label: 'Overview — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
+        { label: 'Index Description — Para 1', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(1)' },
+        { label: 'Index Description — Para 2', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(2)' },
+        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(1)' },
         { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
         { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
       ]
