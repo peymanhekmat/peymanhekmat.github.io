@@ -6,151 +6,73 @@
   <title>Publications — Peyman Hekmatpour, PhD</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --navy: #0e1f3b;
-      --navy-mid: #1a3260;
-      --navy-light: #24478a;
-      --gold: #b8972a;
-      --gold-light: #d4af50;
-      --cream: #f7f4ef;
-      --cream-dark: #ede9e0;
-      --text: #1c1c1c;
-      --text-muted: #5a5a5a;
-      --white: #ffffff;
-      --border: #d0c9b8;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
-
-    nav { background: var(--navy); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold); }
-    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 62px; }
-    .nav-brand { font-family: 'EB Garamond', serif; color: var(--white); font-size: 1.15rem; text-decoration: none; }
-    .nav-brand span { color: var(--gold-light); }
-    .nav-links { display: flex; gap: 0.2rem; list-style: none; }
-    .nav-links a { color: #b8c8e0; text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 3px; transition: color 0.2s, background 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--navy-light); }
-
-    .page-header { background: var(--navy); background-image: linear-gradient(135deg, #0e1f3b 0%, #1a3260 60%, #0e2a4a 100%); padding: 3rem 2rem; border-bottom: 4px solid var(--gold); }
-    .page-header-inner { max-width: 1100px; margin: 0 auto; }
-    .page-header h1 { font-family: 'EB Garamond', serif; font-size: 2.2rem; color: var(--white); font-weight: 400; margin-bottom: 0.3rem; }
-    .page-header p { color: #b8c8e0; font-size: 0.9rem; }
-    .page-header a { color: var(--gold-light); text-decoration: none; }
-
-    .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 260px; gap: 3rem; align-items: start; }
-
-    .year-block { margin-bottom: 2.5rem; }
-    .year-label { font-family: 'EB Garamond', serif; font-size: 1.8rem; color: var(--navy); font-weight: 600; border-bottom: 2px solid var(--gold); padding-bottom: 0.4rem; margin-bottom: 1.2rem; }
-
-    .pub-item { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--navy-light); margin-bottom: 0.85rem; border-radius: 0 4px 4px 0; transition: border-left-color 0.2s; overflow: hidden; }
-    .pub-item:hover { border-left-color: var(--gold); }
-
-    .pub-header { padding: 1.1rem 1.3rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; user-select: none; }
-    .pub-header:hover { background: #faf9f6; }
-    .pub-main { flex: 1; }
-    .pub-authors { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .pub-authors strong { color: var(--navy); }
-    .pub-title { font-family: 'EB Garamond', serif; font-size: 1.05rem; color: var(--text); font-style: italic; margin-bottom: 0.3rem; line-height: 1.4; }
-    .pub-journal { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .pub-footer { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-    .pub-doi { display: inline-block; font-size: 0.78rem; font-weight: 600; color: var(--navy-light); text-decoration: none; letter-spacing: 0.03em; border: 1px solid var(--navy-light); padding: 0.2rem 0.6rem; border-radius: 2px; transition: all 0.2s; }
-    .pub-doi:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
-    .abstract-hint { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
-
-    .pub-toggle { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--cream); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: background 0.2s; margin-top: 4px; }
-    .pub-toggle svg { transition: transform 0.3s; }
-    .pub-item.open .pub-toggle { background: var(--navy); border-color: var(--navy); }
-    .pub-item.open .pub-toggle svg { transform: rotate(180deg); stroke: var(--white); }
-
-    .pub-abstract { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 1.3rem; background: var(--cream); }
-    .pub-item.open .pub-abstract { max-height: 600px; padding: 1rem 1.3rem; border-top: 1px solid var(--border); }
-    .abstract-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy-light); margin-bottom: 0.4rem; }
-    .pub-abstract p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
-
-    .sidebar { position: sticky; top: 80px; }
-    .card { background: var(--white); border: 1px solid var(--border); border-top: 4px solid var(--navy); padding: 1.4rem; margin-bottom: 1.5rem; border-radius: 0 0 4px 4px; }
-    .card-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin-bottom: 1rem; }
-    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--cream-dark); font-size: 0.88rem; }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-num { font-family: 'EB Garamond', serif; font-size: 1.4rem; color: var(--gold); font-weight: 600; }
-    .scholar-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.75rem; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; text-decoration: none; font-size: 0.82rem; font-weight: 600; color: var(--navy); transition: all 0.2s; margin-bottom: 0.5rem; }
-    .scholar-link:hover { background: var(--navy); color: var(--white); }
-    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-    footer { background: var(--navy); border-top: 3px solid var(--gold); color: #7a90b0; text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; }
-    footer a { color: var(--gold-light); text-decoration: none; }
-
-    @media (max-width: 768px) {
-      .main { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .nav-links { display: none; }
-    }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.4rem;
-      z-index: 300;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: #b8c8e0;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none;
-      background: var(--navy-mid);
-      border-bottom: 3px solid var(--gold);
-      padding: 1rem 1.5rem;
-    }
-    .mobile-menu.open { display: block; }
-    .mobile-menu a {
-      display: block;
-      color: #b8c8e0;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--white); }
-    .mobile-menu .mobile-section-label {
-      display: block;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      padding: 0.75rem 0 0.25rem;
-      pointer-events: none;
-    }
-    @media (max-width: 768px) {
-      .hamburger { display: flex; }
-      .nav-links { display: none !important; }
-    }
-
-    .nav-links li { position: relative; }
-    .nav-links li.has-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; opacity: 0.7; }
-    .dropdown { display: none; position: absolute; top: calc(100% + 3px); left: 0; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-top: 3px solid var(--gold); border-radius: 0 0 4px 4px; min-width: 230px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-    .nav-links li.has-dropdown.open .dropdown { display: block; }
-    .dropdown-label { display: block; padding: 0.55rem 1rem 0.25rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); pointer-events: none; }
-    .dropdown a { display: block; color: #b8c8e0 !important; padding: 0.55rem 1rem !important; font-size: 0.81rem !important; border-radius: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.06); background: transparent !important; text-transform: none !important; letter-spacing: 0.04em !important; }
-    .dropdown a:last-child { border-bottom: none; }
-    .dropdown a:hover { background: var(--navy-light) !important; color: var(--white) !important; }
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' ▾';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
+    .page-header p{color:#b8c8e0;font-size:0.9rem;}
+    .page-header p a{color:var(--gold-light);}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 260px;gap:3rem;align-items:start;}
+    .year-block{margin-bottom:2.5rem;}
+    .year-label{font-family:'EB Garamond',serif;font-size:1.8rem;color:var(--navy);font-weight:600;border-bottom:2px solid var(--gold);padding-bottom:0.4rem;margin-bottom:1.2rem;}
+    .pub-item{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--navy-light);margin-bottom:0.85rem;border-radius:0 4px 4px 0;overflow:hidden;transition:border-left-color 0.2s;}
+    .pub-item.open{border-left-color:var(--gold);}
+    .pub-header{padding:1rem 1.2rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+    .pub-header:hover{background:var(--cream);}
+    .pub-main{flex:1;}
+    .pub-authors{font-size:0.85rem;color:var(--text-muted);margin-bottom:0.2rem;}
+    .pub-title{font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.2rem;}
+    .pub-journal{font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:0.4rem;}
+    .pub-footer{display:flex;align-items:center;gap:1rem;}
+    .pub-doi{font-size:0.78rem;color:var(--navy-light);text-decoration:none;font-weight:600;}
+    .pub-doi:hover{text-decoration:underline;}
+    .abstract-hint{font-size:0.75rem;color:var(--text-muted);font-style:italic;}
+    .pub-toggle{color:var(--text-muted);flex-shrink:0;transition:transform 0.25s;margin-top:0.2rem;}
+    .pub-item.open .pub-toggle{transform:rotate(180deg);}
+    .pub-abstract{display:none;padding:0 1.2rem 1rem;border-top:1px solid var(--cream-dark);background:var(--cream);}
+    .pub-item.open .pub-abstract{display:block;}
+    .abstract-label{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy-light);margin:0.75rem 0 0.4rem;}
+    .pub-abstract p{font-size:0.85rem;color:var(--text-muted);line-height:1.65;}
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .scholar-link{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.85rem;color:var(--navy);text-decoration:none;}
+    .scholar-link:last-child{border-bottom:none;}
+    .scholar-link:hover{color:var(--navy-light);}
+    .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
@@ -166,9 +88,7 @@
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
-  <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
       <li class="has-dropdown">
         <a href="#" onclick="toggleDropdown(event,this)">Research</a>
@@ -200,302 +120,20 @@
 <div class="page-header">
   <div class="page-header-inner">
     <h1>Publications</h1>
-    <p>Peer-reviewed journal articles · <a href="https://scholar.google.com/citations?hl=en&user=fucRfBoAAAAJ&view_op=list_works&sortby=pubdate" target="_blank">View full profile on Google Scholar ↗</a></p>
+    <p>Peer-reviewed journal articles &middot; <a href="https://scholar.google.com/citations?hl=en&user=fucRfBoAAAAJ&view_op=list_works&sortby=pubdate" target="_blank">View full profile on Google Scholar ↗</a></p>
   </div>
 </div>
 
 <div class="main">
-  
-<main>
-
-    <div class="year-block">
-      <div class="year-label">2027</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors"><strong>Peyman Hekmatpour</strong></p>
-            <p class="pub-title">TESTS</p>
-            <p class="pub-journal">TEST</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="doi.org/test" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              <span class="abstract-hint">Click to view abstract</span>
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        <div class="pub-abstract"><p class="abstract-label">Abstract</p><p>testing</p></div>
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2026</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Schnabel, Landon, Ilana M. Horwitz, <strong>Peyman Hekmatpour</strong>, and Cyrus Schleifer.</p>
-            <p class="pub-title">DIY Faith.</p>
-            <p class="pub-journal">Contexts (2026).</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1177/15365042261417619" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2025</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Schnabel, Landon, Ilana Horwitz, <strong>Peyman Hekmatpour</strong>, and Cyrus Schleifer.</p>
-            <p class="pub-title">Breaking Free of The Iron Cage: A Bidirectional Theory of Religious Change.</p>
-            <p class="pub-journal">Socius.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1177/23780231251327442" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2024</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman.</p>
-            <p class="pub-title">World Society, Cultural Diversity, and Gender Gap in Political Empowerment: A Cross-National Comparative Analysis.</p>
-            <p class="pub-journal">Comparative Sociology.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1163/15691330-bja10114" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Huft, Justin, and <strong>Peyman Hekmatpour</strong>.</p>
-            <p class="pub-title">Income Inequality, World Polity and Political Secularization: A Comparative Historical Analysis.</p>
-            <p class="pub-journal">Sociology of Religion: A Quarterly Review.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1093/socrel/srae021" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman.</p>
-            <p class="pub-title">Foreign direct investment, sectoral distribution and income inequality in developed and developing economies.</p>
-            <p class="pub-journal">International Journal of Sociology 54(3): 133–154.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1080/00207659.2024.2348380" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Mueller, J. Tom, <strong>Peyman Hekmatpour</strong>, Matthew M. Brooks, and Regina S. Baker.</p>
-            <p class="pub-title">Further complications to poverty of place: daily poverty dynamics across space.</p>
-            <p class="pub-journal">Population, Space, and Place (online first).</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1002/psp.2769" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2023</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Vo, Tiffanie, Cyrus Schleifer, and <strong>Peyman Hekmatpour</strong>.</p>
-            <p class="pub-title">Asian Americans and Income Inequality: Gendered Disparities between and within Racial and Ethnic Groups.</p>
-            <p class="pub-journal">Sociological Perspectives 66(6): 1103–1124.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1177/07311214231177019" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Jafarigol, Elaheh, William Keely, Tess Hortag, Tom Welborn, <strong>Peyman Hekmatpour</strong>, and Theodore B. Trafalis.</p>
-            <p class="pub-title">Religious Affiliation in the Twenty-First Century: A Machine Learning Perspective on the World Value Survey.</p>
-            <p class="pub-journal">Society (online first).</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1007/s12115-023-00887-0" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2022</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman, and Carrie M. Leslie.</p>
-            <p class="pub-title">Ecologically Unequal Exchange and Disparate Death Rates Attributable to Air Pollution: A Comparative Study of 169 Countries from 1991 to 2017.</p>
-            <p class="pub-journal">Environmental Research 212: 113161.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1016/j.envres.2022.113161" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman.</p>
-            <p class="pub-title">Right-wing stewards: The promoting effect of religiosity on environmental concern among political conservatives in a global context.</p>
-            <p class="pub-journal">Social Problems 69(2): 612–637.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1093/socpro/spaa066" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2021</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman.</p>
-            <p class="pub-title">Secular Values, Economic Development, and Gender Inequality in a Global Context.</p>
-            <p class="pub-journal">Comparative Sociology 20(2): 163–194.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1163/15691330-bja10031" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Burns, Thomas J., Tom W. Boyd, and <strong>Peyman Hekmatpour</strong>.</p>
-            <p class="pub-title">Elective Affinities in the Anthropocene: Christianity and the Natural Environment Reconsidered.</p>
-            <p class="pub-journal">Social Science, Humanities and Sustainability Research 2(4): 82–95.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.22158/sshsr.v2n4p82" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2020</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman.</p>
-            <p class="pub-title">Inequality and religiosity in a global context: Different secularization paths for developed and developing nations.</p>
-            <p class="pub-journal">International Journal of Sociology 50(4): 286–309.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1080/00207659.2020.1771013" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2019</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Hekmatpour, Peyman, and Thomas J. Burns.</p>
-            <p class="pub-title">Perception of Western governments' hostility to Islam among European Muslims before and after ISIS: the important roles of residential segregation and education.</p>
-            <p class="pub-journal">The British Journal of Sociology 70(5): 2133–2165.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.1111/1468-4446.12673" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="year-block">
-      <div class="year-label">2018</div>
-      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">Burns, Thomas J., <strong>Peyman Hekmatpour</strong>, and Kristen C. Speer.</p>
-            <p class="pub-title">Human interaction with the natural environment: the POETICAS model as a framework for understanding and praxis in late modernity.</p>
-            <p class="pub-journal">International Journal of Environment and Climate Change 8(3): 234–268.</p>
-            <div class="pub-footer">
-              <a class="pub-doi" href="https://doi.org/10.9734/ijecc/2018/v8i327171" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>
-              
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        
-      </div>
-    </div>
+  <main id="pub-main">
+    <div style="color:#5a5a5a;font-size:0.9rem;padding:1rem 0;">Loading publications...</div>
   </main>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="card">
-      <p class="card-title">Publication Stats</p>
-      <div class="stat-row"><span>Total Articles</span><span class="stat-num">14</span></div>
-      <div class="stat-row"><span>Journals</span><span class="stat-num">12</span></div>
-      <div class="stat-row"><span>Since</span><span class="stat-num">2018</span></div>
+      <p class="card-title">Summary</p>
+      <div id="pub-count" style="font-family:'EB Garamond',serif;font-size:2rem;color:var(--gold);font-weight:600;text-align:center;padding:0.5rem 0;"></div>
+      <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;">peer-reviewed publications</p>
     </div>
     <div class="card">
       <p class="card-title">Academic Profiles</p>
@@ -505,41 +143,74 @@
       <a class="scholar-link" href="https://www.researchgate.net/profile/Peyman-Hekmatpour" target="_blank">
         <span class="dot" style="background:#00ccbb"></span> ResearchGate
       </a>
+      <a class="scholar-link" href="https://orcid.org/0000-0002-7036-1490" target="_blank">
+        <span class="dot" style="background:#a6ce39"></span> ORCID
+      </a>
     </div>
     <div class="card">
-      <p class="card-title">Key Journals</p>
-      <ul style="list-style:none; font-size:0.83rem; color:var(--text-muted); line-height:2;">
-        <li>Social Problems</li>
-        <li>British Journal of Sociology</li>
-        <li>Environmental Research</li>
-        <li>Comparative Sociology</li>
-        <li>Sociology of Religion</li>
-        <li>Sociological Perspectives</li>
-        <li>International Journal of Sociology</li>
-        <li>Contexts</li>
-      </ul>
+      <p class="card-title">Research Areas</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.8;">
+        Environmental Sociology<br>
+        Global Stratification<br>
+        Political Sociology<br>
+        Sociology of Religion<br>
+        Quantitative Methods
+      </p>
     </div>
   </aside>
 </div>
 
 <footer>
-  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
 </footer>
 
 <script>
-  function toggleAbstract(header) {
-    const item = header.closest('.pub-item');
-    item.classList.toggle('open');
-  }
+  function toggleAbstract(header){header.closest('.pub-item').classList.toggle('open');}
+  function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
+  function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
 </script>
 
 <script>
-  function toggleMobile(btn) {
-    btn.classList.toggle("open");
-    document.getElementById("mobileMenu").classList.toggle("open");
-  }
-  function toggleDropdown(e, el) { e.preventDefault(); const li = el.parentElement; const isOpen = li.classList.contains("open"); document.querySelectorAll(".has-dropdown").forEach(d => d.classList.remove("open")); if (!isOpen) li.classList.add("open"); }
-  document.addEventListener("click", function(e) { if (!e.target.closest(".has-dropdown")) document.querySelectorAll(".has-dropdown").forEach(d => d.classList.remove("open")); });
+fetch('publications.json')
+  .then(r => r.json())
+  .then(pubs => {
+    const byYear = {};
+    pubs.forEach(p => {
+      const y = p.year || 'N/A';
+      if (!byYear[y]) byYear[y] = [];
+      byYear[y].push(p);
+    });
+    const years = Object.keys(byYear).sort((a,b) => parseInt(b)-parseInt(a));
+    let html = '';
+    years.forEach(year => {
+      html += '<div class="year-block"><div class="year-label">' + year + '</div>';
+      byYear[year].forEach(p => {
+        const auth = p.authors.replace(/Peyman Hekmatpour/g, '<strong>Peyman Hekmatpour</strong>');
+        html += '<div class="pub-item">'
+          + '<div class="pub-header" onclick="toggleAbstract(this)">'
+          + '<div class="pub-main">'
+          + '<p class="pub-authors">' + auth + '</p>'
+          + '<p class="pub-title">' + p.title + '</p>'
+          + '<p class="pub-journal">' + p.journal + '</p>'
+          + '<div class="pub-footer">'
+          + (p.doi ? '<a class="pub-doi" href="' + p.doi + '" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>' : '')
+          + (p.abstract ? '<span class="abstract-hint">Click to view abstract</span>' : '')
+          + '</div></div>'
+          + '<div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>'
+          + '</div>'
+          + (p.abstract ? '<div class="pub-abstract"><p class="abstract-label">Abstract</p><p>' + p.abstract + '</p></div>' : '')
+          + '</div>';
+      });
+      html += '</div>';
+    });
+    document.getElementById('pub-main').innerHTML = html;
+    document.getElementById('pub-count').textContent = pubs.length;
+  })
+  .catch(e => {
+    document.getElementById('pub-main').innerHTML = '<p style="color:#c0392b;">Could not load publications: ' + e + '</p>';
+  });
 </script>
+
 </body>
 </html>

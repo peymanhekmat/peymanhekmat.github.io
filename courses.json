@@ -1,0 +1,74 @@
+[
+  {
+    "category": "Methods & Statistics",
+    "title": "Social Research Methods",
+    "code": "SOC 4133 (OSU) · SOC 3133 (OU) · Hyflex & Face-to-face",
+    "description": "Introduces students to the logic and practice of social science research. Students learn to evaluate research designs, formulate research questions, and engage with core methodological approaches including surveys, experiments, qualitative methods, and content analysis. The course emphasizes critical reading of published research and developing the skills to conduct and evaluate independent research projects. By the end of the course, students are equipped to frame feasible research questions, select appropriate methodological strategies, and critically assess the strengths and limitations of different approaches."
+  },
+  {
+    "category": "Methods & Statistics",
+    "title": "Quantitative Methods in Sociology",
+    "code": "SOC 4243 (OSU) · Online",
+    "description": "A required course for sociology majors covering the foundations of quantitative data analysis. Topics include descriptive statistics, probability, hypothesis testing, correlation, and regression analysis. Students work with real sociological datasets and develop proficiency in interpreting and communicating statistical results. Weekly video walkthroughs and example-driven instruction are central to making challenging material accessible, particularly for students with limited prior exposure to statistics."
+  },
+  {
+    "category": "Methods & Statistics",
+    "title": "Applied Regression Analysis",
+    "code": "MATH 5773 (OU) · Graduate · Online",
+    "description": "A graduate-level course covering regression modeling with applied emphasis using R. Topics include categorical variables, multiple linear regression, model building and selection, experimental design, ANOVA, nonparametric statistics, and statistical process control. Students submit weekly R-based labs, complete a comprehensive project connecting multiple techniques to a real-world problem, and sit for midterm and final exams. Part of OU's online Master's in Applied Statistics program."
+  },
+  {
+    "category": "Methods & Statistics",
+    "title": "Introduction to Multivariate Statistical Analysis",
+    "code": "MATH 5793 (OU) · Graduate · Online",
+    "description": "A graduate-level course on multivariate statistical methods implemented in R. Topics include matrix algebra and random vectors, sample geometry, the multivariate normal distribution, inference about mean vectors, principal components analysis, factor analysis, and clustering and ordination methods. Students submit weekly R labs, complete two major applied projects, and sit for midterm and final exams. Part of OU's online Master's in Applied Statistics program."
+  },
+  {
+    "category": "Methods & Statistics",
+    "title": "Ethics in Statistical Practice",
+    "code": "DSP 5773 (OU) · Graduate · Online",
+    "description": "A graduate seminar for students in OU's online Master's in Applied Statistics program examining ethical dimensions of data collection, analysis, and communication. Topics include privacy and surveillance, bias and fairness, accountability in machine learning and AI, data aggregation, and the obligations of statisticians to varied stakeholders. Students engage weekly with primary readings through discussion posts and write biweekly analytical essays connecting ethical theory to real-world case studies."
+  },
+  {
+    "category": "Methods & Statistics",
+    "title": "Database Design for Information Organizations",
+    "code": "LIS 5683 (OU) · Graduate · Online",
+    "description": "A graduate-level course introducing relational database design and management using MySQL. Topics include entity-relationship diagrams, data normalization, SQL data types and manipulation, aggregate and logical operators, constraints, relational database structures, views, stored procedures, and triggers. Students complete weekly hands-on assignments and a semester-long real-world database project. No prior programming experience required."
+  },
+  {
+    "category": "Inequality & Stratification",
+    "title": "Social Stratification",
+    "code": "SOC 4383 (OSU) · SOC 3683 (OU) · Online & Face-to-face",
+    "description": "An examination of hierarchical systems of social classification and their consequences for inequality in the United States and globally. The course combines classical theoretical frameworks with contemporary empirical research to explore class structure, wealth and income distribution, social mobility, and the interplay of class with race, gender, and family. Students analyze how stratification shapes everyday life across multiple dimensions, from occupational prestige and political power to poverty and public policy."
+  },
+  {
+    "category": "Inequality & Stratification",
+    "title": "Racial & Ethnic Relations",
+    "code": "SOC 3133 (OSU) · Online / Hyflex · Diversity & Inclusion Designated",
+    "description": "A diversity-designated course examining the historical and contemporary dynamics of race and ethnicity in the United States and globally. Topics include theories of prejudice and discrimination, immigration, intergroup conflict, structural racism, and policies addressing racial inequality. The course emphasizes creating an inclusive environment where students from all backgrounds engage thoughtfully with sensitive material. Students consistently describe the course as engaging, thought-provoking, and respectful in tone."
+  },
+  {
+    "category": "Environmental Sociology",
+    "title": "Environmental Sociology",
+    "code": "SOC 4433 / SOC 1113 (OSU) · Online · Sustainability Designated",
+    "description": "A sustainability-designated course exploring the relationship between society and the natural environment. Topics include environmental movements, climate change, consumption, the treadmill of production, and the uneven distribution of environmental risks. The course draws on classical and contemporary sociological theory to help students understand how social structures shape both environmental problems and potential solutions."
+  },
+  {
+    "category": "Environmental Sociology",
+    "title": "Environmental Inequality",
+    "code": "SOC 4453 (OSU) · Hyflex · Sustainability Designated",
+    "description": "An advanced seminar on environmental justice examining who bears the greatest burden of environmental harm and why. The course integrates empirical research on pollution exposure, climate vulnerability, and resource access with sociological frameworks including ecologically unequal exchange, environmental racism, and global political economy. Students engage with case studies from the US and internationally and critically evaluate policy responses to environmental inequalities."
+  },
+  {
+    "category": "General Education",
+    "title": "Introduction to Sociology",
+    "code": "SOC 1113 (OSU & OU) · Online & Face-to-face",
+    "description": "A general education course introducing students to sociology as a scientific discipline and a powerful way of understanding the social world. Topics include sociological theory, research methods, culture, socialization, stratification, race and ethnicity, gender and sexuality, religion, family, politics, the economy, and social movements. The course cultivates the sociological imagination and develops students' capacity to critically engage with sociological data and arguments."
+  },
+  {
+    "category": "General Education",
+    "title": "Social Problems",
+    "code": "SOC 1523 (OU) · Face-to-face",
+    "description": "An analysis of major social problems in the United States and around the world, and the policy debates surrounding them. Students examine social problems through major sociological paradigms and research, exploring how problems arise within and are shaped by social institutions. Topics covered across the semester include social class, race and ethnicity, gender, sexual orientation, families, education, work and economy, health and medicine, crime and criminal justice, the environment, and war and terrorism."
+  }
+]

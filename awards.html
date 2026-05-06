@@ -37,34 +37,29 @@
     .mobile-menu a:hover{color:var(--white);}
     .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
     @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
-
     .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
     .page-header-inner{max-width:1100px;margin:0 auto;}
-    .page-header .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
-    .page-header .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
     .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
     .page-header p{color:#b8c8e0;font-size:0.9rem;}
-
     .main{max-width:900px;margin:0 auto;padding:3rem 2rem;}
     .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1.2rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
     section{margin-bottom:2.5rem;}
-
-    /* Award dropdown items */
-    .award-item{border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;margin-bottom:0.6rem;background:var(--white);overflow:hidden;transition:border-left-color 0.2s;}
+    .award-item{border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;margin-bottom:0.6rem;background:var(--white);overflow:hidden;transition:border-left-color 0.2s;cursor:pointer;}
     .award-item.open{border-left-color:var(--navy);}
-    .award-header{display:flex;justify-content:space-between;align-items:flex-start;padding:0.9rem 1.1rem;cursor:pointer;user-select:none;gap:1rem;}
+    .award-header{display:flex;justify-content:space-between;align-items:flex-start;padding:0.9rem 1.1rem;gap:1rem;}
     .award-header:hover{background:var(--cream-dark);}
     .award-meta{flex:1;}
-    .award-title{font-size:0.92rem;font-weight:600;color:var(--navy);margin-bottom:0.15rem;line-height:1.4;}
+    .award-title{font-size:0.92rem;font-weight:600;color:var(--navy);margin-bottom:0.15rem;}
     .award-sub{font-size:0.78rem;color:var(--text-muted);}
     .award-year-badge{background:var(--navy);color:var(--gold-light);font-size:0.72rem;font-weight:700;padding:0.25rem 0.6rem;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:0.1rem;}
-    .award-arrow{color:var(--gold);font-size:0.82rem;transition:transform 0.25s;flex-shrink:0;margin-top:0.25rem;}
+    .award-arrow{color:var(--gold);font-size:0.82rem;transition:transform 0.2s;flex-shrink:0;margin-top:0.25rem;}
     .award-item.open .award-arrow{transform:rotate(180deg);}
     .award-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--cream-dark);}
     .award-item.open .award-body{display:block;}
     .award-body p{font-size:0.87rem;color:var(--text-muted);margin-top:0.75rem;line-height:1.65;}
     .award-amount{display:inline-block;background:var(--cream-dark);border:1px solid var(--border);color:var(--navy);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:2px;margin-top:0.5rem;}
-
     footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
     footer a{color:var(--gold-light);text-decoration:none;}
   </style>
@@ -113,7 +108,7 @@
 
 <div class="page-header">
   <div class="page-header-inner">
-    <p class="breadcrumb"><a href="index.html">Home</a> › Grants &amp; Awards</p>
+    <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Grants &amp; Awards</p>
     <h1>Grants &amp; Awards</h1>
     <p>Fellowships, scholarships, and academic honors</p>
   </div>
@@ -122,138 +117,12 @@
 <div class="main">
   <section>
     <h2 class="section-title">Honors &amp; Awards</h2>
-
-    <!-- AURCA -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Advancing Undergraduate Research and Creative Activity (AURCA) Award</div>
-          <div class="award-sub">College of Arts &amp; Sciences, Oklahoma State University</div>
-        </div>
-        <span class="award-year-badge">2024-2025</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>The AURCA program was established by the College of Arts and Sciences at Oklahoma State University to expand access to mentored research and creative opportunities for undergraduates. Faculty recipients of this award are selected to supervise work-study eligible undergraduate students in paid research positions, working 8-14 hours per week across the academic year. The program connects students with faculty mentors across 24 departments in the natural, physical, and social sciences, as well as the arts and humanities. This award recognized Dr. Hekmatpour's mentorship of undergraduate research assistants working on cross-national and network-based sociological projects.</p>
-      </div>
-    </div>
-
-    <!-- MERGLER -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Nancy L. Mergler Dissertation Completion Fellowship</div>
-          <div class="award-sub">Graduate College, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2020</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>The Nancy L. Mergler Dissertation Completion Fellowship is one of the most competitive graduate awards at the University of Oklahoma, granted by the Graduate College to a small number of outstanding doctoral candidates each year across all disciplines. The fellowship supports PhD students in the final stages of dissertation writing, providing a stipend, tuition waiver, and health insurance coverage for a full academic year so the fellow can dedicate full time to completing their dissertation. Recipients are selected by a faculty committee drawn from diverse fields across the university. Dr. Hekmatpour was the third OU Sociology PhD candidate to receive this fellowship.</p>
-        <span class="award-amount">$30,000 for the 2020-2021 academic year</span>
-      </div>
-    </div>
-
-    <!-- OUTSTANDING DOCTORAL STUDENT -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Outstanding Doctoral Student of the Year</div>
-          <div class="award-sub">Department of Sociology, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2019</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>Awarded annually by the OU Department of Sociology to recognize exceptional achievement across research, coursework, teaching responsibilities, and departmental service. Recipients are nominated by faculty and selected by the Graduate Assessment Committee. Winners are recognized with a permanent plaque in the main sociology office. This award acknowledged Dr. Hekmatpour's contributions to the department during his doctoral training, including his early publication record, teaching performance, and engagement in departmental life.</p>
-      </div>
-    </div>
-
-    <!-- ROBBERSON TRAVEL -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Robberson Travel Grant</div>
-          <div class="award-sub">Graduate College, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2019</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>The Robberson Travel Grant is awarded by the OU Graduate College to support graduate students in presenting their research at professional conferences. The grant covers travel, lodging, and registration costs associated with academic conference participation, enabling graduate students to disseminate their work and engage with the broader scholarly community.</p>
-        <span class="award-amount">$1,298</span>
-      </div>
-    </div>
-
-    <!-- STUDENT TRAVEL GRANT -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Student Travel Grant</div>
-          <div class="award-sub">College of Arts and Sciences, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2018, 2019</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>Awarded by the OU College of Arts and Sciences to support graduate student participation in national and international academic conferences. This grant supplements the Robberson Travel Grant in covering conference-related expenses and reflects the college's commitment to supporting graduate student research dissemination and professional development.</p>
-        <span class="award-amount">$1,500 total (two awards)</span>
-      </div>
-    </div>
-
-    <!-- WOODWARD SCHOLARSHIP -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">James C. &amp; Alice G. Woodward Scholarship</div>
-          <div class="award-sub">University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2018</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>A merit-based scholarship awarded by the University of Oklahoma to support graduate student academic work. The Woodward Scholarship recognizes academic achievement and supports students in advancing their research and studies at the university.</p>
-        <span class="award-amount">$1,000</span>
-      </div>
-    </div>
-
-    <!-- GRASMICK -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Harold Grasmick Summer Research Fellowship</div>
-          <div class="award-sub">Department of Sociology, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2017, 2018</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>Awarded annually by the OU Department of Sociology to a small cohort of graduate students to support original research conducted over the summer months. The fellowship was established in honor of Harold Grasmick, a distinguished former professor in the department, and is funded through his generous donation. Recipients work on a faculty-supervised research project with the expectation of producing a publication-ready manuscript, which they present at the department's annual spring symposium.</p>
-        <span class="award-amount">$5,000 total (two awards of $2,500 each)</span>
-      </div>
-    </div>
-
-    <!-- TEACHING ASSISTANTSHIP -->
-    <div class="award-item" onclick="toggleAward(this)">
-      <div class="award-header">
-        <div class="award-meta">
-          <div class="award-title">Graduate Teaching Assistantship and Tuition Waiver</div>
-          <div class="award-sub">Department of Sociology, University of Oklahoma</div>
-        </div>
-        <span class="award-year-badge">2017-2022</span>
-        <span class="award-arrow">▼</span>
-      </div>
-      <div class="award-body">
-        <p>A competitive, annually renewed funding package awarded by the OU Department of Sociology to support doctoral students through their graduate training. The assistantship includes a full tuition waiver and an annual stipend in exchange for teaching and research responsibilities within the department. Recipients serve as instructors of record or teaching assistants for undergraduate courses, gaining substantial pedagogical experience alongside their doctoral research. Dr. Hekmatpour held this position throughout his doctoral studies from 2017 to 2022.</p>
-        <span class="award-amount">$30,000 per year (stipend and tuition waiver)</span>
-      </div>
-    </div>
-
+    <div id="awards-list"><div style="color:#5a5a5a;font-size:0.9rem;">Loading...</div></div>
   </section>
 </div>
 
 <footer>
-  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
 </footer>
 
 <script>
@@ -262,5 +131,34 @@
   function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
   document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
 </script>
+
+<script>
+fetch('awards.json')
+  .then(r => r.json())
+  .then(awards => {
+    let html = '';
+    awards.forEach(a => {
+      html += '<div class="award-item" onclick="toggleAward(this)">'
+        + '<div class="award-header">'
+        + '<div class="award-meta">'
+        + '<div class="award-title">' + a.title + '</div>'
+        + '<div class="award-sub">' + a.institution + '</div>'
+        + '</div>'
+        + '<span class="award-year-badge">' + a.year + '</span>'
+        + '<span class="award-arrow">▼</span>'
+        + '</div>'
+        + '<div class="award-body">'
+        + '<p>' + a.description + '</p>'
+        + (a.amount ? '<span class="award-amount">' + a.amount + '</span>' : '')
+        + '</div>'
+        + '</div>';
+    });
+    document.getElementById('awards-list').innerHTML = html;
+  })
+  .catch(() => {
+    document.getElementById('awards-list').innerHTML = '<p style="color:#c0392b;">Could not load awards.</p>';
+  });
+</script>
+
 </body>
 </html>

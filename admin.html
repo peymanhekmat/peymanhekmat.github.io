@@ -218,6 +218,162 @@ async function loadPage(pageKey) {
   }
 }
 
+
+// ── JSON FILE EDITORS ──
+let jsonCache = {};
+
+async function loadJSON(filename) {
+  if (jsonCache[filename]) return jsonCache[filename];
+  const res = await ghGet(filename);
+  const data = JSON.parse(atob(res.content.replace(/\n/g,'')));
+  jsonCache[filename] = { data, sha: res.sha };
+  return jsonCache[filename];
+}
+
+async function saveJSON(filename, data) {
+  const cached = jsonCache[filename];
+  if (!cached) throw new Error('No cached SHA for ' + filename);
+  const content = JSON.stringify(data, null, 2);
+  const result = await ghPut(filename, content, cached.sha, `Dashboard update: ${filename}`);
+  // Refresh SHA
+  const fresh = await ghGet(filename);
+  jsonCache[filename] = { data, sha: fresh.sha };
+  return result;
+}
+
+async function renderJSONEditor(type, idx, body) {
+  body.innerHTML = '<div class="loading"><span class="spinner"></span> Loading data...</div>';
+  const fileMap = { 'json-publications': 'publications.json', 'json-awards': 'awards.json', 'json-courses': 'courses.json' };
+  const filename = fileMap[type];
+  try {
+    const { data } = await loadJSON(filename);
+    if (type === 'json-publications') renderPubEditor(data, body, filename);
+    else if (type === 'json-awards') renderAwardEditor(data, body, filename);
+    else if (type === 'json-courses') renderCourseEditor(data, body, filename);
+  } catch(e) {
+    body.innerHTML = `<div class="alert alert-warn">Could not load ${filename}: ${e.message}</div>`;
+  }
+}
+
+// PUBLICATIONS JSON EDITOR
+function renderPubEditor(pubs, body, filename) {
+  body.innerHTML = `<button class="btn-add" onclick="addJsonPub('${filename}')">+ Add Publication</button><div id="json-pub-list"></div>
+    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','publications')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
+  const list = document.getElementById('json-pub-list');
+  pubs.forEach((p,i) => renderJsonPubItem(p, i, list, filename));
+}
+
+function renderJsonPubItem(p, i, container, filename) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div style="display:grid;grid-template-columns:90px 1fr;gap:0.5rem;margin-bottom:0.5rem;">
+      <div class="field-group"><div class="field-label">Year</div><input class="field" data-key="year" value="${escHtml(p.year||'')}"/></div>
+      <div class="field-group"><div class="field-label">Authors</div><input class="field" data-key="authors" value="${escHtml(p.authors||'')}"/></div>
+    </div>
+    <div class="field-group"><div class="field-label">Title</div><input class="field" data-key="title" value="${escHtml(p.title||'')}"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
+      <div class="field-group"><div class="field-label">Journal</div><input class="field" data-key="journal" value="${escHtml(p.journal||'')}"/></div>
+      <div class="field-group"><div class="field-label">DOI URL</div><input class="field" data-key="doi" value="${escHtml(p.doi||'')}"/></div>
+    </div>
+    <div class="field-group"><div class="field-label">Abstract</div><textarea class="field" data-key="abstract" rows="3">${escHtml(p.abstract||'')}</textarea></div>
+    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
+  container.appendChild(div);
+}
+
+function addJsonPub(filename) {
+  const list = document.getElementById('json-pub-list');
+  renderJsonPubItem({year:'',authors:'',title:'',journal:'',doi:'',abstract:''}, list.children.length, list, filename);
+  list.lastElementChild.scrollIntoView({behavior:'smooth'});
+}
+
+// AWARDS JSON EDITOR
+function renderAwardEditor(awards, body, filename) {
+  body.innerHTML = `<button class="btn-add" onclick="addJsonAward('${filename}')">+ Add Award</button><div id="json-award-list"></div>
+    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','awards')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
+  const list = document.getElementById('json-award-list');
+  awards.forEach((a,i) => renderJsonAwardItem(a, i, list));
+}
+
+function renderJsonAwardItem(a, i, container) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div style="display:grid;grid-template-columns:120px 1fr;gap:0.5rem;margin-bottom:0.5rem;">
+      <div class="field-group"><div class="field-label">Year</div><input class="field" data-key="year" value="${escHtml(a.year||'')}"/></div>
+      <div class="field-group"><div class="field-label">Title</div><input class="field" data-key="title" value="${escHtml(a.title||'')}"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
+      <div class="field-group"><div class="field-label">Institution</div><input class="field" data-key="institution" value="${escHtml(a.institution||'')}"/></div>
+      <div class="field-group"><div class="field-label">Amount (optional)</div><input class="field" data-key="amount" value="${escHtml(a.amount||'')}"/></div>
+    </div>
+    <div class="field-group"><div class="field-label">Description</div><textarea class="field" data-key="description" rows="3">${escHtml(a.description||'')}</textarea></div>
+    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
+  container.appendChild(div);
+}
+
+function addJsonAward(filename) {
+  const list = document.getElementById('json-award-list');
+  renderJsonAwardItem({year:'',title:'',institution:'',amount:'',description:''}, list.children.length, list);
+  list.lastElementChild.scrollIntoView({behavior:'smooth'});
+}
+
+// COURSES JSON EDITOR
+function renderCourseEditor(courses, body, filename) {
+  body.innerHTML = `<button class="btn-add" onclick="addJsonCourse('${filename}')">+ Add Course</button><div id="json-course-list"></div>
+    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','courses')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
+  const list = document.getElementById('json-course-list');
+  courses.forEach((c,i) => renderJsonCourseItem(c, i, list));
+}
+
+function renderJsonCourseItem(c, i, container) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
+      <div class="field-group"><div class="field-label">Category</div><input class="field" data-key="category" value="${escHtml(c.category||'')}"/></div>
+      <div class="field-group"><div class="field-label">Course Code / Info</div><input class="field" data-key="code" value="${escHtml(c.code||'')}"/></div>
+    </div>
+    <div class="field-group"><div class="field-label">Course Title</div><input class="field" data-key="title" value="${escHtml(c.title||'')}"/></div>
+    <div class="field-group"><div class="field-label">Description</div><textarea class="field" data-key="description" rows="3">${escHtml(c.description||'')}</textarea></div>
+    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
+  container.appendChild(div);
+}
+
+function addJsonCourse(filename) {
+  const list = document.getElementById('json-course-list');
+  renderJsonCourseItem({category:'',title:'',code:'',description:''}, list.children.length, list);
+  list.lastElementChild.scrollIntoView({behavior:'smooth'});
+}
+
+// SAVE JSON DATA
+async function saveJsonData(filename, type) {
+  const statusEl = document.getElementById('json-save-status');
+  statusEl.className = 'save-status saving';
+  statusEl.textContent = 'Saving...';
+
+  const listId = type === 'publications' ? 'json-pub-list' : type === 'awards' ? 'json-award-list' : 'json-course-list';
+  const list = document.getElementById(listId);
+  const items = [];
+  list.querySelectorAll('.list-item').forEach(el => {
+    const item = {};
+    el.querySelectorAll('[data-key]').forEach(inp => {
+      item[inp.dataset.key] = inp.tagName === 'TEXTAREA' ? inp.value : inp.value;
+    });
+    items.push(item);
+  });
+
+  try {
+    await saveJSON(filename, items);
+    statusEl.className = 'save-status success';
+    statusEl.textContent = 'Saved and published!';
+    setTimeout(() => { statusEl.textContent = ''; }, 4000);
+  } catch(e) {
+    statusEl.className = 'save-status error';
+    statusEl.textContent = 'Error: ' + e.message;
+  }
+}
+
 // ── EXTRACT HELPERS ──
 function extractTag(html, selector) {
   const div = document.createElement('div');
@@ -295,6 +451,10 @@ function toggleCard(header) {
 
 function renderFieldBody(field, idx) {
   const body = document.getElementById(`field-body-${idx}`);
+  if (field.type === 'json') {
+    renderJSONEditor(field, idx, body);
+    return;
+  }
   if (field.type === 'text' || field.type === 'textarea') {
     // Use innerHTML for textarea (preserves <br>, <strong> etc), textContent for plain input
     const val = field.type === 'textarea'
@@ -311,6 +471,8 @@ function renderFieldBody(field, idx) {
     renderListField(field, idx, body);
   } else if (field.type === 'publications') {
     renderPublications(body);
+  } else if (['json-publications','json-awards','json-courses'].includes(field.type)) {
+    renderJSONEditor(field.type, idx, body);
   }
 }
 
@@ -559,6 +721,26 @@ function rebuildList(html, field, items) {
 }
 
 async function savePage() {
+  // Check if this page uses JSON editing
+  const jsonContainer = document.querySelector('[id^="json-items-"]');
+  if (jsonContainer) {
+    const fieldIdx = jsonContainer.id.replace('json-items-','');
+    const config = getPageConfig(getCurrentPageKey(), currentHTML);
+    const field = config.fields[parseInt(fieldIdx)];
+    if (field && field.file) {
+      await saveJSONPage(field.file, fieldIdx);
+      return;
+    }
+  }
+  // Also handle publications if pub-list exists
+  if (document.getElementById('pub-list')) {
+    const config = getPageConfig(getCurrentPageKey(), currentHTML);
+    const field = config.fields.find(f => f.file === 'publications.json');
+    if (field) {
+      await saveJSONPage('publications.json', 0);
+      return;
+    }
+  }
   const btn = document.getElementById('save-btn');
   const status = document.getElementById('save-status');
   btn.disabled = true;
@@ -568,7 +750,6 @@ async function savePage() {
     const newHTML = collectChanges();
     await ghPut(currentFile, newHTML, currentSha, `Dashboard update: ${currentFile}`);
     currentHTML = newHTML;
-    // Refresh SHA
     const fresh = await ghGet(currentFile);
     currentSha = fresh.sha;
     status.className = 'save-status success';
@@ -626,69 +807,24 @@ function getPageConfig(pageKey, html) {
 
     'awards': {
       title: 'Awards & Grants',
-      desc: 'Add, remove or edit awards and fellowships.',
-      fields: [
-        {
-          label: 'Awards List', type: 'list',
-          containerSelector: '.main section',
-          itemSelector: '.award-item',
-          itemTag: 'div', itemClass: 'award-item',
-          itemLabel: 'Award',
-          itemFields: [
-            { label: 'Year', key: 'year', subSelector: '.award-year-badge' },
-            { label: 'Title', key: 'title', subSelector: '.award-title' },
-            { label: 'Institution', key: 'inst', subSelector: '.award-sub' },
-          ],
-          renderItem: (item) => `
-            <div class="award-header" onclick="toggleAward(this)">
-              <div class="award-meta">
-                <div class="award-title">${item.title||''}</div>
-                <div class="award-sub">${item.inst||''}</div>
-              </div>
-              <span class="award-year-badge">${item.year||''}</span>
-              <span class="award-arrow">▼</span>
-            </div>
-            <div class="award-body"><p>Description coming soon.</p></div>`
-        }
-      ]
+      desc: 'Add, edit or remove awards and fellowships. Changes go live within 1-2 minutes.',
+      fields: [{ label: 'Awards', type: 'json-awards' }]
     },
 
     'publications': {
       title: 'Publications',
       desc: 'Add, edit or remove publications. Changes go live within 1-2 minutes.',
-      fields: [
-        { label: 'Publications', type: 'publications' }
-      ]
+      fields: [{ label: 'Publications', type: 'json-publications' }]
     },
 
     'teaching': {
       title: 'Teaching',
-      desc: 'Edit the teaching philosophy and course descriptions.',
+      desc: 'Edit the teaching philosophy and manage courses. Changes go live within 1-2 minutes.',
       fields: [
-        { label: 'Teaching Philosophy — Para 1', type: 'textarea', selector: '.section-title + p' },
-        { label: 'Teaching Philosophy — Para 2', type: 'textarea', selector: 'section p:nth-child(2)' },
-        { label: 'Teaching Philosophy — Para 3', type: 'textarea', selector: 'section p:nth-child(3)' },
-        {
-          label: 'Courses', type: 'list',
-          containerSelector: '.main main',
-          itemSelector: '.course-item',
-          itemTag: 'div', itemClass: 'course-item',
-          itemLabel: 'Course',
-          itemFields: [
-            { label: 'Course Title', key: 'title', subSelector: '.course-title' },
-            { label: 'Course Code / Info', key: 'code', subSelector: '.course-code' },
-            { label: 'Description', key: 'desc', subSelector: '.course-body p' },
-          ],
-          renderItem: (item) => `
-            <div class="course-header">
-              <div>
-                <div class="course-title">${item.title||''}</div>
-                <div class="course-code">${item.code||''}</div>
-              </div>
-              <span class="course-arrow">▼</span>
-            </div>
-            <div class="course-body"><p>${item.desc||''}</p></div>`
-        }
+        { label: 'Teaching Philosophy — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
+        { label: 'Teaching Philosophy — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
+        { label: 'Teaching Philosophy — Para 3', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(3)' },
+        { label: 'Courses', type: 'json-courses' }
       ]
     },
 
@@ -737,6 +873,123 @@ function getPageConfig(pageKey, html) {
 }
 
 // Initialize
+
+// ── JSON EDITOR ──
+let jsonData = {}; // holds loaded JSON per file
+
+async function renderJSONEditor(field, idx, body) {
+  body.innerHTML = '<div style="color:#5a5a5a;font-size:0.85rem;padding:0.5rem 0;">Loading data...</div>';
+  try {
+    const res = await ghGet(field.file);
+    const raw = decodeURIComponent(escape(atob(res.content.replace(/\n/g,''))));
+    jsonData[field.file] = { sha: res.sha, data: JSON.parse(raw) };
+    renderJSONItems(field, idx, body, jsonData[field.file].data);
+  } catch(e) {
+    body.innerHTML = `<div style="color:var(--red);font-size:0.85rem;">Could not load ${field.file}: ${e.message}</div>`;
+  }
+}
+
+function renderJSONItems(field, idx, body, items) {
+  const schemas = {
+    publications: [
+      { key:'year', label:'Year', type:'input' },
+      { key:'authors', label:'Authors', type:'input' },
+      { key:'title', label:'Title', type:'input' },
+      { key:'journal', label:'Journal', type:'input' },
+      { key:'doi', label:'DOI URL', type:'input' },
+      { key:'abstract', label:'Abstract', type:'textarea' },
+    ],
+    awards: [
+      { key:'year', label:'Year', type:'input' },
+      { key:'title', label:'Title', type:'input' },
+      { key:'institution', label:'Institution', type:'input' },
+      { key:'amount', label:'Amount (optional)', type:'input' },
+      { key:'description', label:'Description', type:'textarea' },
+    ],
+    courses: [
+      { key:'category', label:'Category', type:'input', hint:'Methods & Statistics | Inequality & Stratification | Environmental Sociology | General Education' },
+      { key:'title', label:'Course Title', type:'input' },
+      { key:'code', label:'Course Code / Info', type:'input' },
+      { key:'description', label:'Description', type:'textarea' },
+    ],
+  };
+  const schema = schemas[field.schema] || [];
+
+  let html = `<button class="btn-add" onclick="addJSONItem('${field.file}','${field.schema}',${idx})">+ Add Item</button>`;
+  html += `<div id="json-items-${idx}">`;
+  items.forEach((item, i) => {
+    html += renderJSONItem(schema, item, i, idx);
+  });
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+function renderJSONItem(schema, item, itemIdx, fieldIdx) {
+  let html = `<div class="list-item" data-item-idx="${itemIdx}"><div class="list-item-fields">`;
+  schema.forEach(f => {
+    const val = (item[f.key] || '').replace(/"/g,'&quot;');
+    html += `<div class="field-group">
+      <div class="field-label">${f.label}${f.hint ? ' <span style="font-weight:400;font-style:italic;color:#aaa;">(' + f.hint + ')</span>' : ''}</div>
+      ${f.type === 'textarea'
+        ? `<textarea class="field" data-key="${f.key}" rows="3">${(item[f.key]||'').replace(/</g,'&lt;')}</textarea>`
+        : `<input class="field" type="text" data-key="${f.key}" value="${val}"/>`}
+    </div>`;
+  });
+  html += `</div><div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div></div>`;
+  return html;
+}
+
+function addJSONItem(file, schema, fieldIdx) {
+  const schemas = {
+    publications: {year:'',authors:'',title:'',journal:'',doi:'',abstract:''},
+    awards: {year:'',title:'',institution:'',amount:'',description:''},
+    courses: {category:'',title:'',code:'',description:''},
+  };
+  const container = document.getElementById(`json-items-${fieldIdx}`);
+  const newIdx = container.children.length;
+  const schemaFields = {
+    publications: [{key:'year',label:'Year',type:'input'},{key:'authors',label:'Authors',type:'input'},{key:'title',label:'Title',type:'input'},{key:'journal',label:'Journal',type:'input'},{key:'doi',label:'DOI URL',type:'input'},{key:'abstract',label:'Abstract',type:'textarea'}],
+    awards: [{key:'year',label:'Year',type:'input'},{key:'title',label:'Title',type:'input'},{key:'institution',label:'Institution',type:'input'},{key:'amount',label:'Amount',type:'input'},{key:'description',label:'Description',type:'textarea'}],
+    courses: [{key:'category',label:'Category',type:'input',hint:'Methods & Statistics | Inequality & Stratification | Environmental Sociology | General Education'},{key:'title',label:'Course Title',type:'input'},{key:'code',label:'Course Code',type:'input'},{key:'description',label:'Description',type:'textarea'}],
+  };
+  container.insertAdjacentHTML('beforeend', renderJSONItem(schemaFields[schema], schemas[schema], newIdx, fieldIdx));
+  container.lastElementChild.scrollIntoView({behavior:'smooth'});
+}
+
+async function saveJSONPage(file, fieldIdx) {
+  const btn = document.getElementById('save-btn');
+  const status = document.getElementById('save-status');
+  btn.disabled = true;
+  status.className = 'save-status saving';
+  status.textContent = 'Saving...';
+
+  try {
+    const container = document.getElementById(`json-items-${fieldIdx}`);
+    const items = [];
+    container.querySelectorAll('.list-item').forEach(el => {
+      const item = {};
+      el.querySelectorAll('[data-key]').forEach(inp => {
+        item[inp.dataset.key] = inp.tagName === 'TEXTAREA' ? inp.value : inp.value;
+      });
+      items.push(item);
+    });
+    const sha = jsonData[file].sha;
+    const newContent = JSON.stringify(items, null, 2);
+    await ghPut(file, newContent, sha, `Dashboard update: ${file}`);
+    // Refresh SHA
+    const fresh = await ghGet(file);
+    jsonData[file].sha = fresh.sha;
+    jsonData[file].data = items;
+    status.className = 'save-status success';
+    status.textContent = 'Saved and published!';
+    setTimeout(() => { status.textContent = ''; }, 4000);
+  } catch(e) {
+    status.className = 'save-status error';
+    status.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+}
+
 window.addEventListener('load', () => {
   if (sessionStorage.getItem('admin_auth') === '1') {
     loadPage('index');

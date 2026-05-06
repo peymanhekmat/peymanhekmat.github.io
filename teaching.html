@@ -9,7 +9,7 @@
     :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.85;}
 
     nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
@@ -46,11 +46,146 @@
     .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
     .page-header p{color:#b8c8e0;font-size:0.9rem;}
 
-    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;}
-    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
-    section{margin-bottom:2.5rem;}
-    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    /* NARRATIVE CONTAINER */
+    .narrative{max-width:860px;margin:0 auto;padding:4rem 2rem 5rem;}
 
+    /* Year label */
+    .year-tag{
+      display:block;
+      clear:both;
+      font-size:0.72rem;
+      font-weight:700;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      border-bottom:2px solid var(--gold);
+      padding-bottom:0.15rem;
+      margin-bottom:1.1rem;
+    }
+
+    /* Body text */
+    .narrative p{
+      font-size:1rem;
+      color:var(--text);
+      margin-bottom:1.2rem;
+      line-height:1.9;
+    }
+
+    /* CIRCLE PHOTO - floats left or right with text wrapping */
+    .circle-float-right{
+      float:right;
+      margin:0 0 1.5rem 2.5rem;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      object-fit:cover;
+      object-position:center top;
+      border:5px solid var(--gold);
+      box-shadow:0 0 0 8px rgba(184,151,42,0.15), 0 8px 32px rgba(0,0,0,0.18);
+      shape-outside:circle(50%);
+    }
+    .circle-float-left{
+      float:left;
+      margin:0 2.5rem 1.5rem 0;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      object-fit:cover;
+      object-position:center top;
+      border:5px solid var(--gold);
+      box-shadow:0 0 0 8px rgba(184,151,42,0.15), 0 8px 32px rgba(0,0,0,0.18);
+      shape-outside:circle(50%);
+    }
+
+    /* Logo circle - smaller, for institution logos */
+    .logo-circle-right{
+      float:right;
+      margin:0 0 1.5rem 2rem;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:contain;
+      background:var(--white);
+      border:4px solid var(--gold);
+      box-shadow:0 0 0 6px rgba(184,151,42,0.12), 0 4px 20px rgba(0,0,0,0.12);
+      padding:16px;
+      shape-outside:circle(50%);
+    }
+    .logo-circle-left{
+      float:left;
+      margin:0 2rem 1.5rem 0;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:contain;
+      background:var(--white);
+      border:4px solid var(--gold);
+      box-shadow:0 0 0 6px rgba(184,151,42,0.12), 0 4px 20px rgba(0,0,0,0.12);
+      padding:16px;
+      shape-outside:circle(50%);
+    }
+
+    /* Clearfix after each chapter */
+    .chapter{margin-bottom:0;}
+    .chapter::after{content:'';display:table;clear:both;}
+
+    /* Divider between chapters */
+    .chapter-divider{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      margin:2.5rem 0;
+      color:var(--gold);
+      font-size:0.75rem;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+    }
+    .chapter-divider::before,.chapter-divider::after{
+      content:'';
+      flex:1;
+      height:1px;
+      background:linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* Pull quote */
+    .pull-quote{
+      font-family:'EB Garamond',serif;
+      font-size:1.18rem;
+      font-style:italic;
+      color:var(--navy-mid);
+      border-left:4px solid var(--gold);
+      padding:0.85rem 1.2rem;
+      margin:1.5rem 0;
+      background:var(--white);
+      border-radius:0 4px 4px 0;
+      line-height:1.65;
+      clear:both;
+    }
+
+    /* Current position card */
+    .position-card{
+      background:var(--navy);
+      color:var(--white);
+      border-radius:6px;
+      padding:1.5rem;
+      margin:2rem 0 0;
+      border-left:4px solid var(--gold);
+      clear:both;
+    }
+    .position-card .pos-title{font-family:'EB Garamond',serif;font-size:1.15rem;color:var(--gold-light);margin-bottom:0.4rem;}
+    .position-card .pos-sub{font-size:0.85rem;color:#b8c8e0;line-height:1.7;}
+
+    /* OSU logo on dark card needs lighter bg */
+    .logo-osu-inline{height:44px;width:auto;margin-bottom:0.75rem;filter:brightness(10);}
+
+    @media(max-width:600px){
+      .circle-float-right,.circle-float-left{float:none;display:block;margin:0 auto 1.5rem;width:200px;height:200px;}
+      .logo-circle-right,.logo-circle-left{float:none;display:block;margin:0 auto 1.5rem;width:130px;height:130px;}
+    }
+
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  
     /* Course dropdowns */
     .course-group-label{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin:1.2rem 0 0.5rem;}
     .course-item{border:1px solid var(--border);border-left:3px solid var(--navy-light);border-radius:0 4px 4px 0;margin-bottom:0.5rem;background:var(--white);overflow:hidden;transition:border-left-color 0.2s;}
@@ -64,7 +199,6 @@
     .course-body{display:none;padding:0 1rem 1rem;border-top:1px solid var(--cream-dark);}
     .course-item.open .course-body{display:block;}
     .course-body p{font-size:0.87rem;color:var(--text-muted);margin:0.75rem 0 0;line-height:1.65;}
-
     /* Sidebar */
     .sidebar{position:sticky;top:80px;}
     .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
@@ -75,10 +209,11 @@
     .eval-score{font-family:'EB Garamond',serif;font-size:1.1rem;color:var(--gold);font-weight:600;white-space:nowrap;}
     .quote-block{background:var(--cream-dark);border-left:3px solid var(--gold);padding:0.85rem 1rem;border-radius:0 4px 4px 0;margin-bottom:0.75rem;font-size:0.83rem;color:var(--text-muted);font-style:italic;line-height:1.6;}
     .quote-block:last-child{margin-bottom:0;}
-
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
     @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}}
-    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
-    footer a{color:var(--gold-light);text-decoration:none;}
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
@@ -134,190 +269,21 @@
 <div class="main">
   <main>
 
-    <!-- TEACHING PHILOSOPHY -->
     <section>
       <h2 class="section-title">Teaching Philosophy</h2>
       <p>My teaching practice is grounded in a commitment to clarity, accessibility, and meaningful engagement across instructional modalities — hyflex, online, and face-to-face. I view teaching as a collaborative process that balances guidance with opportunities for students to develop confidence in their own analytical skills.</p>
-      <p>A major focus of my teaching has been supporting students' development of methodological and analytical confidence. Many students enter research methods or statistical courses with apprehension, and my goal is to meet them with accessible explanations, supportive communication, and consistent reinforcement. I also integrate my own research as real-world examples across courses, increasing student engagement with primary scholarship as intended at an R1 institution.</p>
-      <p>Beyond the classroom, I have supervised undergraduate and graduate students through the AURCA program and departmental research assistantships, mentoring work involving Python programming, dataset construction, cross-national comparisons, and network analysis — several of which resulted in conference presentations.</p>
+      <p>A major focus of my teaching has been supporting students' development of methodological and analytical confidence. Many students enter research methods or statistical courses with apprehension, and my goal is to meet them with accessible explanations, supportive communication, and consistent reinforcement. I also integrate my own research as real-world examples across courses, increasing student engagement with primary scholarship.</p>
+      <p>Beyond the classroom, I have supervised undergraduate and graduate students through the AURCA program and departmental research assistantships, mentoring work involving Python programming, dataset construction, cross-national comparisons, and network analysis.</p>
     </section>
 
-
-    <!-- UNIFIED COURSE LIST -->
     <section>
       <h2 class="section-title">Courses Taught</h2>
-
-      <p class="course-group-label">Methods &amp; Statistics</p>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Social Research Methods</div>
-            <div class="course-code">SOC 4133 (OSU) · SOC 3133 (OU) · Hyflex &amp; Face-to-face</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>Introduces students to the logic and practice of social science research. Students learn to evaluate research designs, formulate research questions, and engage with core methodological approaches including surveys, experiments, qualitative methods, and content analysis. The course emphasizes critical reading of published research and developing the skills to conduct and evaluate independent research projects. By the end of the course, students are equipped to frame feasible research questions, select appropriate methodological strategies, and critically assess the strengths and limitations of different approaches.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Quantitative Methods in Sociology</div>
-            <div class="course-code">SOC 4243 (OSU) · Online</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A required course for sociology majors covering the foundations of quantitative data analysis. Topics include descriptive statistics, probability, hypothesis testing, correlation, and regression analysis. Students work with real sociological datasets and develop proficiency in interpreting and communicating statistical results. Weekly video walkthroughs and example-driven instruction are central to making challenging material accessible, particularly for students with limited prior exposure to statistics.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Applied Regression Analysis</div>
-            <div class="course-code">MATH 5773 (OU) · Graduate · Online</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A graduate-level course covering regression modeling with applied emphasis using R. Topics include categorical variables, multiple linear regression, model building and selection, experimental design, ANOVA, nonparametric statistics, and statistical process control. Students submit weekly R-based labs, complete a comprehensive project connecting multiple techniques to a real-world problem, and sit for midterm and final exams. Part of OU's online Master's in Applied Statistics program.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Introduction to Multivariate Statistical Analysis</div>
-            <div class="course-code">MATH 5793 (OU) · Graduate · Online</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A graduate-level course on multivariate statistical methods implemented in R. Topics include matrix algebra and random vectors, sample geometry, the multivariate normal distribution, inference about mean vectors, principal components analysis, factor analysis, and clustering and ordination methods. Students submit weekly R labs, complete two major applied projects, and sit for midterm and final exams. Part of OU's online Master's in Applied Statistics program.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Ethics in Statistical Practice</div>
-            <div class="course-code">DSP 5773 (OU) · Graduate · Online</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A graduate seminar for students in OU's online Master's in Applied Statistics program examining ethical dimensions of data collection, analysis, and communication. Topics include privacy and surveillance, bias and fairness, accountability in machine learning and AI, data aggregation, and the obligations of statisticians to varied stakeholders. Students engage weekly with primary readings through discussion posts and write biweekly analytical essays connecting ethical theory to real-world case studies.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Database Design for Information Organizations</div>
-            <div class="course-code">LIS 5683 (OU) · Graduate · Online</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A graduate-level course introducing relational database design and management using MySQL. Topics include entity-relationship diagrams, data normalization, SQL data types and manipulation, aggregate and logical operators, constraints, relational database structures, views, stored procedures, and triggers. Students complete weekly hands-on assignments and a semester-long real-world database project. No prior programming experience required.</p>
-        </div>
-      </div>
-
-      <p class="course-group-label">Inequality &amp; Stratification</p>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Social Stratification</div>
-            <div class="course-code">SOC 4383 (OSU) · SOC 3683 (OU) · Online &amp; Face-to-face</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>An examination of hierarchical systems of social classification and their consequences for inequality in the United States and globally. The course combines classical theoretical frameworks with contemporary empirical research to explore class structure, wealth and income distribution, social mobility, and the interplay of class with race, gender, and family. Students analyze how stratification shapes everyday life across multiple dimensions, from occupational prestige and political power to poverty and public policy.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Racial &amp; Ethnic Relations</div>
-            <div class="course-code">SOC 3133 (OSU) · Online / Hyflex · Diversity &amp; Inclusion Designated</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A diversity-designated course examining the historical and contemporary dynamics of race and ethnicity in the United States and globally. Topics include theories of prejudice and discrimination, immigration, intergroup conflict, structural racism, and policies addressing racial inequality. The course emphasizes creating an inclusive environment where students from all backgrounds engage thoughtfully with sensitive material. Students consistently describe the course as engaging, thought-provoking, and respectful in tone.</p>
-        </div>
-      </div>
-
-      <p class="course-group-label">Environmental Sociology</p>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Environmental Sociology</div>
-            <div class="course-code">SOC 4433 / SOC 1113 (OSU) · Online · Sustainability Designated</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A sustainability-designated course exploring the relationship between society and the natural environment. Topics include environmental movements, climate change, consumption, the treadmill of production, and the uneven distribution of environmental risks. The course draws on classical and contemporary sociological theory to help students understand how social structures shape both environmental problems and potential solutions, and how societal responsibilities to address environmental justice are distributed across communities and nations.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Environmental Inequality</div>
-            <div class="course-code">SOC 4453 (OSU) · Hyflex · Sustainability Designated</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>An advanced seminar on environmental justice examining who bears the greatest burden of environmental harm and why. The course integrates empirical research on pollution exposure, climate vulnerability, and resource access with sociological frameworks including ecologically unequal exchange, environmental racism, and global political economy. Students engage with case studies from the US and internationally and critically evaluate policy responses to environmental inequalities. A peer reviewer rated the course as excellent, noting its strong integration of theory, history, and contemporary examples.</p>
-        </div>
-      </div>
-
-      <p class="course-group-label">General Education</p>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Introduction to Sociology</div>
-            <div class="course-code">SOC 1113 (OSU &amp; OU) · Online &amp; Face-to-face</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>A general education course introducing students to sociology as a scientific discipline and a powerful way of understanding the social world. Topics include sociological theory, research methods, culture, socialization, stratification, race and ethnicity, gender and sexuality, religion, family, politics, the economy, and social movements. The course cultivates the sociological imagination — the ability to connect individual experiences to broader structural forces — and develops students' capacity to critically engage with sociological data and arguments.</p>
-        </div>
-      </div>
-
-      <div class="course-item" onclick="toggleCourse(this)">
-        <div class="course-header">
-          <div>
-            <div class="course-title">Social Problems</div>
-            <div class="course-code">SOC 1523 (OU) · Face-to-face</div>
-          </div>
-          <span class="course-arrow">▼</span>
-        </div>
-        <div class="course-body">
-          <p>An analysis of major social problems in the United States and around the world, and the policy debates surrounding them. Students examine social problems through major sociological paradigms and research, exploring how problems arise within and are shaped by social institutions. Topics covered across the semester include social class, race and ethnicity, gender, sexual orientation, families, education, work and economy, health and medicine, crime and criminal justice, the environment, and war and terrorism.</p>
-        </div>
-      </div>
-
+      <div id="courses-list"><div style="color:#5a5a5a;font-size:0.9rem;padding:1rem 0;">Loading courses...</div></div>
     </section>
 
   </main>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-
     <div class="card">
       <p class="card-title">Overall Evaluation Summary</p>
       <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;">Aggregated student ratings (1–5 scale), AY 2024–25, N=20</p>
@@ -330,7 +296,6 @@
       <div class="eval-row"><span class="eval-label">Excellent teacher</span><span class="eval-score">4.65</span></div>
       <div class="eval-row"><span class="eval-label">Would recommend course</span><span class="eval-score">4.50</span></div>
     </div>
-
     <div class="card">
       <p class="card-title">Student Voices</p>
       <div class="quote-block">"Give this professor anything he wants academically. He rocks!"</div>
@@ -338,16 +303,14 @@
       <div class="quote-block">"He created an informative, respectful, and safe environment to learn."</div>
       <div class="quote-block">"I am definitely leaving this class feeling like I actually learned the material rather than just memorizing it."</div>
     </div>
-
     <div class="card">
       <p class="card-title">Modalities</p>
       <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.8;">
-        ✦ Online (synchronous &amp; asynchronous)<br>
-        ✦ Hyflex<br>
-        ✦ Face-to-face
+        &#10022; Online (synchronous &amp; asynchronous)<br>
+        &#10022; Hyflex<br>
+        &#10022; Face-to-face
       </p>
     </div>
-
   </aside>
 </div>
 
@@ -356,23 +319,42 @@
 </footer>
 
 <script>
-  function toggleCourse(el) {
-    el.classList.toggle('open');
-  }
-  function toggleDropdown(e,el){
-    e.preventDefault();
-    const li=el.parentElement;
-    const isOpen=li.classList.contains('open');
-    document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));
-    if(!isOpen)li.classList.add('open');
-  }
-  function toggleMobile(btn){
-    btn.classList.toggle('open');
-    document.getElementById('mobileMenu').classList.toggle('open');
-  }
-  document.addEventListener('click',function(e){
-    if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));
+  function toggleCourse(el){el.classList.toggle('open');}
+  function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
+  function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
+</script>
+
+<script>
+fetch('courses.json')
+  .then(r => r.json())
+  .then(courses => {
+    const order = ['Methods & Statistics','Inequality & Stratification','Environmental Sociology','General Education'];
+    const byCategory = {};
+    courses.forEach(c => {
+      if (!byCategory[c.category]) byCategory[c.category] = [];
+      byCategory[c.category].push(c);
+    });
+    let html = '';
+    order.forEach(cat => {
+      if (!byCategory[cat]) return;
+      html += '<p class="course-group-label">' + cat + '</p>';
+      byCategory[cat].forEach(c => {
+        html += '<div class="course-item" onclick="toggleCourse(this)">'
+          + '<div class="course-header"><div>'
+          + '<div class="course-title">' + c.title + '</div>'
+          + '<div class="course-code">' + c.code + '</div>'
+          + '</div><span class="course-arrow">▼</span></div>'
+          + '<div class="course-body"><p>' + c.description + '</p></div>'
+          + '</div>';
+      });
+    });
+    document.getElementById('courses-list').innerHTML = html;
+  })
+  .catch(e => {
+    document.getElementById('courses-list').innerHTML = '<p style="color:#c0392b;">Could not load courses.</p>';
   });
 </script>
+
 </body>
 </html>
