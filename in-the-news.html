@@ -71,8 +71,9 @@
     .news-card.featured .card-thumb{aspect-ratio:21/9;}
     .card-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;}
     .news-card:hover .card-thumb img{transform:scale(1.04);}
-    .card-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);}
-    .thumb-outlet{font-family:'EB Garamond',serif;font-size:1.4rem;color:var(--gold-light);font-weight:600;text-align:center;padding:1rem;}
+    .card-thumb-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .card-thumb-placeholder::before{content:'';position:absolute;inset:0;opacity:0.08;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.3) 0,rgba(255,255,255,0.3) 1px,transparent 0,transparent 50%);background-size:10px 10px;}
+    .thumb-outlet{font-family:'EB Garamond',serif;font-size:1.15rem;color:rgba(255,255,255,0.95);font-weight:600;text-align:center;padding:1rem;position:relative;z-index:1;line-height:1.3;}
 
     /* CARD TAG */
     .card-tag{position:absolute;top:0.6rem;left:0.6rem;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:2px;}
@@ -166,8 +167,7 @@
     <!-- FEATURED: KFOR Iran Strikes 2026 -->
     <a class="news-card featured" href="https://kfor.com/news/local/iranians-in-oklahoma-reacting-to-strikes-in-iran/" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <img src="https://kfor.com/wp-content/uploads/sites/2/2026/02/AP26060549285088.jpg" alt="Iran protests" onerror="this.style.display='none';this.parentElement.classList.add('card-thumb-placeholder-active')"/>
-        <div class="card-thumb-placeholder" style="display:none" id="ph1"><span class="thumb-outlet">KFOR</span></div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Iran.svg/320px-Flag_of_Iran.svg.png" alt="Iran protests" onerror="this.style.display='none';var p=this.nextElementSibling;if(p)p.style.display='flex';"/><div class="card-thumb-placeholder" style="display:none" style="display:none" id="ph1"><span class="thumb-outlet">KFOR</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -184,8 +184,7 @@
     <!-- KFOR Anti-Iran Regime Protests OKC -->
     <a class="news-card" href="https://kfor.com/news/local/anti-iran-regime-protests-near-downtown-okc/" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <img src="https://kfor.com/wp-content/uploads/sites/2/2023/01/iran-protest-okc.jpg" alt="Iran protest OKC" onerror="this.style.display='none'"/>
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">KFOR</span></div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Protesters_in_Iran_2022_%28cropped%29.jpg/320px-Protesters_in_Iran_2022_%28cropped%29.jpg" alt="Iran protest OKC" onerror="this.style.display='none';var p=this.nextElementSibling;if(p)p.style.display='flex';"/><div class="card-thumb-placeholder" style="display:none" style="background:linear-gradient(135deg,#0a3d6b,#1565c0)"><span class="thumb-outlet" style="color:white;font-size:1.5rem;">KFOR</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -202,7 +201,7 @@
     <!-- The Oklahoman -->
     <a class="news-card" href="https://www.oklahoman.com/story/news/local/oklahoma-city/2022/10/15/oklahomans-gather-to-support-iranian-protests-against-islamic-republic/69555637007/" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">The Oklahoman</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#c0392b,#922b21)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">The Oklahoman</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -219,7 +218,7 @@
     <!-- OU Daily Scissortail Oct 2022 -->
     <a class="news-card" href="https://localtoday.news/ok/oklahomans-join-islamic-republic-global-protest-demonstrate-support-for-women-in-iran-at-scissortail-park-news-30701.html" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">OU Daily</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -236,7 +235,7 @@
     <!-- OU Daily Sept 2022 Mahsa Amini -->
     <a class="news-card" href="https://www.oudaily.com/news/ou-students-rally-in-support-of-iranian-protests-joining-150-universities-worldwide/article_205ccdfa-710a-11ed-9876-3fe7f533424e.html" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">OU Daily</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -253,7 +252,7 @@
     <!-- OU Daily Sept 2022 South Oval -->
     <a class="news-card" href="https://www.oudaily.com/news/ou-students-join-worldwide-protests-of-mahsa-aminis-death-in-iranian-police-custody/article_ac7acab4-0c7a-11ea-a3ec-3fa5469892f4.html" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">OU Daily</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -270,7 +269,7 @@
     <!-- OU Daily Scissortail Feb 2023 -->
     <a class="news-card" href="https://www.oudaily.com/news/advocates-gather-at-scissortail-park-to-support-women-in-iran/article_205ccdfa-710a-11ed-9876-3fe7f533424e.html" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">OU Daily</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -287,7 +286,7 @@
     <!-- OU Daily 2019 gas prices -->
     <a class="news-card" href="https://www.oudaily.com/news/ou-students-to-hold-rally-to-support-iranian-protests-over-gas-prices-internet-blocks/article_ac7acab4-0c7a-11ea-a3ec-3fa5469892f4.html" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">OU Daily</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -302,9 +301,9 @@
     </a>
 
     <!-- ocolly Voices of Iran -->
-    <a class="news-card" href="https://ocolly.com/voices-of-iran" target="_blank" data-category="activism">
+    <a class="news-card" href="https://www.ocolly.com/multimedia/photos/see-our-best-photos-from-voices-of-iran/collection_464b289c-6224-4514-af2e-f984453905de.html#1" target="_blank" data-category="activism">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">O'Colly</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#ff6600,#cc5200)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">O'Colly</span></div>
         <span class="card-tag tag-activism">Activism</span>
       </div>
       <div class="card-body">
@@ -321,8 +320,7 @@
     <!-- FEATURED: Cornell / Phys.org DIY Faith 2026 -->
     <a class="news-card featured" href="https://phys.org/news/2026-04-young-americans-abandoning-faith-theyre.html" target="_blank" data-category="scholarship">
       <div class="card-thumb">
-        <img src="https://scx2.b-cdn.net/gfx/news/2026/young-americans-arent.jpg" alt="DIY Faith research" onerror="this.style.display='none'"/>
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Phys.org</span></div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/American_church_services.jpg/320px-American_church_services.jpg" alt="DIY Faith research" onerror="this.style.display='none';var p=this.nextElementSibling;if(p)p.style.display='flex';"/><div class="card-thumb-placeholder" style="display:none"><span class="thumb-outlet">Phys.org</span></div>
         <span class="card-tag tag-scholarship">Scholarship</span>
       </div>
       <div class="card-body">
@@ -339,7 +337,7 @@
     <!-- Cornell Chronicle DIY Religion 2025 -->
     <a class="news-card" href="https://phys.org/news/2025-04-diy-religion-americans-faith-church.html" target="_blank" data-category="scholarship">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Cornell Chronicle</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#b31b1b,#8a1515)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">Cornell Chronicle</span></div>
         <span class="card-tag tag-scholarship">Scholarship</span>
       </div>
       <div class="card-body">
@@ -356,7 +354,7 @@
     <!-- Christian Post -->
     <a class="news-card" href="https://www.christianpost.com/news/americans-are-swapping-organized-religion-for-personal-truth-study.html" target="_blank" data-category="scholarship">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Christian Post</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#1a5276,#154360)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">Christian Post</span></div>
         <span class="card-tag tag-scholarship">Scholarship</span>
       </div>
       <div class="card-body">
@@ -373,7 +371,7 @@
     <!-- PsyPost -->
     <a class="news-card" href="https://www.psypost.org/millennials-are-abandoning-organized-religion-a-new-study-provides-insight-into-why/" target="_blank" data-category="scholarship">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">PsyPost</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#1e8449,#196f3d)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">PsyPost</span></div>
         <span class="card-tag tag-scholarship">Scholarship</span>
       </div>
       <div class="card-body">
@@ -390,7 +388,7 @@
     <!-- The Society Pages -->
     <a class="news-card" href="https://thesocietypages.org/trot/2024/10/02/asian-americans-on-the-corporate-ladder/" target="_blank" data-category="scholarship">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Society Pages</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#6c3483,#512e5f)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">Society Pages</span></div>
         <span class="card-tag tag-scholarship">Scholarship</span>
       </div>
       <div class="card-body">
@@ -407,7 +405,7 @@
     <!-- OU Dissertation Defense -->
     <a class="news-card" href="https://www.ou.edu/cas/soc/News-and-Events/News/news-archive/2022/Hekmatpour-Defend-PhD-Dissertation" target="_blank" data-category="academic">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Univ. of Oklahoma</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">Univ. of Oklahoma</span></div>
         <span class="card-tag tag-academic">Academic</span>
       </div>
       <div class="card-body">
@@ -424,7 +422,7 @@
     <!-- OU Accepts OSU position -->
     <a class="news-card" href="https://www.ou.edu/cas/soc/News-and-Events/News/news-archive/2022/Hekmatpour-accepts-teaching-position" target="_blank" data-category="academic">
       <div class="card-thumb">
-        <div class="card-thumb-placeholder"><span class="thumb-outlet">Univ. of Oklahoma</span></div>
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,#841617,#5d0f10)"><span class="thumb-outlet" style="color:white;font-size:1.1rem;padding:1rem;text-align:center;">Univ. of Oklahoma</span></div>
         <span class="card-tag tag-academic">Academic</span>
       </div>
       <div class="card-body">
