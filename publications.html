@@ -215,8 +215,8 @@ fetch('publications.json')
     document.getElementById('stat-total').textContent = pubs.length;
     const journals = new Set(pubs.map(p => p.journal.split(' ')[0]));
     document.getElementById('stat-journals').textContent = journals.size;
-    const years = pubs.map(p => parseInt(p.year)).filter(y => !isNaN(y));
-    document.getElementById('stat-since').textContent = Math.min(...years);
+    const yearNums = pubs.map(p => parseInt(p.year)).filter(y => !isNaN(y));
+    document.getElementById('stat-since').textContent = Math.min(...yearNums);
   })
   .catch(e => {
     document.getElementById('pub-main').innerHTML = '<p style="color:#c0392b;">Could not load publications: ' + e + '</p>';
