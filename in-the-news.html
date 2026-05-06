@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>In the News — Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+
+    /* NAV */
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' ▾';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+
+    /* PAGE HEADER */
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;}
+    .page-header p{color:#b8c8e0;font-size:0.9rem;}
+
+    /* FILTER BAR */
+    .filter-bar{background:var(--white);border-bottom:1px solid var(--border);padding:0.75rem 2rem;}
+    .filter-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+    .filter-label{font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-right:0.5rem;}
+    .filter-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;padding:0.3rem 0.85rem;border-radius:20px;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+    .filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+    .filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+
+    /* MOSAIC GRID */
+    .main{max-width:1100px;margin:0 auto;padding:2.5rem 2rem;}
+    .mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;grid-auto-rows:auto;}
+
+    /* NEWS CARD */
+    .news-card{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;position:relative;}
+    .news-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.12);}
+    .news-card.featured{grid-column:span 2;}
+    .news-card.tall{grid-row:span 2;}
+
+    /* CARD THUMBNAIL */
+    .card-thumb{width:100%;aspect-ratio:16/9;background:var(--navy-mid);overflow:hidden;position:relative;flex-shrink:0;}
+    .news-card.featured .card-thumb{aspect-ratio:21/9;}
+    .card-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;}
+    .news-card:hover .card-thumb img{transform:scale(1.04);}
+    .card-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);}
+    .thumb-outlet{font-family:'EB Garamond',serif;font-size:1.4rem;color:var(--gold-light);font-weight:600;text-align:center;padding:1rem;}
+
+    /* CARD TAG */
+    .card-tag{position:absolute;top:0.6rem;left:0.6rem;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:2px;}
+    .tag-activism{background:#c0392b;color:var(--white);}
+    .tag-scholarship{background:var(--navy);color:var(--gold-light);}
+    .tag-academic{background:var(--navy-mid);color:#b8c8e0;}
+
+    /* CARD BODY */
+    .card-body{padding:1rem 1.1rem;flex:1;display:flex;flex-direction:column;}
+    .card-outlet{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+    .card-headline{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--navy);line-height:1.35;margin-bottom:0.5rem;font-weight:600;}
+    .news-card.featured .card-headline{font-size:1.3rem;}
+    .card-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.55;flex:1;}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;padding-top:0.6rem;border-top:1px solid var(--cream-dark);}
+    .card-date{font-size:0.73rem;color:var(--text-muted);}
+    .card-arrow{font-size:0.75rem;color:var(--gold);font-weight:700;}
+
+    /* HIDDEN */
+    .news-card.hidden{display:none;}
+
+    @media(max-width:900px){.mosaic{grid-template-columns:repeat(2,1fr);}.news-card.featured{grid-column:span 2;}}
+    @media(max-width:600px){.mosaic{grid-template-columns:1fr;}.news-card.featured{grid-column:span 1;}}
+
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;margin-top:3rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C0CB4TPWCY');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+        </div>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="publications.html">Publications</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> › In the News</p>
+    <h1>In the News</h1>
+    <p>Media coverage of research and civic engagement</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('activism',this)">Activism</button>
+    <button class="filter-btn" onclick="filterCards('scholarship',this)">Scholarship</button>
+    <button class="filter-btn" onclick="filterCards('academic',this)">Academic</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="mosaic" id="mosaic">
+
+    <!-- FEATURED: KFOR Iran Strikes 2026 -->
+    <a class="news-card featured" href="https://kfor.com/news/local/iranians-in-oklahoma-reacting-to-strikes-in-iran/" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <img src="https://kfor.com/wp-content/uploads/sites/2/2026/02/AP26060549285088.jpg" alt="Iran protests" onerror="this.style.display='none';this.parentElement.classList.add('card-thumb-placeholder-active')"/>
+        <div class="card-thumb-placeholder" style="display:none" id="ph1"><span class="thumb-outlet">KFOR</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">KFOR News 4 · Oklahoma City</div>
+        <div class="card-headline">Iranians in Oklahoma reacting to strikes in Iran</div>
+        <div class="card-desc">Dr. Hekmatpour shares his emotional reaction to news of the attacks in Iran as an Iranian in exile, speaking to the significance of the moment for the Iranian community in Oklahoma.</div>
+        <div class="card-footer">
+          <span class="card-date">February 28, 2026</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- KFOR Anti-Iran Regime Protests OKC -->
+    <a class="news-card" href="https://kfor.com/news/local/anti-iran-regime-protests-near-downtown-okc/" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <img src="https://kfor.com/wp-content/uploads/sites/2/2023/01/iran-protest-okc.jpg" alt="Iran protest OKC" onerror="this.style.display='none'"/>
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">KFOR</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">KFOR News 4 · Oklahoma City</div>
+        <div class="card-headline">Anti-Iran regime protests near downtown OKC</div>
+        <div class="card-desc">As rally organizer, Dr. Hekmatpour speaks out at a protest outside the OKC National Memorial, saying the government "is cracking down on professors with an iron fist."</div>
+        <div class="card-footer">
+          <span class="card-date">January 11, 2026</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- The Oklahoman -->
+    <a class="news-card" href="https://www.oklahoman.com/story/news/local/oklahoma-city/2022/10/15/oklahomans-gather-to-support-iranian-protests-against-islamic-republic/69555637007/" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">The Oklahoman</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">The Oklahoman</div>
+        <div class="card-headline">'Their fight is our fight.' Oklahomans rally against Iran's Islamic Republic</div>
+        <div class="card-desc">About 350 people attended a rally in Oklahoma City's Scissortail Park to protest Iran's Islamic Republic, with Dr. Hekmatpour among the organizers and speakers.</div>
+        <div class="card-footer">
+          <span class="card-date">October 15, 2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Daily Scissortail Oct 2022 -->
+    <a class="news-card" href="https://localtoday.news/ok/oklahomans-join-islamic-republic-global-protest-demonstrate-support-for-women-in-iran-at-scissortail-park-news-30701.html" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">OU Daily · October 2022</div>
+        <div class="card-headline">Oklahomans join global protest of Islamic Republic, demonstrate support for women in Iran at Scissortail Park</div>
+        <div class="card-desc">Dr. Hekmatpour addressed a crowd of nearly 200 at Scissortail Park, calling on the international community to stand with the Iranian people in their struggle for freedom.</div>
+        <div class="card-footer">
+          <span class="card-date">October 14, 2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Daily Sept 2022 Mahsa Amini -->
+    <a class="news-card" href="https://www.oudaily.com/news/ou-students-rally-in-support-of-iranian-protests-joining-150-universities-worldwide/article_205ccdfa-710a-11ed-9876-3fe7f533424e.html" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">OU Daily · December 2022</div>
+        <div class="card-headline">OU students rally in support of Iranian protests, joining 150 universities worldwide</div>
+        <div class="card-desc">The OU Iranian Student Association held a campus rally in solidarity with ongoing protests in Iran following the death of Mahsa Amini.</div>
+        <div class="card-footer">
+          <span class="card-date">December 1, 2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Daily Sept 2022 South Oval -->
+    <a class="news-card" href="https://www.oudaily.com/news/ou-students-join-worldwide-protests-of-mahsa-aminis-death-in-iranian-police-custody/article_ac7acab4-0c7a-11ea-a3ec-3fa5469892f4.html" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">OU Daily · September 2022</div>
+        <div class="card-headline">OU students join worldwide protests of Mahsa Amini's death in Iranian police custody</div>
+        <div class="card-desc">OU students protested on the South Oval in solidarity with protesters in Iran following the death of Mahsa Amini in police custody.</div>
+        <div class="card-footer">
+          <span class="card-date">September 23, 2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Daily Scissortail Feb 2023 -->
+    <a class="news-card" href="https://www.oudaily.com/news/advocates-gather-at-scissortail-park-to-support-women-in-iran/article_205ccdfa-710a-11ed-9876-3fe7f533424e.html" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">OU Daily · February 2023</div>
+        <div class="card-headline">Advocates gather at Scissortail Park to support women in Iran</div>
+        <div class="card-desc">Nearly 70 demonstrators chanted "Women, life, freedom" outside Scissortail Park in continued solidarity with Iranian protesters.</div>
+        <div class="card-footer">
+          <span class="card-date">February 12, 2023</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Daily 2019 gas prices -->
+    <a class="news-card" href="https://www.oudaily.com/news/ou-students-to-hold-rally-to-support-iranian-protests-over-gas-prices-internet-blocks/article_ac7acab4-0c7a-11ea-a3ec-3fa5469892f4.html" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">OU Daily</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">OU Daily · November 2019</div>
+        <div class="card-headline">OU students to hold rally to support Iranian protests over gas prices, internet blocks</div>
+        <div class="card-desc">Peyman Hekmatpour, then a sociology graduate student, organized a campus rally following the Iranian government's internet shutdown and crackdown on fuel-price protests.</div>
+        <div class="card-footer">
+          <span class="card-date">November 21, 2019</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- ocolly Voices of Iran -->
+    <a class="news-card" href="https://ocolly.com/voices-of-iran" target="_blank" data-category="activism">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">O'Colly</span></div>
+        <span class="card-tag tag-activism">Activism</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">O'Colly · OSU Student Newspaper</div>
+        <div class="card-headline">See our best photos from Voices of Iran</div>
+        <div class="card-desc">Photo coverage of the Voices of Iran event at OSU's Student Union, featuring speakers from the Iranian community.</div>
+        <div class="card-footer">
+          <span class="card-date">February 5, 2026</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- FEATURED: Cornell / Phys.org DIY Faith 2026 -->
+    <a class="news-card featured" href="https://phys.org/news/2026-04-young-americans-abandoning-faith-theyre.html" target="_blank" data-category="scholarship">
+      <div class="card-thumb">
+        <img src="https://scx2.b-cdn.net/gfx/news/2026/young-americans-arent.jpg" alt="DIY Faith research" onerror="this.style.display='none'"/>
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Phys.org</span></div>
+        <span class="card-tag tag-scholarship">Scholarship</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">Phys.org · April 2026</div>
+        <div class="card-headline">Young Americans aren't abandoning faith — study suggests they're rebuilding it</div>
+        <div class="card-desc">Coverage of "DIY Faith," co-authored with Schnabel, Horwitz, and Schleifer in Contexts. The study finds young adults are leaving organized religion to pursue more personal, values-driven forms of spirituality.</div>
+        <div class="card-footer">
+          <span class="card-date">April 2026</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Cornell Chronicle DIY Religion 2025 -->
+    <a class="news-card" href="https://phys.org/news/2025-04-diy-religion-americans-faith-church.html" target="_blank" data-category="scholarship">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Cornell Chronicle</span></div>
+        <span class="card-tag tag-scholarship">Scholarship</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">Cornell Chronicle · April 2025</div>
+        <div class="card-headline">DIY religion: More Americans finding faith outside church</div>
+        <div class="card-desc">Coverage of "Breaking Free of the Iron Cage" published in Socius, tracing why large numbers of Americans are leaving organized religion for more individualized spiritual practice.</div>
+        <div class="card-footer">
+          <span class="card-date">April 14, 2025</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Christian Post -->
+    <a class="news-card" href="https://www.christianpost.com/news/americans-are-swapping-organized-religion-for-personal-truth-study.html" target="_blank" data-category="scholarship">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Christian Post</span></div>
+        <span class="card-tag tag-scholarship">Scholarship</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">Christian Post · April 2025</div>
+        <div class="card-headline">Americans are swapping organized religion for personal truth: study</div>
+        <div class="card-desc">A new study finds more Americans are leaving organized religion in search of personalized faith perspectives that embrace syncretism — coverage of the Breaking Free of the Iron Cage paper.</div>
+        <div class="card-footer">
+          <span class="card-date">April 16, 2025</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- PsyPost -->
+    <a class="news-card" href="https://www.psypost.org/millennials-are-abandoning-organized-religion-a-new-study-provides-insight-into-why/" target="_blank" data-category="scholarship">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">PsyPost</span></div>
+        <span class="card-tag tag-scholarship">Scholarship</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">PsyPost</div>
+        <div class="card-headline">Millennials are abandoning organized religion. A new study provides insight into why</div>
+        <div class="card-desc">Coverage of the research on religious individualization among young Americans, drawing on the longitudinal National Study of Youth and Religion data.</div>
+        <div class="card-footer">
+          <span class="card-date">2025</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- The Society Pages -->
+    <a class="news-card" href="https://thesocietypages.org/trot/2024/10/02/asian-americans-on-the-corporate-ladder/" target="_blank" data-category="scholarship">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Society Pages</span></div>
+        <span class="card-tag tag-scholarship">Scholarship</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">The Society Pages · October 2024</div>
+        <div class="card-headline">Asian Americans on the Corporate Ladder — There's Research on That</div>
+        <div class="card-desc">Public sociology coverage of research on income inequality and gendered disparities among Asian Americans, co-authored with Vo and Schleifer in Sociological Perspectives.</div>
+        <div class="card-footer">
+          <span class="card-date">October 2, 2024</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Dissertation Defense -->
+    <a class="news-card" href="https://www.ou.edu/cas/soc/News-and-Events/News/news-archive/2022/Hekmatpour-Defend-PhD-Dissertation" target="_blank" data-category="academic">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Univ. of Oklahoma</span></div>
+        <span class="card-tag tag-academic">Academic</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">University of Oklahoma · Department of Sociology</div>
+        <div class="card-headline">Hekmatpour successfully defends PhD dissertation</div>
+        <div class="card-desc">Announcement of Dr. Hekmatpour's successful dissertation defense — "Global vs. Local: Panel Analyses of Environmental, Economic, and Political Gender Inequities in Late Capitalism."</div>
+        <div class="card-footer">
+          <span class="card-date">2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- OU Accepts OSU position -->
+    <a class="news-card" href="https://www.ou.edu/cas/soc/News-and-Events/News/news-archive/2022/Hekmatpour-accepts-teaching-position" target="_blank" data-category="academic">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder"><span class="thumb-outlet">Univ. of Oklahoma</span></div>
+        <span class="card-tag tag-academic">Academic</span>
+      </div>
+      <div class="card-body">
+        <div class="card-outlet">University of Oklahoma · Department of Sociology</div>
+        <div class="card-headline">Hekmatpour accepts teaching position at Oklahoma State University</div>
+        <div class="card-desc">Announcement that Dr. Hekmatpour has accepted a Teaching Assistant Professor position in the Department of Sociology at Oklahoma State University's Tulsa campus.</div>
+        <div class="card-footer">
+          <span class="card-date">2022</span>
+          <span class="card-arrow">Read ↗</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+function toggleDropdown(e,el){e.preventDefault();const li=el.parentElement;const isOpen=li.classList.contains('open');document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));if(!isOpen)li.classList.add('open');}
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.has-dropdown'))document.querySelectorAll('.has-dropdown').forEach(d=>d.classList.remove('open'));});
+
+// Fix placeholder images - if img fails to load show the placeholder div
+document.querySelectorAll('.card-thumb img').forEach(img => {
+  img.addEventListener('error', function() {
+    this.style.display = 'none';
+    const placeholder = this.nextElementSibling;
+    if (placeholder && placeholder.classList.contains('card-thumb-placeholder')) {
+      placeholder.style.display = 'flex';
+    }
+  });
+});
+
+// Filter
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.news-card').forEach(card => {
+    if (cat === 'all' || card.dataset.category === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>
