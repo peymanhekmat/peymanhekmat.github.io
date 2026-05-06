@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subnational EUE &amp; Air Pollution — Peyman Hekmatpour, PhD</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <style>
@@ -98,15 +98,15 @@
     footer a{color:var(--gold-light);text-decoration:none;}
   </style>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-C0CB4TPWCY');
   </script>
-</head>
-<body>
+
+
 
 <nav>
   <div class="nav-inner">
@@ -150,7 +150,7 @@
 </div>
 
 <div class="copyright-banner">
-  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+  <p>© Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
 </div>
 
 <div class="main">
@@ -164,7 +164,7 @@
       <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">CFS Waves (2012, 2017, 2022)</span></div>
       <div class="stat-box"><span class="stat-num">.45</span><span class="stat-label">Net EUE Coefficient (µg/m³)</span></div>
     </div>
-    <p>This project extends ecologically unequal exchange (EUE) theory to the subnational level, asking whether the dynamics observed between nations — where net exporters of ecologically intensive goods bear disproportionate environmental costs — also operate across US counties. Using the Commodity Flow Survey (CFS) for 2012, 2017, and 2022, the study constructs a directed inter-county shipment network and derives four original measures capturing different dimensions of counties' ecological exchange positions. These are linked to EPA fine particulate matter (PM2.5) data in a county fixed-effects panel model.</p>
+    <p>This project extends ecologically unequal exchange (EUE) theory to the subnational level, asking whether the dynamics observed between nations where net exporters of ecologically intensive goods bear disproportionate environmental costs also operate across US counties. Using the Commodity Flow Survey (CFS) for 2012, 2017, and 2022, the study constructs a directed inter-county shipment network and derives four original measures capturing different dimensions of counties' ecological exchange positions. These are linked to EPA fine particulate matter (PM2.5) data in a county fixed-effects panel model.</p>
   </section>
 
   <section>
@@ -174,23 +174,23 @@
     <div class="formula-grid">
       <div class="formula-card">
         <h4>1. Net Ecologically Intensive Exchange Position</h4>
-        <div class="formula">EUE&#7522; = &Sigma;W&#7522;&#11388;D&#11388; &minus; &Sigma;W&#11388;&#7522;D&#11388;</div>
-        <div class="formula">EUE&#7522;<sup>norm</sup> = (Out&#7522; &minus; In&#7522;) / (Out&#7522; + In&#7522;)</div>
+        <div class="formula">EUEᵢ = ΣWᵢⱼDⱼ − ΣWⱼᵢDⱼ</div>
+        <div class="formula">EUEᵢ<sup>norm</sup> = (Outᵢ − Inᵢ) / (Outᵢ + Inᵢ)</div>
         <p>Net balance of ecologically intensive flows. Positive = net sender; negative = net receiver. Normalized to [-1, 1] for cross-county comparability.</p>
       </div>
       <div class="formula-card">
         <h4>2. Eco-Intensive Inflow Dependence</h4>
-        <div class="formula">Dep&#7522; = &Sigma;W&#11388;&#7522;D&#11388; / &Sigma;W&#11388;&#7522;</div>
+        <div class="formula">Depᵢ = ΣWⱼᵢDⱼ / ΣWⱼᵢ</div>
         <p>Share of all incoming flows that are ecologically intensive. Captures structural linkage to ecologically intensive activity through what a county receives rather than what it produces.</p>
       </div>
       <div class="formula-card">
         <h4>3. Eco-Intensive Production Share</h4>
-        <div class="formula">ProdShare&#7522; = &Sigma;W&#7522;&#11388;D&#11388; / &Sigma;W&#7522;&#11388;</div>
+        <div class="formula">ProdShareᵢ = ΣWᵢⱼDⱼ / ΣWᵢⱼ</div>
         <p>Share of a county's outgoing flows that are ecologically intensive. Higher values indicate that a larger share of what a county exports to the rest of the economy is environmentally burdensome production.</p>
       </div>
       <div class="formula-card">
         <h4>4. Transit &amp; Warehousing Share</h4>
-        <div class="formula">Med&#7522; = &Sigma;W&#7522;&#11388;<sup>(48-49)</sup> / &Sigma;W&#7522;&#11388;</div>
+        <div class="formula">Medᵢ = ΣWᵢⱼ<sup>(48-49)</sup> / ΣWᵢⱼ</div>
         <p>Share of outgoing flows from transportation and warehousing (NAICS 48-49). Identifies counties functioning as logistics intermediaries rather than production sites — a theoretically distinct ecological role.</p>
       </div>
     </div>
@@ -275,7 +275,7 @@
 </div>
 
 <footer>
-  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+  <p>© 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
 </footer>
 
 <script>
@@ -406,5 +406,5 @@ window.addEventListener('load', () => {
   drawCoef();
 });
 </script>
-</body>
-</html>
+
+
