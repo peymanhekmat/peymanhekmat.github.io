@@ -41,35 +41,39 @@
     .page-header-inner{max-width:1100px;margin:0 auto;}
     .page-header h1{font-family:'EB Garamond',serif;font-size:2.2rem;color:var(--white);font-weight:400;margin-bottom:0.3rem;}
     .page-header p{color:#b8c8e0;font-size:0.9rem;}
-    .page-header p a{color:var(--gold-light);}
+    .page-header a{color:var(--gold-light);text-decoration:none;}
     .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 260px;gap:3rem;align-items:start;}
     .year-block{margin-bottom:2.5rem;}
     .year-label{font-family:'EB Garamond',serif;font-size:1.8rem;color:var(--navy);font-weight:600;border-bottom:2px solid var(--gold);padding-bottom:0.4rem;margin-bottom:1.2rem;}
-    .pub-item{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--navy-light);margin-bottom:0.85rem;border-radius:0 4px 4px 0;overflow:hidden;transition:border-left-color 0.2s;}
+    .pub-item{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--navy-light);padding:1.1rem 1.3rem;margin-bottom:0.85rem;border-radius:0 4px 4px 0;transition:border-left-color 0.2s;overflow:hidden;}
+    .pub-item:hover{border-left-color:var(--gold);}
     .pub-item.open{border-left-color:var(--gold);}
-    .pub-header{padding:1rem 1.2rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
-    .pub-header:hover{background:var(--cream);}
+    .pub-header{cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
     .pub-main{flex:1;}
-    .pub-authors{font-size:0.85rem;color:var(--text-muted);margin-bottom:0.2rem;}
-    .pub-title{font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.2rem;}
-    .pub-journal{font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:0.4rem;}
-    .pub-footer{display:flex;align-items:center;gap:1rem;}
-    .pub-doi{font-size:0.78rem;color:var(--navy-light);text-decoration:none;font-weight:600;}
-    .pub-doi:hover{text-decoration:underline;}
+    .pub-authors{font-size:0.85rem;color:var(--text-muted);margin-bottom:0.3rem;}
+    .pub-authors strong{color:var(--navy);}
+    .pub-title{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--text);font-style:italic;margin-bottom:0.3rem;line-height:1.4;}
+    .pub-journal{font-size:0.85rem;color:var(--text-muted);margin-bottom:0.4rem;}
+    .pub-footer{display:flex;align-items:center;gap:1rem;margin-top:0.4rem;}
+    .pub-doi{display:inline-block;font-size:0.78rem;font-weight:600;color:var(--navy-light);text-decoration:none;letter-spacing:0.03em;border:1px solid var(--navy-light);padding:0.2rem 0.6rem;border-radius:2px;transition:all 0.2s;}
+    .pub-doi:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
     .abstract-hint{font-size:0.75rem;color:var(--text-muted);font-style:italic;}
     .pub-toggle{color:var(--text-muted);flex-shrink:0;transition:transform 0.25s;margin-top:0.2rem;}
     .pub-item.open .pub-toggle{transform:rotate(180deg);}
-    .pub-abstract{display:none;padding:0 1.2rem 1rem;border-top:1px solid var(--cream-dark);background:var(--cream);}
+    .pub-abstract{display:none;padding:0.75rem 0 0;border-top:1px solid var(--cream-dark);margin-top:0.75rem;}
     .pub-item.open .pub-abstract{display:block;}
-    .abstract-label{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy-light);margin:0.75rem 0 0.4rem;}
+    .abstract-label{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy-light);margin-bottom:0.4rem;}
     .pub-abstract p{font-size:0.85rem;color:var(--text-muted);line-height:1.65;}
     .sidebar{position:sticky;top:80px;}
     .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
     .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
-    .scholar-link{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.85rem;color:var(--navy);text-decoration:none;}
-    .scholar-link:last-child{border-bottom:none;}
-    .scholar-link:hover{color:var(--navy-light);}
-    .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    .scholar-link{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.75rem;background:var(--cream);border:1px solid var(--border);border-radius:3px;text-decoration:none;font-size:0.82rem;font-weight:600;color:var(--navy);transition:all 0.2s;margin-bottom:0.5rem;}
+    .scholar-link:last-child{margin-bottom:0;}
+    .scholar-link:hover{background:var(--navy);color:var(--white);}
+    .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .stat-row{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.88rem;}
+    .stat-row:last-child{border-bottom:none;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.4rem;color:var(--gold);font-weight:600;}
     @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}}
     footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
     footer a{color:var(--gold-light);text-decoration:none;}
@@ -131,9 +135,10 @@
 
   <aside class="sidebar">
     <div class="card">
-      <p class="card-title">Summary</p>
-      <div id="pub-count" style="font-family:'EB Garamond',serif;font-size:2rem;color:var(--gold);font-weight:600;text-align:center;padding:0.5rem 0;"></div>
-      <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;">peer-reviewed publications</p>
+      <p class="card-title">Publication Stats</p>
+      <div class="stat-row"><span>Total Articles</span><span class="stat-num" id="stat-total">—</span></div>
+      <div class="stat-row"><span>Journals</span><span class="stat-num" id="stat-journals">—</span></div>
+      <div class="stat-row"><span>Since</span><span class="stat-num" id="stat-since">—</span></div>
     </div>
     <div class="card">
       <p class="card-title">Academic Profiles</p>
@@ -148,14 +153,16 @@
       </a>
     </div>
     <div class="card">
-      <p class="card-title">Research Areas</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.8;">
-        Environmental Sociology<br>
-        Global Stratification<br>
-        Political Sociology<br>
-        Sociology of Religion<br>
-        Quantitative Methods
-      </p>
+      <p class="card-title">Key Journals</p>
+      <ul style="list-style:none;font-size:0.83rem;color:var(--text-muted);line-height:2;">
+        <li>Social Problems</li>
+        <li>British Journal of Sociology</li>
+        <li>Environmental Research</li>
+        <li>Comparative Sociology</li>
+        <li>Sociology of Religion</li>
+        <li>Sociological Perspectives</li>
+        <li>International Journal of Sociology</li>
+      </ul>
     </div>
   </aside>
 </div>
@@ -205,7 +212,11 @@ fetch('publications.json')
       html += '</div>';
     });
     document.getElementById('pub-main').innerHTML = html;
-    document.getElementById('pub-count').textContent = pubs.length;
+    document.getElementById('stat-total').textContent = pubs.length;
+    const journals = new Set(pubs.map(p => p.journal.split(' ')[0]));
+    document.getElementById('stat-journals').textContent = journals.size;
+    const years = pubs.map(p => parseInt(p.year)).filter(y => !isNaN(y));
+    document.getElementById('stat-since').textContent = Math.min(...years);
   })
   .catch(e => {
     document.getElementById('pub-main').innerHTML = '<p style="color:#c0392b;">Could not load publications: ' + e + '</p>';

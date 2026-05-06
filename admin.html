@@ -8,89 +8,74 @@
     :root{--navy:#0e1f3b;--navy-mid:#1a3260;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;--green:#27ae60;--red:#c0392b;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--text);font-size:15px;}
-
-    /* LOGIN */
     #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy);}
-    .login-box{background:var(--white);padding:2.5rem;border-radius:8px;width:340px;border-top:4px solid var(--gold);}
+    .login-box{background:var(--white);padding:2.5rem;border-radius:8px;width:360px;border-top:4px solid var(--gold);}
     .login-box h1{font-size:1.3rem;color:var(--navy);margin-bottom:0.3rem;}
     .login-box p{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;}
     .login-box input{width:100%;padding:0.65rem 0.85rem;border:1px solid var(--border);border-radius:4px;font-size:0.9rem;margin-bottom:0.75rem;outline:none;}
     .login-box input:focus{border-color:var(--navy);}
-    .btn{display:inline-block;padding:0.6rem 1.2rem;border:none;border-radius:4px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
-    .btn-primary{background:var(--navy);color:var(--white);width:100%;}
+    .field-hint{font-size:0.73rem;color:#999;margin-bottom:0.3rem;margin-top:-0.4rem;}
+    .btn-primary{background:var(--navy);color:var(--white);width:100%;padding:0.65rem;border:none;border-radius:4px;font-size:0.9rem;font-weight:600;cursor:pointer;}
     .btn-primary:hover{background:var(--navy-mid);}
     .login-error{color:var(--red);font-size:0.8rem;margin-top:0.5rem;display:none;}
-
-    /* MAIN */
     #main-screen{display:none;min-height:100vh;}
     header{background:var(--navy);border-bottom:3px solid var(--gold);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;}
     header h1{font-size:1rem;color:var(--white);font-weight:600;}
-    header .site-link{font-size:0.78rem;color:var(--gold-light);text-decoration:none;}
-    header .site-link:hover{text-decoration:underline;}
-    .btn-sm{padding:0.35rem 0.85rem;font-size:0.78rem;}
-    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#b8c8e0;}
-    .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);}
-
+    .site-link{font-size:0.78rem;color:var(--gold-light);text-decoration:none;}
+    .site-link:hover{text-decoration:underline;}
+    .btn-sm{padding:0.35rem 0.85rem;font-size:0.78rem;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#b8c8e0;border-radius:3px;cursor:pointer;}
+    .btn-sm:hover{border-color:var(--gold-light);color:var(--gold-light);}
     .layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 58px);}
-
-    /* SIDEBAR */
     .sidebar{background:var(--white);border-right:1px solid var(--border);padding:1.5rem 0;}
     .sidebar-label{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);padding:0 1.2rem;margin-bottom:0.4rem;margin-top:1rem;}
     .sidebar-label:first-child{margin-top:0;}
     .nav-item{display:block;width:100%;text-align:left;background:none;border:none;padding:0.55rem 1.2rem;font-size:0.85rem;color:var(--text);cursor:pointer;border-left:3px solid transparent;transition:all 0.15s;}
     .nav-item:hover{background:var(--cream);color:var(--navy);}
     .nav-item.active{background:var(--cream);color:var(--navy);border-left-color:var(--gold);font-weight:600;}
-
-    /* CONTENT */
     .content{padding:2rem;max-width:860px;}
     .content h2{font-size:1.2rem;color:var(--navy);margin-bottom:0.3rem;}
-    .content .page-desc{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;}
+    .page-desc{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;}
+    .alert{padding:0.7rem 1rem;border-radius:4px;font-size:0.83rem;margin-bottom:1rem;}
+    .alert-info{background:#e8f4fd;border:1px solid #b8d4f0;color:#1a5276;}
+    .alert-warn{background:#fef9e7;border:1px solid #f9e79f;color:#7d6608;}
 
-    /* EDITOR CARD */
-    .editor-card{background:var(--white);border:1px solid var(--border);border-radius:6px;margin-bottom:1.25rem;overflow:hidden;}
-    .editor-card-header{padding:0.7rem 1rem;background:var(--cream-dark);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+    /* TEXT EDITOR CARDS */
+    .editor-card{background:var(--white);border:1px solid var(--border);border-radius:6px;margin-bottom:0.85rem;overflow:hidden;}
+    .editor-card-header{padding:0.65rem 1rem;background:var(--cream-dark);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
     .editor-card-header:hover{background:#e5e0d5;}
     .editor-label{font-size:0.82rem;font-weight:600;color:var(--navy);}
-    .editor-type{font-size:0.7rem;color:var(--text-muted);background:var(--border);padding:0.15rem 0.5rem;border-radius:10px;}
     .editor-toggle{color:var(--text-muted);font-size:0.8rem;transition:transform 0.2s;}
     .editor-card.open .editor-toggle{transform:rotate(180deg);}
     .editor-body{display:none;padding:1rem;}
     .editor-card.open .editor-body{display:block;}
-    textarea.field{width:100%;border:1px solid var(--border);border-radius:4px;padding:0.65rem 0.8rem;font-size:0.85rem;font-family:inherit;line-height:1.6;resize:vertical;outline:none;min-height:80px;}
-    textarea.field:focus{border-color:var(--navy);}
-    input.field{width:100%;border:1px solid var(--border);border-radius:4px;padding:0.6rem 0.8rem;font-size:0.85rem;font-family:inherit;outline:none;}
-    input.field:focus{border-color:var(--navy);}
-    .field-label{font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em;}
+    .field-label{font-size:0.73rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em;}
     .field-group{margin-bottom:0.85rem;}
     .field-group:last-child{margin-bottom:0;}
+    textarea.field,input.field{width:100%;border:1px solid var(--border);border-radius:4px;padding:0.6rem 0.8rem;font-size:0.85rem;font-family:inherit;outline:none;}
+    textarea.field{resize:vertical;min-height:80px;line-height:1.6;}
+    textarea.field:focus,input.field:focus{border-color:var(--navy);}
+
+    /* JSON LIST EDITOR */
+    .list-item{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:0.9rem 1rem;margin-bottom:0.6rem;}
+    .item-grid-2{display:grid;grid-template-columns:120px 1fr;gap:0.5rem;}
+    .item-grid-half{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
+    .btn-add{background:var(--green);color:var(--white);padding:0.4rem 1rem;font-size:0.8rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;margin-bottom:0.85rem;display:block;}
+    .btn-add:hover{background:#219a52;}
+    .btn-remove{background:var(--red);color:var(--white);padding:0.28rem 0.7rem;font-size:0.75rem;font-weight:600;border:none;border-radius:3px;cursor:pointer;margin-top:0.6rem;}
+    .btn-remove:hover{background:#a93226;}
 
     /* SAVE BAR */
-    .save-bar{display:flex;align-items:center;gap:0.75rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
+    .save-bar{display:flex;align-items:center;gap:0.75rem;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);}
     .btn-save{background:var(--navy);color:var(--white);padding:0.5rem 1.4rem;font-size:0.85rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;}
     .btn-save:hover{background:var(--navy-mid);}
     .btn-save:disabled{opacity:0.5;cursor:not-allowed;}
     .save-status{font-size:0.8rem;}
     .save-status.saving{color:var(--text-muted);}
-    .save-status.success{color:var(--green);}
-    .save-status.error{color:var(--red);}
-
-    /* LIST EDITOR (publications, awards, courses) */
-    .list-item{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:0.8rem 1rem;margin-bottom:0.6rem;position:relative;}
-    .list-item-fields{display:grid;gap:0.5rem;}
-    .list-item-actions{display:flex;gap:0.5rem;margin-top:0.6rem;}
-    .btn-danger{background:var(--red);color:var(--white);padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:600;border:none;border-radius:3px;cursor:pointer;}
-    .btn-danger:hover{background:#a93226;}
-    .btn-add{background:var(--green);color:var(--white);padding:0.4rem 1rem;font-size:0.8rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;margin-bottom:1rem;}
-    .btn-add:hover{background:#219a52;}
-
-    /* LOADING */
-    .loading{color:var(--text-muted);font-size:0.88rem;padding:1rem 0;}
-    .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:0.4rem;vertical-align:middle;}
+    .save-status.ok{color:var(--green);}
+    .save-status.err{color:var(--red);}
+    .loading{color:var(--text-muted);font-size:0.88rem;padding:0.5rem 0;}
+    .spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:0.3rem;vertical-align:middle;}
     @keyframes spin{to{transform:rotate(360deg);}}
-
-    .alert{padding:0.7rem 1rem;border-radius:4px;font-size:0.83rem;margin-bottom:1rem;}
-    .alert-info{background:#e8f4fd;border:1px solid #b8d4f0;color:#1a5276;}
-    .alert-warn{background:#fef9e7;border:1px solid #f9e79f;color:#7d6608;}
   </style>
 </head>
 <body>
@@ -99,41 +84,38 @@
 <div id="login-screen">
   <div class="login-box">
     <h1>phekmat.com Admin</h1>
-    <p>Enter your password to access the dashboard.</p>
-    <input type="password" id="pwd-input" placeholder="Dashboard Password" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <div class="field-group" style="margin-bottom:0.75rem;">
-      <div style="font-size:0.75rem;color:#888;margin-bottom:0.3rem;">GitHub Personal Access Token</div>
-      <input type="password" id="token-input" placeholder="Paste your token here" style="width:100%;padding:0.65rem 0.85rem;border:1px solid #d0c9b8;border-radius:4px;font-size:0.9rem;outline:none;" onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
-    <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
-    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+    <p>Enter your credentials to access the dashboard.</p>
+    <input type="password" id="pwd-input" placeholder="Dashboard password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <p class="field-hint">GitHub Personal Access Token</p>
+    <input type="password" id="token-input" placeholder="Paste your token here" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    <p class="login-error" id="login-error"></p>
   </div>
 </div>
 
-<!-- MAIN DASHBOARD -->
+<!-- MAIN -->
 <div id="main-screen">
   <header>
     <h1>phekmat.com — Admin Dashboard</h1>
     <div style="display:flex;align-items:center;gap:1rem;">
       <a href="https://phekmat.com" target="_blank" class="site-link">View Site ↗</a>
-      <button class="btn btn-sm btn-outline" onclick="doLogout()">Sign Out</button>
+      <button class="btn-sm" onclick="doLogout()">Sign Out</button>
     </div>
   </header>
-
   <div class="layout">
     <nav class="sidebar">
       <div class="sidebar-label">Pages</div>
       <button class="nav-item active" onclick="loadPage('index')">Home</button>
       <button class="nav-item" onclick="loadPage('about')">About</button>
-      <button class="nav-item" onclick="loadPage('teaching')">Teaching</button>
-      <button class="nav-item" onclick="loadPage('awards')">Awards &amp; Grants</button>
-      <button class="nav-item" onclick="loadPage('publications')">Publications</button>
       <button class="nav-item" onclick="loadPage('contact')">Contact</button>
-      <div class="sidebar-label">Research</div>
+      <div class="sidebar-label">JSON Data</div>
+      <button class="nav-item" onclick="loadJSON('publications')">Publications</button>
+      <button class="nav-item" onclick="loadJSON('awards')">Awards &amp; Grants</button>
+      <button class="nav-item" onclick="loadJSON('courses')">Teaching Courses</button>
+      <div class="sidebar-label">Research Pages</div>
       <button class="nav-item" onclick="loadPage('project-eue')">EUE &amp; Air Pollution</button>
       <button class="nav-item" onclick="loadPage('project-fdi')">FDI &amp; Climate</button>
     </nav>
-
     <main class="content" id="content-area">
       <div class="loading"><span class="spinner"></span> Loading...</div>
     </main>
@@ -144,856 +126,370 @@
 // ── CONFIG ──
 const OWNER = 'peymanhekmat';
 const REPO  = 'peymanhekmat.github.io';
-let TOKEN = '';
-const PASS  = atob('cGhla21hdDIwMjVhZG1pbg==');  // password is base64 encoded
+let TOKEN   = '';
+const PASS  = atob('cGhla21hdDIwMjVhZG1pbg==');
 
-// ── LOGIN ──
+// ── AUTH ──
 function doLogin() {
   const pwd = document.getElementById('pwd-input').value;
   const tok = document.getElementById('token-input').value.trim();
-  if (pwd === PASS && tok.length > 20) {
-    TOKEN = tok;
-    sessionStorage.setItem('admin_auth', '1');
-    sessionStorage.setItem('admin_token', tok);
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-screen').style.display = 'block';
-    loadPage('index');
-  } else if (pwd !== PASS) {
-    document.getElementById('login-error').textContent = 'Incorrect password.';
-    document.getElementById('login-error').style.display = 'block';
-  } else {
-    document.getElementById('login-error').textContent = 'Please enter your GitHub Personal Access Token.';
-    document.getElementById('login-error').style.display = 'block';
-  }
+  const err = document.getElementById('login-error');
+  if (pwd !== PASS) { err.textContent = 'Incorrect password.'; err.style.display='block'; return; }
+  if (tok.length < 10) { err.textContent = 'Please enter your GitHub Personal Access Token.'; err.style.display='block'; return; }
+  TOKEN = tok;
+  sessionStorage.setItem('admin_auth','1');
+  sessionStorage.setItem('admin_token', tok);
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-screen').style.display='block';
+  loadPage('index');
 }
 function doLogout() {
-  sessionStorage.removeItem('admin_auth');
-  sessionStorage.removeItem('admin_token');
+  sessionStorage.clear();
   TOKEN = '';
   location.reload();
 }
-if (sessionStorage.getItem('admin_auth') === '1' && sessionStorage.getItem('admin_token')) {
+if (sessionStorage.getItem('admin_auth')==='1' && sessionStorage.getItem('admin_token')) {
   TOKEN = sessionStorage.getItem('admin_token');
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('main-screen').style.display = 'block';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-screen').style.display='block';
 }
 
 // ── GITHUB API ──
 async function ghGet(path) {
   const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
-    headers: { Authorization: `to` + `ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json' }
+    headers: { Authorization: `to`+`ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json' }
   });
   if (!r.ok) throw new Error(`GitHub API error: ${r.status}`);
   return r.json();
 }
-
 async function ghPut(path, content, sha, message) {
   const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
     method: 'PUT',
-    headers: { Authorization: `to` + `ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    headers: { Authorization: `to`+`ken ${TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
     body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha })
   });
   if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'Save failed'); }
   return r.json();
 }
 
+// ── STATE ──
 let currentFile = null;
 let currentSha  = null;
 let currentHTML = null;
+let jsonState   = {};  // { file, sha, data }
 
-// ── PAGE LOADER ──
-async function loadPage(pageKey) {
+// ── ACTIVE NAV ──
+function setActive(btn) {
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.nav-item[onclick="loadPage('${pageKey}')"]`).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════
+// HTML PAGE EDITOR
+// ═══════════════════════════════════════════
+async function loadPage(key, btn) {
+  if (btn) setActive(btn); else {
+    const b = document.querySelector(`.nav-item[onclick="loadPage('${key}')"]`);
+    if (b) setActive(b);
+  }
   const area = document.getElementById('content-area');
   area.innerHTML = '<div class="loading"><span class="spinner"></span> Loading page...</div>';
-  currentFile = pageKey + '.html';
+  currentFile = key + '.html';
   try {
     const data = await ghGet(currentFile);
     currentSha  = data.sha;
     currentHTML = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
-    renderEditor(pageKey, currentHTML);
+    renderHTMLEditor(key);
   } catch(e) {
     area.innerHTML = `<div class="alert alert-warn">Could not load ${currentFile}: ${e.message}</div>`;
   }
 }
 
+const PAGE_FIELDS = {
+  index: {
+    title: 'Home Page', desc: 'Edit homepage text.',
+    fields: [
+      { label: 'Subtitle / Role', sel: '.hero-subtitle', type: 'text' },
+      { label: 'Affiliations', sel: '.hero-affil', type: 'html' },
+      { label: 'Bio — Paragraph 1', sel: '.bio p:nth-of-type(1)', type: 'html' },
+      { label: 'Bio — Paragraph 2', sel: '.bio p:nth-of-type(2)', type: 'html' },
+      { label: 'Bio — Paragraph 3', sel: '.bio p:nth-of-type(3)', type: 'html' },
+    ]
+  },
+  about: {
+    title: 'About Page', desc: 'Edit biography chapters.',
+    fields: [
+      { label: 'Chapter 1 — Para 1', sel: '.chapter:nth-of-type(1) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 1 — Para 2', sel: '.chapter:nth-of-type(1) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 2 — Para 1', sel: '.chapter:nth-of-type(2) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 2 — Para 2', sel: '.chapter:nth-of-type(2) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 3 — Para 1', sel: '.chapter:nth-of-type(3) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 3 — Para 2', sel: '.chapter:nth-of-type(3) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 3 — Para 3', sel: '.chapter:nth-of-type(3) p:nth-of-type(3)', type: 'html' },
+      { label: 'Chapter 4 — Para 1', sel: '.chapter:nth-of-type(4) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 4 — Para 2', sel: '.chapter:nth-of-type(4) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 5 — Para 1', sel: '.chapter:nth-of-type(5) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 5 — Para 2', sel: '.chapter:nth-of-type(5) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 5 — Para 3', sel: '.chapter:nth-of-type(5) p:nth-of-type(3)', type: 'html' },
+      { label: 'Chapter 5 — Para 4', sel: '.chapter:nth-of-type(5) p:nth-of-type(4)', type: 'html' },
+      { label: 'Chapter 6 — Para 1', sel: '.chapter:nth-of-type(6) p:nth-of-type(1)', type: 'html' },
+      { label: 'Chapter 6 — Para 2', sel: '.chapter:nth-of-type(6) p:nth-of-type(2)', type: 'html' },
+      { label: 'Chapter 6 — Para 3', sel: '.chapter:nth-of-type(6) p:nth-of-type(3)', type: 'html' },
+    ]
+  },
+  contact: {
+    title: 'Contact Page', desc: 'Edit contact information.',
+    fields: [
+      { label: 'Email', sel: 'a[href^="mailto"]', type: 'text' },
+      { label: 'Phone', sel: 'a[href^="tel"]', type: 'text' },
+    ]
+  },
+  'project-eue': {
+    title: 'EUE Project Page', desc: 'Edit overview and findings text.',
+    fields: [
+      { label: 'Overview — Para 1', sel: 'section:nth-of-type(1) p:nth-of-type(1)', type: 'html' },
+      { label: 'Overview — Para 2', sel: 'section:nth-of-type(1) p:nth-of-type(2)', type: 'html' },
+      { label: 'Network Measures — Para 1', sel: 'section:nth-of-type(2) p:nth-of-type(1)', type: 'html' },
+      { label: 'Network Measures — Para 2', sel: 'section:nth-of-type(2) p:nth-of-type(2)', type: 'html' },
+      { label: 'Network Measures — Para 3', sel: 'section:nth-of-type(2) p:nth-of-type(3)', type: 'html' },
+      { label: 'Key Findings — Para 1', sel: 'section:last-of-type p:nth-of-type(1)', type: 'html' },
+      { label: 'Key Findings — Para 2', sel: 'section:last-of-type p:nth-of-type(2)', type: 'html' },
+      { label: 'Key Findings — Para 3', sel: 'section:last-of-type p:nth-of-type(3)', type: 'html' },
+    ]
+  },
+  'project-fdi': {
+    title: 'FDI Project Page', desc: 'Edit overview and findings text.',
+    fields: [
+      { label: 'Overview — Para 1', sel: 'section:nth-of-type(1) p:nth-of-type(1)', type: 'html' },
+      { label: 'Overview — Para 2', sel: 'section:nth-of-type(1) p:nth-of-type(2)', type: 'html' },
+      { label: 'Index Description — Para 1', sel: 'section:nth-of-type(2) p:nth-of-type(1)', type: 'html' },
+      { label: 'Index Description — Para 2', sel: 'section:nth-of-type(2) p:nth-of-type(2)', type: 'html' },
+      { label: 'Key Findings — Para 1', sel: 'section:last-of-type p:nth-of-type(1)', type: 'html' },
+      { label: 'Key Findings — Para 2', sel: 'section:last-of-type p:nth-of-type(2)', type: 'html' },
+      { label: 'Key Findings — Para 3', sel: 'section:last-of-type p:nth-of-type(3)', type: 'html' },
+    ]
+  },
+};
 
-// ── JSON FILE EDITORS ──
-let jsonCache = {};
-
-async function loadJSON(filename) {
-  if (jsonCache[filename]) return jsonCache[filename];
-  const res = await ghGet(filename);
-  const data = JSON.parse(atob(res.content.replace(/\n/g,'')));
-  jsonCache[filename] = { data, sha: res.sha };
-  return jsonCache[filename];
-}
-
-async function saveJSON(filename, data) {
-  const cached = jsonCache[filename];
-  if (!cached) throw new Error('No cached SHA for ' + filename);
-  const content = JSON.stringify(data, null, 2);
-  const result = await ghPut(filename, content, cached.sha, `Dashboard update: ${filename}`);
-  // Refresh SHA
-  const fresh = await ghGet(filename);
-  jsonCache[filename] = { data, sha: fresh.sha };
-  return result;
-}
-
-async function renderJSONEditor(type, idx, body) {
-  body.innerHTML = '<div class="loading"><span class="spinner"></span> Loading data...</div>';
-  const fileMap = { 'json-publications': 'publications.json', 'json-awards': 'awards.json', 'json-courses': 'courses.json' };
-  const filename = fileMap[type];
-  try {
-    const { data } = await loadJSON(filename);
-    if (type === 'json-publications') renderPubEditor(data, body, filename);
-    else if (type === 'json-awards') renderAwardEditor(data, body, filename);
-    else if (type === 'json-courses') renderCourseEditor(data, body, filename);
-  } catch(e) {
-    body.innerHTML = `<div class="alert alert-warn">Could not load ${filename}: ${e.message}</div>`;
-  }
-}
-
-// PUBLICATIONS JSON EDITOR
-function renderPubEditor(pubs, body, filename) {
-  body.innerHTML = `<button class="btn-add" onclick="addJsonPub('${filename}')">+ Add Publication</button><div id="json-pub-list"></div>
-    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','publications')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
-  const list = document.getElementById('json-pub-list');
-  pubs.forEach((p,i) => renderJsonPubItem(p, i, list, filename));
-}
-
-function renderJsonPubItem(p, i, container, filename) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.innerHTML = `
-    <div style="display:grid;grid-template-columns:90px 1fr;gap:0.5rem;margin-bottom:0.5rem;">
-      <div class="field-group"><div class="field-label">Year</div><input class="field" data-key="year" value="${escHtml(p.year||'')}"/></div>
-      <div class="field-group"><div class="field-label">Authors</div><input class="field" data-key="authors" value="${escHtml(p.authors||'')}"/></div>
-    </div>
-    <div class="field-group"><div class="field-label">Title</div><input class="field" data-key="title" value="${escHtml(p.title||'')}"/></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
-      <div class="field-group"><div class="field-label">Journal</div><input class="field" data-key="journal" value="${escHtml(p.journal||'')}"/></div>
-      <div class="field-group"><div class="field-label">DOI URL</div><input class="field" data-key="doi" value="${escHtml(p.doi||'')}"/></div>
-    </div>
-    <div class="field-group"><div class="field-label">Abstract</div><textarea class="field" data-key="abstract" rows="3">${escHtml(p.abstract||'')}</textarea></div>
-    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
-  container.appendChild(div);
-}
-
-function addJsonPub(filename) {
-  const list = document.getElementById('json-pub-list');
-  renderJsonPubItem({year:'',authors:'',title:'',journal:'',doi:'',abstract:''}, list.children.length, list, filename);
-  list.lastElementChild.scrollIntoView({behavior:'smooth'});
-}
-
-// AWARDS JSON EDITOR
-function renderAwardEditor(awards, body, filename) {
-  body.innerHTML = `<button class="btn-add" onclick="addJsonAward('${filename}')">+ Add Award</button><div id="json-award-list"></div>
-    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','awards')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
-  const list = document.getElementById('json-award-list');
-  awards.forEach((a,i) => renderJsonAwardItem(a, i, list));
-}
-
-function renderJsonAwardItem(a, i, container) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.innerHTML = `
-    <div style="display:grid;grid-template-columns:120px 1fr;gap:0.5rem;margin-bottom:0.5rem;">
-      <div class="field-group"><div class="field-label">Year</div><input class="field" data-key="year" value="${escHtml(a.year||'')}"/></div>
-      <div class="field-group"><div class="field-label">Title</div><input class="field" data-key="title" value="${escHtml(a.title||'')}"/></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
-      <div class="field-group"><div class="field-label">Institution</div><input class="field" data-key="institution" value="${escHtml(a.institution||'')}"/></div>
-      <div class="field-group"><div class="field-label">Amount (optional)</div><input class="field" data-key="amount" value="${escHtml(a.amount||'')}"/></div>
-    </div>
-    <div class="field-group"><div class="field-label">Description</div><textarea class="field" data-key="description" rows="3">${escHtml(a.description||'')}</textarea></div>
-    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
-  container.appendChild(div);
-}
-
-function addJsonAward(filename) {
-  const list = document.getElementById('json-award-list');
-  renderJsonAwardItem({year:'',title:'',institution:'',amount:'',description:''}, list.children.length, list);
-  list.lastElementChild.scrollIntoView({behavior:'smooth'});
-}
-
-// COURSES JSON EDITOR
-function renderCourseEditor(courses, body, filename) {
-  body.innerHTML = `<button class="btn-add" onclick="addJsonCourse('${filename}')">+ Add Course</button><div id="json-course-list"></div>
-    <div class="save-bar"><button class="btn-save" onclick="saveJsonData('${filename}','courses')">Save &amp; Publish</button><span class="save-status" id="json-save-status"></span></div>`;
-  const list = document.getElementById('json-course-list');
-  courses.forEach((c,i) => renderJsonCourseItem(c, i, list));
-}
-
-function renderJsonCourseItem(c, i, container) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;">
-      <div class="field-group"><div class="field-label">Category</div><input class="field" data-key="category" value="${escHtml(c.category||'')}"/></div>
-      <div class="field-group"><div class="field-label">Course Code / Info</div><input class="field" data-key="code" value="${escHtml(c.code||'')}"/></div>
-    </div>
-    <div class="field-group"><div class="field-label">Course Title</div><input class="field" data-key="title" value="${escHtml(c.title||'')}"/></div>
-    <div class="field-group"><div class="field-label">Description</div><textarea class="field" data-key="description" rows="3">${escHtml(c.description||'')}</textarea></div>
-    <div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div>`;
-  container.appendChild(div);
-}
-
-function addJsonCourse(filename) {
-  const list = document.getElementById('json-course-list');
-  renderJsonCourseItem({category:'',title:'',code:'',description:''}, list.children.length, list);
-  list.lastElementChild.scrollIntoView({behavior:'smooth'});
-}
-
-// SAVE JSON DATA
-async function saveJsonData(filename, type) {
-  const statusEl = document.getElementById('json-save-status');
-  statusEl.className = 'save-status saving';
-  statusEl.textContent = 'Saving...';
-
-  const listId = type === 'publications' ? 'json-pub-list' : type === 'awards' ? 'json-award-list' : 'json-course-list';
-  const list = document.getElementById(listId);
-  const items = [];
-  list.querySelectorAll('.list-item').forEach(el => {
-    const item = {};
-    el.querySelectorAll('[data-key]').forEach(inp => {
-      item[inp.dataset.key] = inp.tagName === 'TEXTAREA' ? inp.value : inp.value;
-    });
-    items.push(item);
-  });
-
-  try {
-    await saveJSON(filename, items);
-    statusEl.className = 'save-status success';
-    statusEl.textContent = 'Saved and published!';
-    setTimeout(() => { statusEl.textContent = ''; }, 4000);
-  } catch(e) {
-    statusEl.className = 'save-status error';
-    statusEl.textContent = 'Error: ' + e.message;
-  }
-}
-
-// ── EXTRACT HELPERS ──
-function extractTag(html, selector) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const el = div.querySelector(selector);
+function getFromHTML(html, sel) {
+  const d = document.createElement('div');
+  d.innerHTML = html;
+  const el = d.querySelector(sel);
   return el ? el.innerHTML.trim() : '';
 }
-
-function extractText(html, selector) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const el = div.querySelector(selector);
-  return el ? el.textContent.trim() : '';
+function setInHTML(html, sel, val) {
+  const d = document.createElement('div');
+  d.innerHTML = html;
+  const el = d.querySelector(sel);
+  if (el) el.innerHTML = val;
+  return d.innerHTML;
 }
 
-function replaceInner(html, selector, newInner) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const el = div.querySelector(selector);
-  if (el) el.innerHTML = newInner;
-  return div.innerHTML;
-}
-
-function replaceText(html, selector, newText) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const el = div.querySelector(selector);
-  if (el) el.textContent = newText;
-  return div.innerHTML;
-}
-
-// ── RENDER EDITOR ──
-function renderEditor(pageKey, html) {
+function renderHTMLEditor(key) {
+  const cfg = PAGE_FIELDS[key];
   const area = document.getElementById('content-area');
-  const configs = getPageConfig(pageKey, html);
-  if (!configs) {
-    area.innerHTML = `<h2>${pageKey}.html</h2><p class="page-desc">This page does not have an editor configuration yet.</p>`;
-    return;
-  }
-  area.innerHTML = `
-    <h2>${configs.title}</h2>
-    <p class="page-desc">${configs.desc}</p>
-    <div class="alert alert-info">Changes are saved directly to GitHub and go live within 1-2 minutes.</div>
-    <div id="editors"></div>
-    <div class="save-bar">
-      <button class="btn-save" id="save-btn" onclick="savePage()">Save &amp; Publish</button>
-      <span class="save-status" id="save-status"></span>
-    </div>`;
-  renderFields(configs.fields);
-}
-
-function renderFields(fields) {
-  const container = document.getElementById('editors');
-  fields.forEach((f, i) => {
-    const card = document.createElement('div');
-    card.className = 'editor-card';
-    card.dataset.fieldIndex = i;
-    card.innerHTML = `
-      <div class="editor-card-header" onclick="toggleCard(this)">
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-          <span class="editor-label">${f.label}</span>
-          <span class="editor-type">${f.type}</span>
-        </div>
+  if (!cfg) { area.innerHTML = `<h2>${key}</h2><p class="page-desc">No editor for this page.</p>`; return; }
+  let html = `<h2>${cfg.title}</h2><p class="page-desc">${cfg.desc}</p>
+    <div class="alert alert-info">Changes save directly to GitHub and go live in 1-2 minutes.</div>
+    <div id="fields">`;
+  cfg.fields.forEach((f, i) => {
+    const val = getFromHTML(currentHTML, f.sel) || '';
+    const input = f.type === 'text'
+      ? `<input class="field" data-idx="${i}" value="${val.replace(/"/g,'&quot;')}"/>`
+      : `<textarea class="field" data-idx="${i}" rows="3">${val}</textarea>`;
+    html += `<div class="editor-card" id="card-${i}">
+      <div class="editor-card-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="editor-label">${f.label}</span>
         <span class="editor-toggle">▼</span>
       </div>
-      <div class="editor-body" id="field-body-${i}"></div>`;
-    container.appendChild(card);
-    renderFieldBody(f, i);
-  });
-}
-
-function toggleCard(header) {
-  header.parentElement.classList.toggle('open');
-}
-
-function renderFieldBody(field, idx) {
-  const body = document.getElementById(`field-body-${idx}`);
-  if (field.type === 'json') {
-    renderJSONEditor(field, idx, body);
-    return;
-  }
-  if (field.type === 'text' || field.type === 'textarea') {
-    // Use innerHTML for textarea (preserves <br>, <strong> etc), textContent for plain input
-    const val = field.type === 'textarea'
-      ? extractTag(currentHTML, field.selector)
-      : extractText(currentHTML, field.selector);
-    body.innerHTML = `
-      <div class="field-group">
-        <div class="field-label">${field.label}</div>
-        ${field.type === 'textarea'
-          ? `<textarea class="field" data-selector="${field.selector}" data-mode="inner" rows="4">${escHtml(val)}</textarea>`
-          : `<input class="field" type="text" data-selector="${field.selector}" data-mode="text" value="${escHtml(val)}"/>`}
-      </div>`;
-  } else if (field.type === 'list') {
-    renderListField(field, idx, body);
-  } else if (field.type === 'publications') {
-    renderPublications(body);
-  } else if (['json-publications','json-awards','json-courses'].includes(field.type)) {
-    renderJSONEditor(field.type, idx, body);
-  }
-}
-
-// ── PUBLICATIONS EDITOR ──
-function parsePubs(html) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const pubs = [];
-  div.querySelectorAll('.year-block').forEach(block => {
-    const year = block.querySelector('.year-label') ? block.querySelector('.year-label').textContent.trim() : '';
-    block.querySelectorAll('.pub-item').forEach(item => {
-      const authEl = item.querySelector('.pub-authors');
-      const authors = authEl ? authEl.textContent.trim() : '';
-      const title = item.querySelector('.pub-title') ? item.querySelector('.pub-title').textContent.trim() : '';
-      const journal = item.querySelector('.pub-journal') ? item.querySelector('.pub-journal').textContent.trim() : '';
-      const doiEl = item.querySelector('a.pub-doi');
-      const doi = doiEl ? doiEl.getAttribute('href') : '';
-      const abstractEl = item.querySelector('.pub-abstract-text') || item.querySelector('.abstract-body p');
-      const abstract = abstractEl ? abstractEl.textContent.trim() : '';
-      pubs.push({ year, authors, title, journal, doi, abstract });
-    });
-  });
-  return pubs;
-}
-
-function renderPublications(body) {
-  const pubs = parsePubs(currentHTML);
-  body.innerHTML = `<button class="btn-add" onclick="addPub()">+ Add Publication</button><div id="pub-list"></div>`;
-  const list = document.getElementById('pub-list');
-  pubs.forEach((p, i) => renderPubItem(p, i, list));
-}
-
-function renderPubItem(p, i, container) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.dataset.pubIdx = i;
-  div.innerHTML = `
-    <div class="list-item-fields">
-      <div style="display:grid;grid-template-columns:100px 1fr;gap:0.5rem;">
-        <div class="field-group">
-          <div class="field-label">Year</div>
-          <input class="field" type="text" data-key="year" value="${escHtml(p.year)}"/>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Authors</div>
-          <input class="field" type="text" data-key="authors" value="${escHtml(p.authors)}"/>
-        </div>
-      </div>
-      <div class="field-group">
-        <div class="field-label">Title</div>
-        <input class="field" type="text" data-key="title" value="${escHtml(p.title)}"/>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-        <div class="field-group">
-          <div class="field-label">Journal</div>
-          <input class="field" type="text" data-key="journal" value="${escHtml(p.journal)}"/>
-        </div>
-        <div class="field-group">
-          <div class="field-label">DOI URL</div>
-          <input class="field" type="text" data-key="doi" value="${escHtml(p.doi)}"/>
-        </div>
-      </div>
-      <div class="field-group">
-        <div class="field-label">Abstract</div>
-        <textarea class="field" data-key="abstract" rows="3">${escHtml(p.abstract)}</textarea>
-      </div>
-    </div>
-    <div class="list-item-actions">
-      <button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button>
+      <div class="editor-body"><div class="field-group">${input}</div></div>
     </div>`;
-  container.appendChild(div);
-}
-
-function addPub() {
-  const list = document.getElementById('pub-list');
-  const i = list.children.length;
-  renderPubItem({ year:'', authors:'', title:'', journal:'', doi:'', abstract:'' }, i, list);
-  list.lastElementChild.scrollIntoView({ behavior:'smooth' });
-}
-
-function collectPubs() {
-  const items = [];
-  document.querySelectorAll('#pub-list .list-item').forEach(el => {
-    const item = {};
-    el.querySelectorAll('[data-key]').forEach(inp => {
-      item[inp.dataset.key] = inp.value || inp.textContent;
-    });
-    items.push(item);
   });
-  return items;
-}
-
-function rebuildPubsHTML(html, pubs) {
-  // Use regex to cleanly replace everything between <main> tags
-  // First build the new year-blocks HTML string
-  const byYear = {};
-  pubs.forEach(p => {
-    const y = (p.year || 'N/A').trim();
-    if (!byYear[y]) byYear[y] = [];
-    byYear[y].push(p);
-  });
-
-  const years = Object.keys(byYear).sort((a,b) => parseInt(b) - parseInt(a));
-
-  let blocksHTML = '';
-  years.forEach(year => {
-    blocksHTML += `\n    <div class="year-block">\n      <div class="year-label">${year}</div>\n`;
-    byYear[year].forEach(p => {
-      const authDisplay = (p.authors||'').replace(/Peyman Hekmatpour/g, '<strong>Peyman Hekmatpour</strong>');
-      blocksHTML += `      <div class="pub-item">
-        <div class="pub-header" onclick="toggleAbstract(this)">
-          <div class="pub-main">
-            <p class="pub-authors">${authDisplay}</p>
-            <p class="pub-title">${p.title||''}</p>
-            <p class="pub-journal">${p.journal||''}</p>
-            <div class="pub-footer">
-              ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">DOI ↗</a>` : ''}
-              ${p.abstract ? '<span class="abstract-hint">Click to view abstract</span>' : ''}
-            </div>
-          </div>
-          <div class="pub-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-        </div>
-        ${p.abstract ? `<div class="pub-abstract"><p class="abstract-label">Abstract</p><p>${p.abstract}</p></div>` : ''}
-      </div>\n`;
-    });
-    blocksHTML += `    </div>\n`;
-  });
-
-  // Replace all content inside <main>...</main> cleanly using regex
-  const newMain = `<main>\n${blocksHTML}  </main>`;
-  return html.replace(/<main>[\s\S]*?<\/main>/, newMain);
-}
-
-function renderListField(field, idx, body) {
-  const items = parseList(currentHTML, field);
-  body.innerHTML = `
-    <button class="btn-add" onclick="addListItem(${idx})">+ Add ${field.itemLabel}</button>
-    <div id="list-items-${idx}"></div>`;
-  const container = document.getElementById(`list-items-${idx}`);
-  items.forEach((item, j) => renderListItem(field, idx, j, item, container));
-  body.dataset.fieldIdx = idx;
-}
-
-function renderListItem(field, fieldIdx, itemIdx, item, container) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.dataset.itemIdx = itemIdx;
-  let fieldsHTML = '<div class="list-item-fields">';
-  field.itemFields.forEach(f => {
-    fieldsHTML += `
-      <div class="field-group">
-        <div class="field-label">${f.label}</div>
-        <input class="field" type="text" data-key="${f.key}" value="${escHtml(item[f.key] || '')}"/>
-      </div>`;
-  });
-  fieldsHTML += '</div>';
-  fieldsHTML += `<div class="list-item-actions">
-    <button class="btn-danger" onclick="removeListItem(this)">Remove</button>
+  html += `</div><div class="save-bar">
+    <button class="btn-save" id="save-btn" onclick="saveHTML('${key}')">Save &amp; Publish</button>
+    <span class="save-status" id="save-status"></span>
   </div>`;
-  div.innerHTML = fieldsHTML;
-  container.appendChild(div);
+  area.innerHTML = html;
 }
 
-function addListItem(fieldIdx) {
-  const field = getPageConfig(getCurrentPageKey(), currentHTML).fields[fieldIdx];
-  const container = document.getElementById(`list-items-${fieldIdx}`);
-  const newItem = {};
-  field.itemFields.forEach(f => newItem[f.key] = '');
-  const itemIdx = container.children.length;
-  renderListItem(field, fieldIdx, itemIdx, newItem, container);
-}
-
-function removeListItem(btn) {
-  btn.closest('.list-item').remove();
-}
-
-function getCurrentPageKey() {
-  return currentFile.replace('.html','');
-}
-
-// ── PARSE LIST ITEMS FROM HTML ──
-function parseList(html, field) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const items = [];
-  div.querySelectorAll(field.itemSelector).forEach(el => {
-    const item = {};
-    field.itemFields.forEach(f => {
-      const sub = el.querySelector(f.subSelector);
-      item[f.key] = sub ? sub.textContent.trim() : el.textContent.trim();
-    });
-    items.push(item);
-  });
-  return items;
-}
-
-// ── COLLECT AND SAVE ──
-function collectChanges() {
-  let html = currentHTML;
-  // Text/textarea fields
-  document.querySelectorAll('.field[data-selector]').forEach(el => {
-    const selector = el.dataset.selector;
-    const mode = el.dataset.mode;
-    const val = el.value;
-    if (mode === 'text') html = replaceText(html, selector, val);
-    else html = replaceInner(html, selector, val);
-  });
-  // List fields
-  document.querySelectorAll('[id^="list-items-"]').forEach(container => {
-    const fieldIdx = parseInt(container.id.replace('list-items-',''));
-    const field = getPageConfig(getCurrentPageKey(), currentHTML).fields[fieldIdx];
-    if (!field || field.type !== 'list') return;
-    const items = [];
-    container.querySelectorAll('.list-item').forEach(itemEl => {
-      const item = {};
-      itemEl.querySelectorAll('input[data-key]').forEach(inp => {
-        item[inp.dataset.key] = inp.value;
-      });
-      items.push(item);
-    });
-    html = rebuildList(html, field, items);
-  });
-  // Publications
-  if (document.getElementById('pub-list')) {
-    const pubs = collectPubs();
-    html = rebuildPubsHTML(html, pubs);
-  }
-  return html;
-}
-
-function rebuildList(html, field, items) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const container = div.querySelector(field.containerSelector);
-  if (!container) return html;
-  // Remove existing items
-  container.querySelectorAll(field.itemSelector).forEach(el => el.remove());
-  // Re-add new items
-  items.forEach(item => {
-    const newEl = document.createElement(field.itemTag || 'div');
-    newEl.className = field.itemClass || '';
-    newEl.innerHTML = field.renderItem(item);
-    container.appendChild(newEl);
-  });
-  return div.innerHTML;
-}
-
-async function savePage() {
-  // Check if this page uses JSON editing
-  const jsonContainer = document.querySelector('[id^="json-items-"]');
-  if (jsonContainer) {
-    const fieldIdx = jsonContainer.id.replace('json-items-','');
-    const config = getPageConfig(getCurrentPageKey(), currentHTML);
-    const field = config.fields[parseInt(fieldIdx)];
-    if (field && field.file) {
-      await saveJSONPage(field.file, fieldIdx);
-      return;
-    }
-  }
-  // Also handle publications if pub-list exists
-  if (document.getElementById('pub-list')) {
-    const config = getPageConfig(getCurrentPageKey(), currentHTML);
-    const field = config.fields.find(f => f.file === 'publications.json');
-    if (field) {
-      await saveJSONPage('publications.json', 0);
-      return;
-    }
-  }
+async function saveHTML(key) {
   const btn = document.getElementById('save-btn');
   const status = document.getElementById('save-status');
-  btn.disabled = true;
-  status.className = 'save-status saving';
-  status.textContent = 'Saving...';
+  btn.disabled = true; status.className='save-status saving'; status.textContent='Saving...';
   try {
-    const newHTML = collectChanges();
-    await ghPut(currentFile, newHTML, currentSha, `Dashboard update: ${currentFile}`);
-    currentHTML = newHTML;
+    const cfg = PAGE_FIELDS[key];
+    let html = currentHTML;
+    document.querySelectorAll('#fields [data-idx]').forEach(el => {
+      const f = cfg.fields[+el.dataset.idx];
+      html = setInHTML(html, f.sel, el.value);
+    });
+    await ghPut(currentFile, html, currentSha, `Dashboard update: ${currentFile}`);
+    currentHTML = html;
     const fresh = await ghGet(currentFile);
     currentSha = fresh.sha;
-    status.className = 'save-status success';
-    status.textContent = 'Saved and published!';
-    setTimeout(() => { status.textContent = ''; }, 4000);
+    status.className='save-status ok'; status.textContent='Saved and published!';
+    setTimeout(()=>{ status.textContent=''; }, 4000);
   } catch(e) {
-    status.className = 'save-status error';
-    status.textContent = 'Error: ' + e.message;
+    status.className='save-status err'; status.textContent='Error: '+e.message;
   }
   btn.disabled = false;
 }
 
-function escHtml(str) {
-  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+// ═══════════════════════════════════════════
+// JSON DATA EDITOR
+// ═══════════════════════════════════════════
+const JSON_SCHEMAS = {
+  publications: {
+    title: 'Publications',
+    desc: 'Add, edit or remove publications.',
+    file: 'publications.json',
+    fields: [
+      { key:'year',     label:'Year',     wide: false },
+      { key:'authors',  label:'Authors',  wide: true  },
+      { key:'title',    label:'Title',    wide: true  },
+      { key:'journal',  label:'Journal',  wide: true  },
+      { key:'doi',      label:'DOI URL',  wide: true  },
+      { key:'abstract', label:'Abstract', textarea: true },
+    ]
+  },
+  awards: {
+    title: 'Awards & Grants',
+    desc: 'Add, edit or remove awards.',
+    file: 'awards.json',
+    fields: [
+      { key:'year',        label:'Year',        wide: false },
+      { key:'title',       label:'Title',       wide: true  },
+      { key:'institution', label:'Institution', wide: true  },
+      { key:'amount',      label:'Amount',      wide: true  },
+      { key:'description', label:'Description', textarea: true },
+    ]
+  },
+  courses: {
+    title: 'Teaching Courses',
+    desc: 'Add, edit or remove courses.',
+    file: 'courses.json',
+    fields: [
+      { key:'category',    label:'Category', hint:'Methods & Statistics | Inequality & Stratification | Environmental Sociology | General Education', wide: true },
+      { key:'title',       label:'Title',    wide: true },
+      { key:'code',        label:'Code / Info', wide: true },
+      { key:'description', label:'Description', textarea: true },
+    ]
+  }
+};
 
-// ── PAGE CONFIGS ──
-function getPageConfig(pageKey, html) {
-  const configs = {
-
-    'index': {
-      title: 'Home Page',
-      desc: 'Edit the homepage hero text, bio, and sidebar content.',
-      fields: [
-        { label: 'Subtitle / Role', type: 'text', selector: '.hero-subtitle' },
-        { label: 'Affiliations (use <br> for line breaks)', type: 'textarea', selector: '.hero-affil' },
-        { label: 'About Bio — Paragraph 1', type: 'textarea', selector: '.bio p:nth-of-type(1)' },
-        { label: 'About Bio — Paragraph 2', type: 'textarea', selector: '.bio p:nth-of-type(2)' },
-        { label: 'About Bio — Paragraph 3', type: 'textarea', selector: '.bio p:nth-of-type(3)' },
-      ]
-    },
-
-    'about': {
-      title: 'About Page',
-      desc: 'Edit the narrative biography text.',
-      fields: [
-        { label: 'Amirkabir — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(1) p:nth-of-type(1)' },
-        { label: 'Amirkabir — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(1) p:nth-of-type(2)' },
-        { label: 'Tehran University — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(2) p:nth-of-type(1)' },
-        { label: 'Tehran University — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(2) p:nth-of-type(2)' },
-        { label: 'OU PhD — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(1)' },
-        { label: 'OU PhD — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(2)' },
-        { label: 'OU PhD — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(3) p:nth-of-type(3)' },
-        { label: 'Graduation — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(4) p:nth-of-type(1)' },
-        { label: 'Graduation — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(4) p:nth-of-type(2)' },
-        { label: 'Activism — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(1)' },
-        { label: 'Activism — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(2)' },
-        { label: 'Activism — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(3)' },
-        { label: 'Activism — Para 4', type: 'textarea', selector: '.chapter:nth-of-type(5) p:nth-of-type(4)' },
-        { label: 'OSU — Para 1', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(1)' },
-        { label: 'OSU — Para 2', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(2)' },
-        { label: 'OSU — Para 3', type: 'textarea', selector: '.chapter:nth-of-type(6) p:nth-of-type(3)' },
-      ]
-    },
-
-    'awards': {
-      title: 'Awards & Grants',
-      desc: 'Add, edit or remove awards and fellowships. Changes go live within 1-2 minutes.',
-      fields: [{ label: 'Awards', type: 'json-awards' }]
-    },
-
-    'publications': {
-      title: 'Publications',
-      desc: 'Add, edit or remove publications. Changes go live within 1-2 minutes.',
-      fields: [{ label: 'Publications', type: 'json-publications' }]
-    },
-
-    'teaching': {
-      title: 'Teaching',
-      desc: 'Edit the teaching philosophy and manage courses. Changes go live within 1-2 minutes.',
-      fields: [
-        { label: 'Teaching Philosophy — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
-        { label: 'Teaching Philosophy — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
-        { label: 'Teaching Philosophy — Para 3', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(3)' },
-        { label: 'Courses', type: 'json-courses' }
-      ]
-    },
-
-    'contact': {
-      title: 'Contact Page',
-      desc: 'Edit contact information.',
-      fields: [
-        { label: 'Email Address', type: 'text', selector: 'a[href^="mailto"]' },
-        { label: 'Phone Number', type: 'text', selector: 'a[href^="tel"]' },
-        { label: 'Office Address (use <br> for line breaks)', type: 'textarea', selector: '.contact-row:nth-of-type(3) .contact-value' },
-        { label: 'Office Hours', type: 'text', selector: '.contact-row:nth-of-type(4) .contact-value' },
-      ]
-    },
-
-    'project-eue': {
-      title: 'EUE & Air Pollution Project',
-      desc: 'Edit the project overview, methods and findings text.',
-      fields: [
-        { label: 'Overview — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
-        { label: 'Overview — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
-        { label: 'Network Measures — Intro Para 1', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(1)' },
-        { label: 'Network Measures — Intro Para 2', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(2)' },
-        { label: 'Network Measures — Closing Para', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(3)' },
-        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(1)' },
-        { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
-        { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
-      ]
-    },
-
-    'project-fdi': {
-      title: 'FDI & Climate Project',
-      desc: 'Edit the project overview, index description and findings text.',
-      fields: [
-        { label: 'Overview — Para 1', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(1)' },
-        { label: 'Overview — Para 2', type: 'textarea', selector: 'section:nth-of-type(1) p:nth-of-type(2)' },
-        { label: 'Index Description — Para 1', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(1)' },
-        { label: 'Index Description — Para 2', type: 'textarea', selector: 'section:nth-of-type(2) p:nth-of-type(2)' },
-        { label: 'Key Findings — Para 1', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(1)' },
-        { label: 'Key Findings — Para 2', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(2)' },
-        { label: 'Key Findings — Para 3', type: 'textarea', selector: 'section:last-of-type p:nth-of-type(3)' },
-      ]
-    },
-
-  };
-  return configs[pageKey] || null;
-}
-
-// Initialize
-
-// ── JSON EDITOR ──
-let jsonData = {}; // holds loaded JSON per file
-
-async function renderJSONEditor(field, idx, body) {
-  body.innerHTML = '<div style="color:#5a5a5a;font-size:0.85rem;padding:0.5rem 0;">Loading data...</div>';
+async function loadJSON(type) {
+  const b = document.querySelector(`.nav-item[onclick="loadJSON('${type}')"]`);
+  if (b) setActive(b);
+  const schema = JSON_SCHEMAS[type];
+  const area = document.getElementById('content-area');
+  area.innerHTML = `<div class="loading"><span class="spinner"></span> Loading ${schema.file}...</div>`;
   try {
-    const res = await ghGet(field.file);
+    const res = await ghGet(schema.file);
     const raw = decodeURIComponent(escape(atob(res.content.replace(/\n/g,''))));
-    jsonData[field.file] = { sha: res.sha, data: JSON.parse(raw) };
-    renderJSONItems(field, idx, body, jsonData[field.file].data);
+    jsonState = { type, file: schema.file, sha: res.sha, data: JSON.parse(raw) };
+    renderJSONEditor(schema, jsonState.data);
   } catch(e) {
-    body.innerHTML = `<div style="color:var(--red);font-size:0.85rem;">Could not load ${field.file}: ${e.message}</div>`;
+    area.innerHTML = `<div class="alert alert-warn">Could not load ${schema.file}: ${e.message}</div>`;
   }
 }
 
-function renderJSONItems(field, idx, body, items) {
-  const schemas = {
-    publications: [
-      { key:'year', label:'Year', type:'input' },
-      { key:'authors', label:'Authors', type:'input' },
-      { key:'title', label:'Title', type:'input' },
-      { key:'journal', label:'Journal', type:'input' },
-      { key:'doi', label:'DOI URL', type:'input' },
-      { key:'abstract', label:'Abstract', type:'textarea' },
-    ],
-    awards: [
-      { key:'year', label:'Year', type:'input' },
-      { key:'title', label:'Title', type:'input' },
-      { key:'institution', label:'Institution', type:'input' },
-      { key:'amount', label:'Amount (optional)', type:'input' },
-      { key:'description', label:'Description', type:'textarea' },
-    ],
-    courses: [
-      { key:'category', label:'Category', type:'input', hint:'Methods & Statistics | Inequality & Stratification | Environmental Sociology | General Education' },
-      { key:'title', label:'Course Title', type:'input' },
-      { key:'code', label:'Course Code / Info', type:'input' },
-      { key:'description', label:'Description', type:'textarea' },
-    ],
-  };
-  const schema = schemas[field.schema] || [];
-
-  let html = `<button class="btn-add" onclick="addJSONItem('${field.file}','${field.schema}',${idx})">+ Add Item</button>`;
-  html += `<div id="json-items-${idx}">`;
+function renderJSONEditor(schema, items) {
+  const area = document.getElementById('content-area');
+  let html = `<h2>${schema.title}</h2><p class="page-desc">${schema.desc}</p>
+    <div class="alert alert-info">Changes save directly to GitHub and go live in 1-2 minutes.</div>
+    <button class="btn-add" onclick="addItem()">+ Add ${schema.title.replace(/s$/,'')}</button>
+    <div id="json-list">`;
   items.forEach((item, i) => {
-    html += renderJSONItem(schema, item, i, idx);
+    html += renderItem(schema, item, i);
   });
-  html += '</div>';
-  body.innerHTML = html;
+  html += `</div><div class="save-bar">
+    <button class="btn-save" id="save-btn" onclick="saveJSON()">Save &amp; Publish</button>
+    <span class="save-status" id="save-status"></span>
+  </div>`;
+  area.innerHTML = html;
 }
 
-function renderJSONItem(schema, item, itemIdx, fieldIdx) {
-  let html = `<div class="list-item" data-item-idx="${itemIdx}"><div class="list-item-fields">`;
-  schema.forEach(f => {
-    const val = (item[f.key] || '').replace(/"/g,'&quot;');
-    html += `<div class="field-group">
-      <div class="field-label">${f.label}${f.hint ? ' <span style="font-weight:400;font-style:italic;color:#aaa;">(' + f.hint + ')</span>' : ''}</div>
-      ${f.type === 'textarea'
-        ? `<textarea class="field" data-key="${f.key}" rows="3">${(item[f.key]||'').replace(/</g,'&lt;')}</textarea>`
-        : `<input class="field" type="text" data-key="${f.key}" value="${val}"/>`}
-    </div>`;
-  });
-  html += `</div><div class="list-item-actions"><button class="btn-danger" onclick="this.closest('.list-item').remove()">Remove</button></div></div>`;
-  return html;
+function renderItem(schema, item, i) {
+  let f = '<div class="list-item">';
+  // Year + first wide field side by side if year is narrow
+  const yearField = schema.fields.find(f => !f.wide && !f.textarea);
+  const otherFields = schema.fields.filter(f => f !== yearField);
+  if (yearField) {
+    const wideFirst = otherFields.find(f => f.wide);
+    const rest = otherFields.filter(f => f !== wideFirst);
+    if (wideFirst) {
+      f += `<div class="item-grid-2" style="margin-bottom:0.5rem;">
+        <div><div class="field-label">${yearField.label}</div>
+          <input class="field" data-key="${yearField.key}" value="${esc(item[yearField.key]||'')}"/></div>
+        <div><div class="field-label">${wideFirst.label}</div>
+          <input class="field" data-key="${wideFirst.key}" value="${esc(item[wideFirst.key]||'')}"/></div>
+      </div>`;
+      rest.forEach(fd => {
+        f += renderField(fd, item);
+      });
+    } else {
+      schema.fields.forEach(fd => { f += renderField(fd, item); });
+    }
+  } else {
+    schema.fields.forEach(fd => { f += renderField(fd, item); });
+  }
+  f += `<button class="btn-remove" onclick="this.closest('.list-item').remove()">Remove</button>`;
+  f += '</div>';
+  return f;
 }
 
-function addJSONItem(file, schema, fieldIdx) {
-  const schemas = {
-    publications: {year:'',authors:'',title:'',journal:'',doi:'',abstract:''},
-    awards: {year:'',title:'',institution:'',amount:'',description:''},
-    courses: {category:'',title:'',code:'',description:''},
-  };
-  const container = document.getElementById(`json-items-${fieldIdx}`);
-  const newIdx = container.children.length;
-  const schemaFields = {
-    publications: [{key:'year',label:'Year',type:'input'},{key:'authors',label:'Authors',type:'input'},{key:'title',label:'Title',type:'input'},{key:'journal',label:'Journal',type:'input'},{key:'doi',label:'DOI URL',type:'input'},{key:'abstract',label:'Abstract',type:'textarea'}],
-    awards: [{key:'year',label:'Year',type:'input'},{key:'title',label:'Title',type:'input'},{key:'institution',label:'Institution',type:'input'},{key:'amount',label:'Amount',type:'input'},{key:'description',label:'Description',type:'textarea'}],
-    courses: [{key:'category',label:'Category',type:'input',hint:'Methods & Statistics | Inequality & Stratification | Environmental Sociology | General Education'},{key:'title',label:'Course Title',type:'input'},{key:'code',label:'Course Code',type:'input'},{key:'description',label:'Description',type:'textarea'}],
-  };
-  container.insertAdjacentHTML('beforeend', renderJSONItem(schemaFields[schema], schemas[schema], newIdx, fieldIdx));
-  container.lastElementChild.scrollIntoView({behavior:'smooth'});
+function renderField(fd, item) {
+  const val = item[fd.key] || '';
+  const hint = fd.hint ? `<span style="font-weight:400;font-style:italic;opacity:0.6;font-size:0.7rem;"> (${fd.hint})</span>` : '';
+  if (fd.textarea) {
+    return `<div class="field-group"><div class="field-label">${fd.label}</div>
+      <textarea class="field" data-key="${fd.key}" rows="3">${val.replace(/</g,'&lt;')}</textarea></div>`;
+  }
+  return `<div class="field-group"><div class="field-label">${fd.label}${hint}</div>
+    <input class="field" type="text" data-key="${fd.key}" value="${esc(val)}"/></div>`;
 }
 
-async function saveJSONPage(file, fieldIdx) {
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function addItem() {
+  const schema = JSON_SCHEMAS[jsonState.type];
+  const empty = {};
+  schema.fields.forEach(f => empty[f.key] = '');
+  const list = document.getElementById('json-list');
+  list.insertAdjacentHTML('beforeend', renderItem(schema, empty, list.children.length));
+  list.lastElementChild.scrollIntoView({ behavior:'smooth' });
+}
+
+async function saveJSON() {
   const btn = document.getElementById('save-btn');
   const status = document.getElementById('save-status');
-  btn.disabled = true;
-  status.className = 'save-status saving';
-  status.textContent = 'Saving...';
-
+  btn.disabled = true; status.className='save-status saving'; status.textContent='Saving...';
   try {
-    const container = document.getElementById(`json-items-${fieldIdx}`);
+    const schema = JSON_SCHEMAS[jsonState.type];
     const items = [];
-    container.querySelectorAll('.list-item').forEach(el => {
+    document.querySelectorAll('#json-list .list-item').forEach(el => {
       const item = {};
       el.querySelectorAll('[data-key]').forEach(inp => {
         item[inp.dataset.key] = inp.tagName === 'TEXTAREA' ? inp.value : inp.value;
       });
       items.push(item);
     });
-    const sha = jsonData[file].sha;
     const newContent = JSON.stringify(items, null, 2);
-    await ghPut(file, newContent, sha, `Dashboard update: ${file}`);
-    // Refresh SHA
-    const fresh = await ghGet(file);
-    jsonData[file].sha = fresh.sha;
-    jsonData[file].data = items;
-    status.className = 'save-status success';
-    status.textContent = 'Saved and published!';
-    setTimeout(() => { status.textContent = ''; }, 4000);
+    await ghPut(jsonState.file, newContent, jsonState.sha, `Dashboard update: ${jsonState.file}`);
+    jsonState.data = items;
+    const fresh = await ghGet(jsonState.file);
+    jsonState.sha = fresh.sha;
+    status.className='save-status ok'; status.textContent='Saved and published!';
+    setTimeout(()=>{ status.textContent=''; }, 4000);
   } catch(e) {
-    status.className = 'save-status error';
-    status.textContent = 'Error: ' + e.message;
+    status.className='save-status err'; status.textContent='Error: '+e.message;
   }
   btn.disabled = false;
 }
 
+// Init
 window.addEventListener('load', () => {
-  if (sessionStorage.getItem('admin_auth') === '1') {
-    loadPage('index');
-  }
+  if (sessionStorage.getItem('admin_auth')==='1') loadPage('index');
 });
 </script>
 </body>
