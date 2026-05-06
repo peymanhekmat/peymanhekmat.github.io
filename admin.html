@@ -108,6 +108,7 @@
       <button class="nav-item active" onclick="loadPage('index')">Home</button>
       <button class="nav-item" onclick="loadPage('about')">About</button>
       <button class="nav-item" onclick="loadPage('contact')">Contact</button>
+      <button class="nav-item" onclick="loadPage('teaching')">Teaching (Philosophy)</button>
       <div class="sidebar-label">JSON Data</div>
       <button class="nav-item" onclick="loadJSON('publications')">Publications</button>
       <button class="nav-item" onclick="loadJSON('awards')">Awards &amp; Grants</button>
@@ -267,6 +268,14 @@ const PAGE_FIELDS = {
       { label: 'Key Findings — Para 1', sel: 'section:last-of-type p:nth-of-type(1)', type: 'html' },
       { label: 'Key Findings — Para 2', sel: 'section:last-of-type p:nth-of-type(2)', type: 'html' },
       { label: 'Key Findings — Para 3', sel: 'section:last-of-type p:nth-of-type(3)', type: 'html' },
+    ]
+  },
+  teaching: {
+    title: 'Teaching Philosophy', desc: 'Edit the teaching philosophy text. To add/remove courses use Teaching Courses in the sidebar.',
+    fields: [
+      { label: 'Philosophy — Para 1', sel: 'section:nth-of-type(1) p:nth-of-type(1)', type: 'html' },
+      { label: 'Philosophy — Para 2', sel: 'section:nth-of-type(1) p:nth-of-type(2)', type: 'html' },
+      { label: 'Philosophy — Para 3', sel: 'section:nth-of-type(1) p:nth-of-type(3)', type: 'html' },
     ]
   },
 };
