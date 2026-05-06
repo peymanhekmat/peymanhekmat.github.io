@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FDI &amp; Climate Adaptability — Peyman Hekmatpour, PhD</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
     :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
@@ -91,15 +91,15 @@
     footer a{color:var(--gold-light);text-decoration:none;}
   </style>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-C0CB4TPWCY');
   </script>
-</head>
-<body>
+
+
 
 <nav>
   <div class="nav-inner">
@@ -143,7 +143,7 @@
 </div>
 
 <div class="copyright-banner">
-  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+  <p>© Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
 </div>
 
 <div class="main">
@@ -158,7 +158,7 @@
       <div class="stat-box"><span class="stat-num">15</span><span class="stat-label">Years (2009 to 2023)</span></div>
       <div class="stat-box"><span class="stat-num">-3.97</span><span class="stat-label">Effect on Climate Readiness</span></div>
     </div>
-    <p>This project addresses a longstanding debate in the sociology of development: does foreign direct investment help or harm receiving nations? Rather than treating all FDI as equivalent, this study develops a new network-based index — the Core Capital Dependency Index — that captures where investment comes from, how central the sender is in the global economy, and how much a receiving country depends on such capital relative to its own outward investments. The index is then used to explain cross-national variation in climate adaptability across 142 countries from 2009 to 2023.</p>
+    <p>This project addresses a longstanding debate in the sociology of development: Does foreign direct investment help or harm receiving nations? Rather than treating all FDI as equivalent, this study develops a new network-based index — the Core Capital Dependency Index that captures where investment comes from, how central the sender is in the global economy, and how much a receiving country depends on such capital relative to its own outward investments. The index is then used to explain cross-national variation in climate adaptability across 142 countries from 2009 to 2023.</p>
     <p>Network data come from the IMF's Direct Investment Positions by Counterpart Economy (DIPCE) dataset, which covers 176 countries across 30,800 bilateral dyads. Climate outcomes are measured using the Notre Dame Global Adaptation Initiative (ND-GAIN) index and its two sub-indices of vulnerability and readiness. Results from growth curve panel models show that dependence on capital from core economies significantly reduces climate readiness and overall adaptability, while leaving vulnerability largely unaffected.</p>
   </section>
 
@@ -174,7 +174,7 @@
         <span class="step-num">1</span>
         <div class="formula-text">
           <strong>Coreness Score.</strong> For each year, countries are ranked by their total outward FDI positions. The rank is then normalized to produce a coreness score between 0 and 1, where 1 = most core (largest outward investor):<br>
-          <span class="formula-eq">Core&#7522;&#8348; = (N&#8348; &minus; rank&#7522;&#8348;) / (N&#8348; &minus; 1)</span>
+          <span class="formula-eq">Coreᵢₜ = (Nₜ − rankᵢₜ) / (Nₜ − 1)</span>
         </div>
       </div>
 
@@ -182,7 +182,7 @@
         <span class="step-num">2</span>
         <div class="formula-text">
           <strong>Capital Composition Score.</strong> For each receiver country, the share of inward FDI coming from each sender is computed, then weighted by the sender's coreness. This scores higher when a country's inflows come predominantly from more core-like economies:<br>
-          <span class="formula-eq">S&#7522;&#11388;&#8348; = In&#7522;&#11388;&#8348; / In&#7522;&#8348; &nbsp;&nbsp; Comp&#7522;&#8348; = &Sigma; S&#7522;&#11388;&#8348; &times; Core&#11388;&#8348;</span>
+          <span class="formula-eq">Sᵢⱼₜ = Inᵢⱼₜ / Inᵢₜ &nbsp;&nbsp; Compᵢₜ = Σ Sᵢⱼₜ × Coreⱼₜ</span>
         </div>
       </div>
 
@@ -190,19 +190,19 @@
         <span class="step-num">3</span>
         <div class="formula-text">
           <strong>Reliance Ratio.</strong> Dependence is conceptualized as reliance on incoming capital relative to a country's own outward investment capacity:<br>
-          <span class="formula-eq">&rho;&#7522;&#8348; = In&#7522;&#8348; / (In&#7522;&#8348; + Out&#7522;&#8348;)</span>
+          <span class="formula-eq">ρᵢₜ = Inᵢₜ / (Inᵢₜ + Outᵢₜ)</span>
         </div>
       </div>
 
       <div class="formula-step">
         <span class="step-num">4</span>
         <div class="formula-text">
-          <strong>Core Capital Dependency Index.</strong> Combining the above, the final index scores higher when a country is more reliant on capital from core-like senders and less central in the network itself. By multiplying by (1 &minus; Core&#7522;&#8348;), the index penalizes countries that are themselves core actors and rewards peripheral receivers:<br>
-          <span class="formula-eq">Dependency&#7522;&#8348; = Comp&#7522;&#8348; &times; &rho;&#7522;&#8348; &times; (1 &minus; Core&#7522;&#8348;)</span>
+          <strong>Core Capital Dependency Index.</strong> Combining the above, the final index scores higher when a country is more reliant on capital from core-like senders and less central in the network itself. By multiplying by (1 − Coreᵢₜ), the index penalizes countries that are themselves core actors and rewards peripheral receivers:<br>
+          <span class="formula-eq">Dependencyᵢₜ = Compᵢₜ × ρᵢₜ × (1 − Coreᵢₜ)</span>
         </div>
       </div>
     </div>
-    <p>The index ranges from 0 to 1. Countries of the Global South — which tend to have high inward FDI from core economies and limited outward investment — consistently score higher, while core economies such as the US, Germany, and Japan score near zero. This makes the index a meaningful and dynamic measure of structural dependency in the global investment network.</p>
+    <p>The index ranges from 0 to 1. Countries of the Global South, which tend to have high inward FDI from core economies and limited outward investment, consistently score higher, while core economies such as the US, Germany, and Japan score near zero. This makes the index a meaningful and dynamic measure of structural dependency in the global investment network.</p>
   </section>
 
   <!-- MAP -->
@@ -260,7 +260,7 @@
   <section>
     <h2 class="section-title">Key Findings</h2>
     <p>Core capital dependency significantly reduces climate readiness (β = -3.97, p &lt; .05) and overall ND-GAIN score (β = -2.08, p &lt; .05), but has no significant effect on climate vulnerability. This distinction is theoretically important: it suggests that FDI dependency from core economies does not directly increase countries' physical or biophysical exposure to climate hazards, but it significantly undermines their institutional, economic, and social capacity to respond to and adapt to those hazards.</p>
-    <p>Notably, for readiness and the overall ND-GAIN index, core capital dependency is the only significant predictor in the full model — outperforming GDP per capita, trade openness, CO2 emissions, and other controls. This underscores the importance of the relational and structural dimension of FDI captured by the new index, as opposed to the simple volume or stock measures used in most prior research.</p>
+    <p>Notably, for readiness and the overall ND-GAIN index, core capital dependency is the only significant predictor in the full model, outperforming GDP per capita, trade openness, CO2 emissions, and other controls. This underscores the importance of the relational and structural dimension of FDI captured by the new index, as opposed to the simple volume or stock measures used in most prior research.</p>
     <p>These results contribute to a growing body of scholarship calling for more nuanced measurement of FDI. By simultaneously accounting for the source of capital, the coreness of the sender, and the receiver's structural position in the global investment network, the Core Capital Dependency Index offers a more theoretically grounded and empirically powerful tool for studying the social consequences of global investment.</p>
   </section>
 
@@ -310,7 +310,7 @@
 </div>
 
 <footer>
-  <p>&copy; 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
+  <p>© 2025 Peyman Hekmatpour, PhD · <a href="index.html">phekmat.com</a></p>
 </footer>
 
 <script>
@@ -499,5 +499,5 @@ window.addEventListener('load', () => {
   drawCoef();
 });
 </script>
-</body>
-</html>
+
+
