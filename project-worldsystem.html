@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World-System Position &amp; Mobility &mdash; Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' \25BE';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;position:fixed;top:65px;left:0;right:0;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.4);max-height:calc(100vh - 65px);overflow-y:auto;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;line-height:1.25;}
+    .page-header .subtitle{color:#b8c8e0;font-size:0.9rem;}
+    .status-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:2px;margin-top:0.75rem;}
+    .copyright-banner{background:#f0ebe0;border-bottom:1px solid var(--border);padding:0.55rem 2rem;text-align:center;}
+    .copyright-banner p{font-size:0.74rem;color:var(--text-muted);margin:0;}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:var(--navy);padding:1rem 0.75rem;border-radius:4px;border-bottom:3px solid var(--gold);text-align:center;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block;}
+    .stat-label{font-size:0.68rem;color:#b8c8e0;letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem;line-height:1.3;}
+    .class-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.1rem 1.3rem;margin-bottom:0.8rem;}
+    .class-card h4{font-family:'EB Garamond',serif;font-size:1.02rem;color:var(--navy);margin-bottom:0.3rem;}
+    .class-card p{font-size:0.85rem;color:var(--text-muted);margin:0;}
+    .class-dot{display:inline-block;width:0.7rem;height:0.7rem;border-radius:50%;margin-right:0.45rem;vertical-align:middle;}
+    .viz-panel{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .viz-header{background:var(--navy);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;}
+    .viz-title{color:var(--white);font-size:0.85rem;font-weight:600;}
+    .viz-btns{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .viz-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .viz-btn:hover,.viz-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+    .viz-note{padding:0.55rem 1.2rem;background:var(--cream-dark);border-top:1px solid var(--border);font-size:0.73rem;color:var(--text-muted);}
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .info-row{display:flex;justify-content:space-between;padding:0.42rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:var(--text-muted);}
+    .info-val{color:var(--navy);font-weight:600;text-align:right;}
+    .tag{display:inline-block;background:var(--navy);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:2px;border-left:3px solid var(--gold);margin:0.18rem;}
+    .finding{display:flex;gap:0.6rem;margin-bottom:0.8rem;font-size:0.83rem;}
+    .finding-icon{color:var(--gold);flex-shrink:0;font-weight:700;}
+    .finding-text{color:var(--text-muted);line-height:1.5;}
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C0CB4TPWCY');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)" class="active">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+          <a href="project-worldsystem.html">World-System Position &amp; Mobility</a>
+        </div>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="in-the-news.html">In the News</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="project-worldsystem.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">World-System Position &amp; Mobility</a>
+  <a href="publications.html">Publications</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="in-the-news.html">In the News</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Research &rsaquo; Current Projects</p>
+    <h1>Position and Mobility in the World-System</h1>
+    <p class="subtitle">A dependency-based classification of the capitalist world-economy and its dynamics across 165 countries, 2009 to 2023</p>
+    <span class="status-badge">Work in Progress</span>
+  </div>
+</div>
+
+<div class="copyright-banner">
+  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+</div>
+
+<div class="main">
+<main>
+
+  <section>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">165</span><span class="stat-label">Countries</span></div>
+      <div class="stat-box"><span class="stat-num">2,272</span><span class="stat-label">Country-Year Observations</span></div>
+      <div class="stat-box"><span class="stat-num">4</span><span class="stat-label">World-System Classes</span></div>
+      <div class="stat-box"><span class="stat-num">15</span><span class="stat-label">Years (2009 to 2023)</span></div>
+    </div>
+    <p>World-systems analysis describes the capitalist world-economy as a single, stratified whole, divided into a core, a semi-periphery, and a periphery. Yet there is no settled way to assign countries to these zones. This project develops a classification built from the structure of the global foreign direct investment network, using the Core Capital Dependency Index together with national income, and then asks how countries move within that structure over time.</p>
+    <p>Fitting Gaussian mixture models to 165 countries from 2009 to 2023, the analysis recovers a four-class structure: a core, an upper and a lower semi-periphery, and a periphery. I distinguish a durable structural position, estimated by pooling all years, from a relative position estimated separately within each annual network, and I use the relative classification to study year-to-year mobility. The central finding is an asymmetry between rising and falling, described below.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">A Four-Class World-System</h2>
+    <p>The classification draws on two dimensions that world-systems theory has always treated as central: the relational structure of cross-border capital ownership, captured by the Core Capital Dependency Index, and the level of national income. Countries that are income-rich and net exporters of capital fall in the core; countries that are income-poor and structurally dependent on core capital fall in the periphery; the intermediate combinations populate an upper and a lower semi-periphery.</p>
+    <div class="class-card" style="border-left-color:#1b3a6b;"><h4><span class="class-dot" style="background:#1b3a6b;"></span>Core</h4><p>High-income net capital exporters of Western Europe, North America, the wealthy Pacific economies, and the richest Gulf states.</p></div>
+    <div class="class-card" style="border-left-color:#2a9d8f;"><h4><span class="class-dot" style="background:#2a9d8f;"></span>Upper semi-periphery</h4><p>Large emerging economies and rentier states, including China, Russia, Brazil, India, and several Gulf and Eastern European countries.</p></div>
+    <div class="class-card" style="border-left-color:#e9a23b;"><h4><span class="class-dot" style="background:#e9a23b;"></span>Lower semi-periphery</h4><p>Middle-income but more dependent economies that sit between the rising middle and the periphery.</p></div>
+    <div class="class-card" style="border-left-color:#9b2226;"><h4><span class="class-dot" style="background:#9b2226;"></span>Periphery</h4><p>Low-income, highly dependent economies concentrated in the Sahel, Central Asia, and the poorest parts of Latin America and the Caribbean.</p></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">The World-System in 2023</h2>
+    <p>The map below shows the structural position of each country in 2023. Hover over a country for its class, its Core Capital Dependency score, and its national income. Scroll to zoom and drag to pan.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">World-System Position (2023)</span></div>
+      <div id="map-div" style="width:100%;height:440px;"></div>
+      <div class="viz-note">Classes from a four-component Gaussian mixture model on the Core Capital Dependency Index and log GNI per capita (PPP). Data: IMF DIPCE and World Bank WDI.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Dependency and Income</h2>
+    <p>The two classification inputs separate the four classes cleanly. Dependency rises and income falls as one moves from core to periphery, the monotonic pattern world-systems theory predicts. Hover over any point for the country and its values. Dashed lines mark the model's class boundaries; fainter points are boundary cases assigned with lower confidence.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Capital Dependency &times; National Income (2023)</span></div>
+      <div id="scatter-div" style="width:100%;height:520px;"></div>
+      <div class="viz-note">Each point is a country in 2023. Vertical axis is GNI per capita (PPP) on a log scale.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Movement, 2009 to 2023</h2>
+    <p>Structural position is highly stable across the period. Of the 141 countries observed in both 2009 and 2023, the large majority remain in the same class, and the movement that does occur is overwhelmingly upward and gradual, concentrated in the rising economies of Asia and the Gulf. Hover over any flow to see which countries made that move.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Structural Transitions, 2009 to 2023</span></div>
+      <div id="sankey-div" style="width:100%;height:480px;"></div>
+      <div class="viz-note">Structural (pooled) classification. Flow thickness is the number of countries; green flows move toward the core, red toward the periphery, gray remain in place.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Position and Its Dynamics</h2>
+    <p>Three models describe the system. A model of position level asks what distinguishes high positions from low ones. Two models of mobility ask what predicts a country's movement up, toward the core, and down, toward the periphery. The coefficient plot below shows all three. Colored bars are statistically significant; gray bars are not. Hover for exact values.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Predictors of Position and Mobility</span></div>
+      <div id="coef-div" style="width:100%;height:520px;"></div>
+      <div class="viz-note">Ordered logit for position level; binary logits for upward and downward relative moves. Cluster-robust standard errors; 95% intervals shown.</div>
+    </div>
+    <p>The anatomy of position is as the theory predicts: core position goes with stronger democracy, political stability, a manufacturing export profile, and migration, and is lower among economies with large state sectors, agrarian export structures, and rapid population growth. Trade openness is negatively associated with position, consistent with dependency accounts of integration as subordination rather than advance.</p>
+    <p>The dynamics, however, are asymmetric. Downward movement is institutionally structured and reasonably predictable, driven by weaker democracy, demographic pressure, and a larger state sector. Upward movement is only weakly predictable from the same factors. Democracy stabilizes a country's position in both directions, reducing the odds of falling and, more surprisingly, the odds of rising. The forces that govern descent differ systematically from those that govern ascent.</p>
+  </section>
+
+</main>
+
+<aside class="sidebar">
+  <div class="card">
+    <p class="card-title">Project Details</p>
+    <div class="info-row"><span class="info-label">Method</span><span class="info-val">GMM; ordered &amp; binary logit</span></div>
+    <div class="info-row"><span class="info-label">Coverage</span><span class="info-val">165 countries</span></div>
+    <div class="info-row"><span class="info-label">Period</span><span class="info-val">2009 to 2023</span></div>
+    <div class="info-row"><span class="info-label">Status</span><span class="info-val">Work in Progress</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Data Sources</p>
+    <span class="tag">IMF DIPCE</span>
+    <span class="tag">World Bank WDI</span>
+    <span class="tag">V-Dem</span>
+    <span class="tag">Fraser Institute</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Key Findings</p>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">FDI-network dependency and income recover a face-valid four-class world-system.</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Structural position is stable; movement is mostly upward and gradual.</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Descent is institutionally structured; ascent is only weakly predictable.</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Democracy stabilizes position in both directions.</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Related Work</p>
+    <div class="info-row"><span class="info-label"><a href="project-fdi.html" style="color:var(--navy-light);text-decoration:none;">FDI &amp; Climate Adaptability</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-eue.html" style="color:var(--navy-light);text-decoration:none;">Subnational EUE &amp; Air Pollution</a></span></div>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <p>&copy; Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+function toggleDropdown(e,el){e.preventDefault();el.parentElement.classList.toggle('open');}
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.nav-links li.has-dropdown.open').forEach(function(li){
+    if(!li.contains(e.target)) li.classList.remove('open');
+  });
+});
+
+var MAP = {"code":["AFG","AGO","ALB","ARE","ARG","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLR","BLZ","BOL","BRA","BRB","BTN","BWA","CAF","CAN","CHE","CHL","CHN","CIV","CMR","COD","COG","COL","COM","CPV","CRI","CYP","CZE","DEU","DJI","DMA","DNK","DOM","DZA","ECU","EGY","ESP","EST","ETH","FIN","FJI","FRA","GAB","GBR","GEO","GHA","GIN","GNQ","GRC","GRD","GTM","GUY","HND","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR","KWT","LAO","LBN","LBR","LBY","LKA","LSO","LTU","LUX","MAR","MDA","MDG","MDV","MEX","MKD","MLI","MLT","MMR","MNG","MRT","MUS","MWI","MYS","NAM","NER","NGA","NIC","NLD","NOR","NPL","NRU","NZL","OMN","PAK","PAN","PER","PHL","PLW","PNG","POL","PRT","PRY","QAT","ROU","RUS","RWA","SAU","SEN","SGP","SLE","SLV","SMR","SRB","SUR","SVK","SVN","SWE","SWZ","TCA","TCD","TGO","THA","TJK","TKM","TON","TTO","TUN","TUR","TZA","UGA","UKR","URY","USA","UZB","VNM","ZAF","ZMB","ZWE"],"name":["Afghanistan","Angola","Albania","United Arab Emirates","Argentina","Australia","Austria","Azerbaijan","Burundi","Belgium","Benin","Burkina Faso","Bangladesh","Bulgaria","Bahrain","Bahamas","Bosnia and Herzegovina","Belarus","Belize","Bolivia","Brazil","Barbados","Bhutan","Botswana","Central African Republic","Canada","Switzerland","Chile","China","C\u00f4te d'Ivoire","Cameroon","DR Congo","Congo Republic","Colombia","Comoros","Cabo Verde","Costa Rica","Cyprus","Czechia","Germany","Djibouti","Dominica","Denmark","Dominican Republic","Algeria","Ecuador","Egypt","Spain","Estonia","Ethiopia","Finland","Fiji","France","Gabon","United Kingdom","Georgia","Ghana","Guinea","Equatorial Guinea","Greece","Grenada","Guatemala","Guyana","Honduras","Haiti","Hungary","Indonesia","India","Ireland","Iran","Iraq","Iceland","Israel","Italy","Jamaica","Jordan","Japan","Kazakhstan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Kuwait","Laos","Lebanon","Liberia","Libya","Sri Lanka","Lesotho","Lithuania","Luxembourg","Morocco","Moldova","Madagascar","Maldives","Mexico","North Macedonia","Mali","Malta","Myanmar","Mongolia","Mauritania","Mauritius","Malawi","Malaysia","Namibia","Niger","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","New Zealand","Oman","Pakistan","Panama","Peru","Philippines","Palau","Papua New Guinea","Poland","Portugal","Paraguay","Qatar","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Singapore","Sierra Leone","El Salvador","San Marino","Serbia","Suriname","Slovakia","Slovenia","Sweden","Eswatini","Turks and Caicos Islands","Chad","Togo","Thailand","Tajikistan","Turkmenistan","Tonga","Trinidad and Tobago","Tunisia","T\u00fcrkiye","Tanzania","Uganda","Ukraine","Uruguay","United States","Uzbekistan","Vietnam","South Africa","Zambia","Zimbabwe"],"rank":[3,3,3,1,2,1,1,2,4,1,4,4,3,2,2,2,3,2,3,3,2,2,4,2,4,1,1,2,2,3,4,4,4,2,3,2,2,1,2,1,3,4,1,3,3,3,3,1,2,4,1,4,1,3,1,3,4,4,4,2,2,3,2,3,4,2,2,2,1,2,4,2,2,1,3,3,1,2,3,3,4,4,1,4,2,4,3,2,4,2,1,3,3,4,3,2,3,4,1,4,4,4,2,4,2,4,4,3,3,1,1,4,4,2,2,4,2,3,3,4,4,2,2,3,1,3,2,4,2,4,1,4,3,2,2,3,2,2,1,3,3,4,4,2,4,4,4,2,3,2,4,4,2,2,1,4,3,2,4,4],"cname":["Lower semi-periphery","Lower semi-periphery","Lower semi-periphery","Core","Upper semi-periphery","Core","Core","Upper semi-periphery","Periphery","Core","Periphery","Periphery","Lower semi-periphery","Upper semi-periphery","Upper semi-periphery","Upper semi-periphery","Lower semi-periphery","Upper semi-periphery","Lower semi-periphery","Lower semi-periphery","Upper semi-periphery","Upper semi-periphery","Periphery","Upper semi-periphery","Periphery","Core","Core","Upper semi-periphery","Upper semi-periphery","Lower semi-periphery","Periphery","Periphery","Periphery","Upper semi-periphery","Lower semi-periphery","Upper semi-periphery","Upper semi-periphery","Core","Upper semi-periphery","Core","Lower semi-periphery","Periphery","Core","Lower semi-periphery","Lower semi-periphery","Lower semi-periphery","Lower semi-periphery","Core","Upper semi-periphery","Periphery","Core","Periphery","Core","Lower semi-periphery","Core","Lower semi-periphery","Periphery","Periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Lower semi-periphery","Upper semi-periphery","Lower semi-periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Upper semi-periphery","Core","Upper semi-periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Core","Lower semi-periphery","Lower semi-periphery","Core","Upper semi-periphery","Lower semi-periphery","Lower semi-periphery","Periphery","Periphery","Core","Periphery","Upper semi-periphery","Periphery","Lower semi-periphery","Upper semi-periphery","Periphery","Upper semi-periphery","Core","Lower semi-periphery","Lower semi-periphery","Periphery","Lower semi-periphery","Upper semi-periphery","Lower semi-periphery","Periphery","Core","Periphery","Periphery","Periphery","Upper semi-periphery","Periphery","Upper semi-periphery","Periphery","Periphery","Lower semi-periphery","Lower semi-periphery","Core","Core","Periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Periphery","Upper semi-periphery","Lower semi-periphery","Lower semi-periphery","Periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Lower semi-periphery","Core","Lower semi-periphery","Upper semi-periphery","Periphery","Upper semi-periphery","Periphery","Core","Periphery","Lower semi-periphery","Upper semi-periphery","Upper semi-periphery","Lower semi-periphery","Upper semi-periphery","Upper semi-periphery","Core","Lower semi-periphery","Lower semi-periphery","Periphery","Periphery","Upper semi-periphery","Periphery","Periphery","Periphery","Upper semi-periphery","Lower semi-periphery","Upper semi-periphery","Periphery","Periphery","Upper semi-periphery","Upper semi-periphery","Core","Periphery","Lower semi-periphery","Upper semi-periphery","Periphery","Periphery"],"dep":[0.106,0.266,0.525,0.063,0.204,0.055,0.044,0.085,0.643,0.027,0.626,0.581,0.435,0.292,0.323,0.124,0.527,0.248,0.31,0.447,0.146,0.145,0.933,0.333,0.941,0.018,0.018,0.147,0.051,0.267,0.721,0.771,0.664,0.19,0.064,0.097,0.305,0.043,0.149,0.009,0.114,0.705,0.046,0.505,0.387,0.444,0.359,0.036,0.219,0.683,0.068,0.712,0.014,0.506,0.009,0.555,0.556,0.734,0.804,0.192,0.104,0.267,0.269,0.321,0.932,0.089,0.136,0.124,0.027,0.268,0.734,0.221,0.107,0.038,0.446,0.488,0.003,0.237,0.294,0.369,0.487,0.886,0.036,0.7,0.111,0.224,0.274,0.141,0.596,0.241,0.005,0.27,0.601,0.468,0.556,0.106,0.546,0.611,0.052,0.393,0.816,0.695,0.043,0.648,0.079,0.556,0.759,0.304,0.391,0.003,0.051,0.69,0.8,0.23,0.27,0.434,0.173,0.449,0.275,0.975,0.672,0.217,0.141,0.5,0.06,0.731,0.092,0.429,0.1,0.477,0.049,0.431,0.292,0.119,0.368,0.397,0.235,0.267,0.037,0.299,0.691,0.772,0.415,0.117,0.805,0.861,0.493,0.371,0.467,0.138,0.612,0.708,0.275,0.205,0.0,0.85,0.44,0.095,0.644,0.403],"gni":[2210,9020,24510,80140,29570,69080,73570,22660,1150,72940,4090,2610,9510,36930,60550,37180,23260,29830,13230,12580,20500,22750,15320,21040,1330,63090,87730,31720,24990,6960,5300,1680,6150,20700,3830,10110,26900,53610,54960,74200,7420,20270,80110,24670,16580,15550,17710,55410,47120,3050,63710,13810,61980,19300,59630,23130,7070,3960,12250,41370,17000,13490,43650,6640,3290,45160,15010,10180,98760,18880,14710,83100,54860,59720,12480,10330,53680,34600,6210,7200,7260,5910,63380,8610,12420,1680,14530,14020,3500,50750,104460,9740,18030,1770,21950,24620,24070,3060,58950,5800,16030,6970,33230,1800,35350,10710,1850,8510,7940,81050,108980,5460,22510,52810,39640,5910,37900,16100,12190,18320,4320,46500,48040,16950,125750,44840,43690,3330,72020,4620,117340,3340,11880,71860,28230,19160,45010,55540,72190,10550,35400,2670,3160,22930,6190,19670,8400,35320,13670,42760,3940,3020,18160,32100,82600,11210,14260,15000,3830,5730]};
+var SC  = {"code":["AFG","AGO","ALB","ARE","ARG","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLR","BLZ","BOL","BRA","BRB","BTN","BWA","CAF","CAN","CHE","CHL","CHN","CIV","CMR","COD","COG","COL","COM","CPV","CRI","CYP","CZE","DEU","DJI","DMA","DNK","DOM","DZA","ECU","EGY","ESP","EST","ETH","FIN","FJI","FRA","GAB","GBR","GEO","GHA","GIN","GNQ","GRC","GRD","GTM","GUY","HND","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR","KWT","LAO","LBN","LBR","LBY","LKA","LSO","LTU","LUX","MAR","MDA","MDG","MDV","MEX","MKD","MLI","MLT","MMR","MNG","MRT","MUS","MWI","MYS","NAM","NER","NGA","NIC","NLD","NOR","NPL","NRU","NZL","OMN","PAK","PAN","PER","PHL","PLW","PNG","POL","PRT","PRY","QAT","ROU","RUS","RWA","SAU","SEN","SGP","SLE","SLV","SMR","SRB","SUR","SVK","SVN","SWE","SWZ","TCA","TCD","TGO","THA","TJK","TKM","TON","TTO","TUN","TUR","TZA","UGA","UKR","URY","USA","UZB","VNM","ZAF","ZMB","ZWE"],"name":["Afghanistan","Angola","Albania","United Arab Emirates","Argentina","Australia","Austria","Azerbaijan","Burundi","Belgium","Benin","Burkina Faso","Bangladesh","Bulgaria","Bahrain","Bahamas","Bosnia and Herzegovina","Belarus","Belize","Bolivia","Brazil","Barbados","Bhutan","Botswana","Central African Republic","Canada","Switzerland","Chile","China","C\u00f4te d'Ivoire","Cameroon","DR Congo","Congo Republic","Colombia","Comoros","Cabo Verde","Costa Rica","Cyprus","Czechia","Germany","Djibouti","Dominica","Denmark","Dominican Republic","Algeria","Ecuador","Egypt","Spain","Estonia","Ethiopia","Finland","Fiji","France","Gabon","United Kingdom","Georgia","Ghana","Guinea","Equatorial Guinea","Greece","Grenada","Guatemala","Guyana","Honduras","Haiti","Hungary","Indonesia","India","Ireland","Iran","Iraq","Iceland","Israel","Italy","Jamaica","Jordan","Japan","Kazakhstan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Kuwait","Laos","Lebanon","Liberia","Libya","Sri Lanka","Lesotho","Lithuania","Luxembourg","Morocco","Moldova","Madagascar","Maldives","Mexico","North Macedonia","Mali","Malta","Myanmar","Mongolia","Mauritania","Mauritius","Malawi","Malaysia","Namibia","Niger","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","New Zealand","Oman","Pakistan","Panama","Peru","Philippines","Palau","Papua New Guinea","Poland","Portugal","Paraguay","Qatar","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Singapore","Sierra Leone","El Salvador","San Marino","Serbia","Suriname","Slovakia","Slovenia","Sweden","Eswatini","Turks and Caicos Islands","Chad","Togo","Thailand","Tajikistan","Turkmenistan","Tonga","Trinidad and Tobago","Tunisia","T\u00fcrkiye","Tanzania","Uganda","Ukraine","Uruguay","United States","Uzbekistan","Vietnam","South Africa","Zambia","Zimbabwe"],"rank":[3,3,3,1,2,1,1,2,4,1,4,4,3,2,2,2,3,2,3,3,2,2,4,2,4,1,1,2,2,3,4,4,4,2,3,2,2,1,2,1,3,4,1,3,3,3,3,1,2,4,1,4,1,3,1,3,4,4,4,2,2,3,2,3,4,2,2,2,1,2,4,2,2,1,3,3,1,2,3,3,4,4,1,4,2,4,3,2,4,2,1,3,3,4,3,2,3,4,1,4,4,4,2,4,2,4,4,3,3,1,1,4,4,2,2,4,2,3,3,4,4,2,2,3,1,3,2,4,2,4,1,4,3,2,2,3,2,2,1,3,3,4,4,2,4,4,4,2,3,2,4,4,2,2,1,4,3,2,4,4],"dep":[0.1056,0.2661,0.525,0.0626,0.2036,0.0554,0.0442,0.0853,0.6433,0.0267,0.6264,0.5811,0.4347,0.2923,0.3233,0.1239,0.5266,0.2482,0.31,0.4466,0.1456,0.1453,0.9334,0.3326,0.9411,0.0182,0.0177,0.1468,0.0508,0.2669,0.7213,0.7709,0.6637,0.1897,0.0644,0.0965,0.3049,0.0434,0.1494,0.0086,0.1135,0.7052,0.0456,0.5049,0.3873,0.4438,0.3591,0.036,0.2191,0.6826,0.0684,0.7123,0.0142,0.5062,0.0094,0.5554,0.556,0.7343,0.8043,0.1921,0.1039,0.2671,0.2688,0.3208,0.9321,0.0892,0.1363,0.1243,0.0268,0.2677,0.7342,0.2208,0.1066,0.0383,0.4459,0.4881,0.0026,0.2367,0.2939,0.3687,0.487,0.8856,0.0356,0.6996,0.1113,0.2239,0.2744,0.1414,0.596,0.2414,0.0045,0.2702,0.6009,0.4681,0.5555,0.1062,0.5461,0.6108,0.052,0.3926,0.816,0.6952,0.0427,0.6477,0.0789,0.5559,0.759,0.304,0.3905,0.0027,0.0509,0.6905,0.8004,0.2304,0.2704,0.4342,0.1728,0.4488,0.2754,0.9754,0.6724,0.2175,0.1406,0.5004,0.0602,0.7308,0.0923,0.4294,0.0998,0.477,0.0491,0.4309,0.2922,0.1185,0.3683,0.3972,0.235,0.2673,0.0372,0.2989,0.6906,0.7719,0.4149,0.1173,0.8054,0.861,0.4934,0.3712,0.4671,0.1375,0.6116,0.7079,0.2753,0.2052,0.0,0.85,0.4395,0.0953,0.6444,0.4026],"gni":[2210,9020,24510,80140,29570,69080,73570,22660,1150,72940,4090,2610,9510,36930,60550,37180,23260,29830,13230,12580,20500,22750,15320,21040,1330,63090,87730,31720,24990,6960,5300,1680,6150,20700,3830,10110,26900,53610,54960,74200,7420,20270,80110,24670,16580,15550,17710,55410,47120,3050,63710,13810,61980,19300,59630,23130,7070,3960,12250,41370,17000,13490,43650,6640,3290,45160,15010,10180,98760,18880,14710,83100,54860,59720,12480,10330,53680,34600,6210,7200,7260,5910,63380,8610,12420,1680,14530,14020,3500,50750,104460,9740,18030,1770,21950,24620,24070,3060,58950,5800,16030,6970,33230,1800,35350,10710,1850,8510,7940,81050,108980,5460,22510,52810,39640,5910,37900,16100,12190,18320,4320,46500,48040,16950,125750,44840,43690,3330,72020,4620,117340,3340,11880,71860,28230,19160,45010,55540,72190,10550,35400,2670,3160,22930,6190,19670,8400,35320,13670,42760,3940,3020,18160,32100,82600,11210,14260,15000,3830,5730],"conf":[0.712,0.887,0.911,0.967,0.999,0.966,0.986,1.0,1.0,0.991,1.0,1.0,0.792,0.996,0.999,1.0,0.907,0.997,0.814,0.884,0.998,0.999,1.0,0.533,1.0,0.983,0.994,1.0,1.0,0.918,1.0,1.0,1.0,0.993,0.961,0.824,0.945,0.918,1.0,0.99,0.706,0.708,0.988,0.921,0.915,0.922,0.824,0.952,1.0,1.0,0.862,0.963,0.981,0.903,0.975,0.881,0.961,1.0,0.999,1.0,0.997,0.561,0.999,0.865,1.0,0.972,0.98,0.754,0.994,0.857,0.971,1.0,0.988,0.968,0.883,0.666,0.941,0.999,0.881,0.802,0.749,1.0,0.98,0.998,0.949,0.984,0.505,0.962,1.0,1.0,0.992,0.867,0.678,1.0,0.872,1.0,0.895,1.0,0.933,0.522,0.996,1.0,0.948,1.0,0.995,0.647,1.0,0.919,0.804,0.991,0.987,1.0,0.939,1.0,0.999,0.729,1.0,0.923,0.732,1.0,1.0,1.0,1.0,0.887,0.969,0.74,0.988,0.994,0.81,0.982,0.987,0.994,0.821,0.991,0.612,0.901,1.0,1.0,0.988,0.889,0.761,1.0,0.994,1.0,1.0,0.996,0.605,0.851,0.879,1.0,1.0,1.0,0.782,1.0,0.99,1.0,0.915,0.992,1.0,0.596]};
+var BD  = {"dep":[-0.02,-0.0086,0.0028,0.0142,0.0256,0.037,0.0485,0.0599,0.0713,0.0827,0.0941,0.1055,0.1169,0.1283,0.1397,0.1511,0.1625,0.1739,0.1854,0.1968,0.2082,0.2196,0.231,0.2424,0.2538,0.2652,0.2766,0.288,0.2994,0.3108,0.3223,0.3337,0.3451,0.3565,0.3679,0.3793,0.3907,0.4021,0.4135,0.4249,0.4363,0.4477,0.4592,0.4706,0.482,0.4934,0.5048,0.5162,0.5276,0.539,0.5504,0.5618,0.5732,0.5847,0.5961,0.6075,0.6189,0.6303,0.6417,0.6531,0.6645,0.6759,0.6873,0.6987,0.7101,0.7216,0.733,0.7444,0.7558,0.7672,0.7786,0.79,0.8014,0.8128,0.8242,0.8356,0.847,0.8585,0.8699,0.8813,0.8927,0.9041,0.9155,0.9269,0.9383,0.9497,0.9611,0.9725,0.9839,0.9954],"gni":[1035,1094,1155,1221,1290,1363,1440,1521,1607,1698,1794,1895,2003,2116,2235,2362,2495,2636,2786,2943,3109,3285,3471,3667,3875,4094,4325,4570,4828,5101,5390,5694,6016,6356,6716,7096,7497,7921,8369,8842,9342,9870,10428,11018,11641,12299,12994,13729,14505,15325,16192,17108,18075,19097,20177,21317,22523,23796,25142,26563,28065,29652,31329,33100,34972,36949,39039,41246,43578,46042,48646,51396,54302,57373,60617,64044,67665,71491,75534,79805,84317,89085,94122,99444,105067,111007,117284,123916,130922,138325],"z":[[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]]};
+var SK  = {"order":["Core","Upper semi-periphery","Lower semi-periphery","Periphery"],"links":{"source":[0,0,1,1,1,1,2,2,2,3,3,3],"target":[4,5,4,5,6,7,5,6,7,5,6,7],"value":[23,1,9,24,1,3,12,30,1,3,12,22],"countries":["Australia, Austria, Belgium, Canada, Cyprus, Denmark, Finland, France, Germany, Ireland, Italy, Japan, Kuwait, Luxembourg, Netherlands, Norway, Singapore, Spain, Sweden, Switzerland, United Arab Emirates, United Kingdom, United States","Iceland","China, Hungary, Israel, Malaysia, Malta, Mauritius, Qatar, Russia, Saudi Arabia","Azerbaijan, Bahamas, Bahrain, Barbados, Brazil, Czechia, Estonia, Greece, Iran, Kazakhstan, Lebanon, Libya, Mexico, New Zealand, Oman, Panama, Poland, Portugal, Slovakia, Slovenia, South Africa, St. Vincent and the Grenadines, Thailand, Uruguay","Belize","Dominica, Iraq, Nauru","Argentina, Belarus, Bulgaria, Chile, Colombia, Costa Rica, Guatemala, India, Indonesia, Sri Lanka, Trinidad and Tobago, Ukraine","Afghanistan, Algeria, Botswana, Egypt, El Salvador, Eswatini, Gabon, Honduras, Jamaica, Jordan, Kenya, Liberia, Maldives, Morocco, Myanmar, Namibia, Nicaragua, Nigeria, North Macedonia, Pakistan, Peru, Philippines, Romania, Serbia, Sierra Leone, Suriname, Togo, Tonga, Tunisia, Zimbabwe","Lesotho","Cabo Verde, Grenada, St. Lucia","Albania, Angola, Bangladesh, Bolivia, Bosnia and Herzegovina, Cambodia, Ecuador, Georgia, Ghana, Paraguay, Senegal, Vietnam","Benin, Bhutan, Cameroon, DR Congo, Equatorial Guinea, Ethiopia, Fiji, Haiti, Laos, Madagascar, Malawi, Mauritania, Mongolia, Nepal, Niger, Papua New Guinea, Tajikistan, Tanzania, Turkmenistan, Uganda, Uzbekistan, Zambia"],"dir":["stay","down","up","stay","down","down","up","stay","down","up","up","stay"]},"tot09":[24,37,43,37],"tot23":[32,40,43,26],"n":141};
+var CF  = {"labels":["Democracy (V-Dem)","Political stability","Government size","Trade openness","Capital formation","Manufacturing exports","Agricultural exports","Military expenditure","Population growth","Unemployment","Migrant stock","Female LFP"],"m1":[0.033,0.785,-0.696,-0.011,-0.038,0.017,-0.152,-0.033,-0.405,-0.058,0.133,-0.001],"m1se":[0.009,0.267,0.131,0.004,0.025,0.007,0.048,0.072,0.121,0.027,0.021,0.013],"m2":[-0.015,0.495,0.053,-0.002,-0.041,0.004,-0.07,0.049,0.043,-0.015,-0.016,-0.004],"m2se":[0.006,0.19,0.099,0.003,0.023,0.005,0.032,0.07,0.061,0.02,0.014,0.01],"m3":[-0.016,-0.022,0.169,0.002,0.001,-0.003,0.069,0.071,0.247,0.001,-0.044,-0.003],"m3se":[0.006,0.194,0.084,0.003,0.019,0.004,0.036,0.074,0.099,0.014,0.013,0.009]};
+var CLASS_COLORS = {1:'#1b3a6b',2:'#2a9d8f',3:'#e9a23b',4:'#9b2226'};
+var CLASS_NAMES  = {1:'Core',2:'Upper semi-periphery',3:'Lower semi-periphery',4:'Periphery'};
+
+function drawMap(){
+  var text = MAP.code.map(function(c,i){
+    return '<b>'+MAP.name[i]+'</b><br>'+MAP.cname[i]+
+           '<br>Dependency: '+MAP.dep[i].toFixed(3)+
+           '<br>GNI per capita (PPP): $'+MAP.gni[i].toLocaleString();
+  });
+  var trace = {
+    type:'choropleth', locationmode:'ISO-3', locations:MAP.code,
+    z:MAP.rank, text:text, hovertemplate:'%{text}<extra></extra>',
+    colorscale:[[0,'#1b3a6b'],[0.33,'#1b3a6b'],[0.33,'#2a9d8f'],[0.66,'#2a9d8f'],
+                [0.66,'#e9a23b'],[0.999,'#e9a23b'],[0.999,'#9b2226'],[1,'#9b2226']],
+    zmin:1, zmax:4, autocolorscale:false, showscale:false,
+    marker:{line:{color:'white',width:0.5}}
+  };
+  var layout = {
+    geo:{showframe:false,showcoastlines:true,coastlinecolor:'#aaa',showland:true,
+         landcolor:'#e8eef4',showocean:true,oceancolor:'#d4e5f5',projection:{type:'natural earth'}},
+    margin:{t:0,b:0,l:0,r:0}, paper_bgcolor:'#ffffff', height:440
+  };
+  Plotly.react('map-div',[trace],layout,{responsive:true,displayModeBar:false,scrollZoom:true});
+}
+
+function drawScatter(){
+  // boundary as a filled contour behind points
+  var contour = {
+    type:'contour', x:BD.dep, y:BD.gni, z:BD.z,
+    showscale:false, hoverinfo:'skip', opacity:0.13,
+    colorscale:[[0,'#1b3a6b'],[0.33,'#1b3a6b'],[0.33,'#2a9d8f'],[0.66,'#2a9d8f'],
+                [0.66,'#e9a23b'],[0.999,'#e9a23b'],[0.999,'#9b2226'],[1,'#9b2226']],
+    autocontour:false, contours:{start:1,end:4,size:1,coloring:'fill'},
+    line:{width:0}, zmin:1, zmax:4
+  };
+  var traces=[contour];
+  [1,2,3,4].forEach(function(k){
+    var idx=SC.rank.map(function(r,i){return r===k?i:-1;}).filter(function(i){return i>=0;});
+    traces.push({
+      type:'scatter', mode:'markers', name:CLASS_NAMES[k],
+      x:idx.map(function(i){return SC.dep[i];}),
+      y:idx.map(function(i){return SC.gni[i];}),
+      text:idx.map(function(i){return SC.name[i];}),
+      customdata:idx.map(function(i){return [SC.cname?SC.cname[i]:CLASS_NAMES[k], SC.dep[i], SC.gni[i]];}),
+      hovertemplate:'<b>%{text}</b><br>'+CLASS_NAMES[k]+
+                    '<br>Dependency: %{x:.3f}<br>GNI (PPP): $%{y:,.0f}<extra></extra>',
+      marker:{size:8, color:CLASS_COLORS[k],
+              opacity:idx.map(function(i){return 0.35+0.6*Math.min(1,Math.max(0,(SC.conf[i]-0.5)/0.5));}),
+              line:{color:'white',width:0.6}}
+    });
+  });
+  var layout={
+    xaxis:{title:{text:'Core Capital Dependency Index',font:{size:12,color:'#5a5a5a'}},
+           gridcolor:'#eee',zeroline:false,tickfont:{size:10},range:[-0.04,1.0]},
+    yaxis:{title:{text:'GNI per capita, PPP (log scale)',font:{size:12,color:'#5a5a5a'}},
+           type:'log',gridcolor:'#eee',zeroline:false,tickfont:{size:10}},
+    legend:{orientation:'h',y:1.07,x:0,font:{size:10}},
+    margin:{t:30,b:55,l:70,r:20},paper_bgcolor:'#ffffff',plot_bgcolor:'#fafafa',height:520
+  };
+  Plotly.react('scatter-div',traces,layout,{responsive:true,displayModeBar:false});
+}
+
+function drawSankey(){
+  var L=SK.links;
+  var labels=[], colors=[];
+  SK.order.forEach(function(o,i){labels.push(o+' (2009)');colors.push(CLASS_COLORS[i+1]);});
+  SK.order.forEach(function(o,i){labels.push(o+' (2023)');colors.push(CLASS_COLORS[i+1]);});
+  var linkColors=L.dir.map(function(d){
+    if(d==='up') return 'rgba(26,152,80,0.45)';
+    if(d==='down') return 'rgba(192,57,43,0.5)';
+    return 'rgba(170,170,170,0.35)';
+  });
+  var linkLabels=L.countries.map(function(c,i){
+    var d=L.dir[i]==='up'?'Upward':(L.dir[i]==='down'?'Downward':'Unchanged');
+    return d+' &middot; '+L.value[i]+' countries<br>'+c;
+  });
+  var trace={
+    type:'sankey', orientation:'h',
+    node:{label:labels,color:colors,pad:18,thickness:18,
+          line:{color:'#fff',width:0.5},
+          hovertemplate:'%{label}<extra></extra>'},
+    link:{source:L.source,target:L.target,value:L.value,color:linkColors,
+          customdata:linkLabels,
+          hovertemplate:'%{customdata}<extra></extra>'}
+  };
+  var layout={font:{family:'Source Sans 3',size:11,color:'#1c1c1c'},
+    margin:{t:10,b:10,l:10,r:10},paper_bgcolor:'#ffffff',height:480};
+  Plotly.react('sankey-div',[trace],layout,{responsive:true,displayModeBar:false});
+}
+
+function drawCoef(){
+  var y=CF.labels;
+  function tr(name,vals,ses,color){
+    return {type:'bar',orientation:'h',name:name,y:y,x:vals,
+      error_x:{type:'data',array:ses.map(function(s){return s*1.96;}),color:'#777',thickness:1,width:3},
+      marker:{color:vals.map(function(v,i){return Math.abs(v)>1.96*ses[i]?color:'#c9c9c9';}),opacity:0.9},
+      hovertemplate:'<b>%{y}</b><br>'+name+': %{x:.3f}<extra></extra>'};
+  }
+  var t1=tr('Position level',CF.m1,CF.m1se,'#1b3a6b');
+  var t2=tr('Upward move',CF.m2,CF.m2se,'#1a9850');
+  var t3=tr('Downward move',CF.m3,CF.m3se,'#c0392b');
+  var layout={barmode:'group',bargap:0.35,bargroupgap:0.1,
+    xaxis:{title:{text:'Coefficient (95% interval)',font:{size:11,color:'#5a5a5a'}},
+           zeroline:true,zerolinecolor:'#999',zerolinewidth:1.2,gridcolor:'#eee',tickfont:{size:10}},
+    yaxis:{tickfont:{size:10},automargin:true,autorange:'reversed'},
+    legend:{orientation:'h',y:1.08,x:0,font:{size:10}},
+    margin:{t:30,b:45,l:160,r:20},paper_bgcolor:'#ffffff',plot_bgcolor:'#ffffff',height:520};
+  Plotly.newPlot('coef-div',[t1,t2,t3],layout,{responsive:true,displayModeBar:false});
+}
+
+window.addEventListener('load',function(){drawMap();drawScatter();drawSankey();drawCoef();});
+</script>
+</body>
+</html>
