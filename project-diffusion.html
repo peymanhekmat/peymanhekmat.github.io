@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diffusion of Environmental Discourse &mdash; Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' \25BE';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;position:fixed;top:65px;left:0;right:0;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.4);max-height:calc(100vh - 65px);overflow-y:auto;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;line-height:1.25;}
+    .page-header .subtitle{color:#b8c8e0;font-size:0.9rem;}
+    .status-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:2px;margin-top:0.75rem;}
+    .copyright-banner{background:#f0ebe0;border-bottom:1px solid var(--border);padding:0.55rem 2rem;text-align:center;}
+    .copyright-banner p{font-size:0.74rem;color:var(--text-muted);margin:0;}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:var(--navy);padding:1rem 0.75rem;border-radius:4px;border-bottom:3px solid var(--gold);text-align:center;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block;}
+    .stat-label{font-size:0.68rem;color:#b8c8e0;letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem;line-height:1.3;}
+    .index-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+    .index-card h4{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--navy);margin-bottom:0.75rem;}
+    .formula-step{display:flex;gap:0.75rem;margin-bottom:0.65rem;align-items:flex-start;}
+    .step-num{background:var(--navy);color:var(--gold-light);font-size:0.7rem;font-weight:700;width:1.4rem;height:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .formula-text{font-size:0.85rem;color:var(--text-muted);line-height:1.55;}
+    .formula-eq{font-family:monospace;font-size:0.82rem;background:var(--cream-dark);padding:0.35rem 0.6rem;border-radius:3px;color:var(--navy-mid);display:inline-block;margin:0.25rem 0;}
+    .viz-panel{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .viz-header{background:var(--navy);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;}
+    .viz-title{color:var(--white);font-size:0.85rem;font-weight:600;}
+    .viz-btns{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .viz-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .viz-btn:hover,.viz-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+    .viz-note{padding:0.55rem 1.2rem;background:var(--cream-dark);border-top:1px solid var(--border);font-size:0.73rem;color:var(--text-muted);}
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .info-row{display:flex;justify-content:space-between;padding:0.42rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:var(--text-muted);}
+    .info-val{color:var(--navy);font-weight:600;text-align:right;}
+    .tag{display:inline-block;background:var(--navy);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:2px;border-left:3px solid var(--gold);margin:0.18rem;}
+    .finding{display:flex;gap:0.6rem;margin-bottom:0.8rem;font-size:0.83rem;}
+    .finding-icon{color:var(--gold);flex-shrink:0;font-weight:700;}
+    .finding-text{color:var(--text-muted);line-height:1.5;}
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C0CB4TPWCY');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)" class="active">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+          <a href="project-worldsystem.html">World-System Position &amp; Mobility</a>
+          <a href="project-abm.html">Generative ABM of Dependency</a>
+          <a href="project-inequality.html">Core Capital &amp; Income Inequality</a>
+          <a href="project-diffusion.html">Diffusion of Environmental Discourse</a>
+        </div>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="in-the-news.html">In the News</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="project-worldsystem.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">World-System Position &amp; Mobility</a>
+  <a href="project-abm.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Generative ABM of Dependency</a>
+  <a href="project-inequality.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Core Capital &amp; Income Inequality</a>
+  <a href="project-diffusion.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Diffusion of Environmental Discourse</a>
+  <a href="publications.html">Publications</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="in-the-news.html">In the News</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Research &rsaquo; Current Projects</p>
+    <h1>Diffusion by Proximity: The Emergence and Spatial Spread<br>of Environmental Discourse in the UN General Debate</h1>
+    <p class="subtitle">How environmental discourse rose and spread across nations in the United Nations General Debate from 1962 to 2024, and the geographic structure that organized that spread</p>
+    <span class="status-badge">Work in Progress</span>
+  </div>
+</div>
+
+<div class="copyright-banner">
+  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+</div>
+
+<div class="main">
+<main>
+
+  <section>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">5,074</span><span class="stat-label">Country-Year Observations</span></div>
+      <div class="stat-box"><span class="stat-num">189</span><span class="stat-label">Countries</span></div>
+      <div class="stat-box"><span class="stat-num">~218k</span><span class="stat-label">Speech Windows Classified</span></div>
+      <div class="stat-box"><span class="stat-num">+.50</span><span class="stat-label">Spatial Lag Effect (M3)</span></div>
+    </div>
+    <p>Environmental discourse is now a permanent feature of the global debate, voiced by nearly every state at the most visible annual gathering of the world's governments. It was not always so. In the early 1960s the environment was almost absent from the United Nations General Debate. This project traces its rise from the margins to the center across six decades, and asks which structure organized the spread: geographic proximity, in which states adopt the discourse of their neighbors, or economic exchange, in which trade and investment ties condition what states say.</p>
+    <p>The analysis embeds the full United Nations General Debate Corpus, splitting roughly two hundred eighteen thousand speech windows into nine literature-anchored discourse registers and measuring the environmental share of each country-year. A two-way fixed-effects spatial panel then tests whether a country's environmental emphasis follows the prior environmental emphasis of its geographic neighbors. It does, strongly and consistently. Economic measures of integration leave that spatial effect intact. The spread of environmental discourse was a spatial phenomenon, not an economic one.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Measuring Environmental Discourse</h2>
+    <p>Each speech is divided into fixed windows of about one hundred fifty words and embedded with a sentence transformer. Every window is scored against nine discourse registers, from development and welfare to sovereignty, security, human rights, and the environment, using centered cosine similarity so that no single register dominates by length. The environmental share of a country-year is the count of environmental windows over all classified windows.</p>
+    <div class="index-card">
+      <h4>From Speeches to a Diffusion Model</h4>
+      <div class="formula-step">
+        <span class="step-num">1</span>
+        <div class="formula-text"><strong>Environmental share.</strong> For each country-year, the share of classified speech windows assigned to the environmental register.<br>
+          <span class="formula-eq">env_share&#7522;&#8348; = env windows / classified windows</span></div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">2</span>
+        <div class="formula-text"><strong>Spatial lag.</strong> Each country's exposure to its neighbors is the inverse-distance, row-normalized weighted average of their prior-year environmental share.<br>
+          <span class="formula-eq">wshare&#7522;&#8348; = &Sigma; W&#7522;&#11388; &times; env_share&#11388;&#8344;&#8331;&#8321;</span></div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">3</span>
+        <div class="formula-text"><strong>Two-way fixed-effects panel.</strong> Own environmental share regressed on neighbors' prior share, with country and year fixed effects and country-clustered standard errors.<br>
+          <span class="formula-eq">env_share&#7522;&#8348; = &beta;&middot;wshare&#7522;&#8348; + &alpha;&#7522; + &tau;&#8348; + &epsilon;&#7522;&#8348;</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 1. The Rise of Environmental Discourse, 1962 to 2024</h2>
+    <p>Over six decades, environmental discourse moved from the margins of the General Debate to its center. The series below traces the environmental share of classified discourse across the full period. Through the 1960s, 1970s, and most of the 1980s the environment had a marginal presence, while security, global inequality, and the politics of sovereignty dominated the agenda. A first spike appears around 1990, coinciding with the lead-up to the 1992 Rio Earth Summit, but environmental discourse recedes through the rest of the decade. The sustained rise begins after 2000, tracking the Kyoto Protocol's entry into force in 2005 and the run-up to the 2009 Copenhagen Conference. By the 2010s, environmental discourse had displaced the security and development concerns that previously dominated.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Environmental Share of General Debate Speech</span></div>
+      <div id="trend-div" style="height:400px;"></div>
+      <div class="viz-note">Global mean environmental share by year, country-years with at least five classified windows. Markers at Stockholm (1972), Rio (1992), and Paris (2015). In the manuscript, this figure plots the environmental register against the other eight discourse registers; shown here is the environmental share that the analysis models.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 2. The Geography of Diffusion</h2>
+    <p>The aggregate rise was produced by a process of spread across countries, and that spread had a distinct geographic structure. The map places a marker at each country that had adopted environmental discourse by each benchmark year. In 1975, environmental discourse was the province of a handful of scattered states. By 1995, clusters had begun to form; by 2015, dense concentrations had emerged across Europe, the Americas, and the island regions of the Pacific and Caribbean; and by 2024, adoption had become nearly universal. The two earliest adopters were Australia in 1969, where environmental discourse emerged from domestic political currents, and The Gambia in 1972, speaking amid the catastrophic Sahelian drought. Use the buttons to step through the benchmark years.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="adopt-title">Cumulative Adoption by 1975</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showAdopt(1975,this)">1975</button>
+          <button class="viz-btn" onclick="showAdopt(1995,this)">1995</button>
+          <button class="viz-btn" onclick="showAdopt(2015,this)">2015</button>
+          <button class="viz-btn" onclick="showAdopt(2024,this)">2024</button>
+        </div>
+      </div>
+      <div id="adopt-div" style="height:440px;"></div>
+      <div class="viz-note">Markers placed at each country that had devoted a sustained, substantial share of its address to the environment by the benchmark year. 105 countries adopt across the full period; 2 by 1975, 25 by 1995, 68 by 2015, 105 by 2024.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 3. Spatial Panel Results: Inverse-Distance Exposure</h2>
+    <p>The coefficient on spatial exposure, the inverse-distance weighted average of neighbors' prior-year environmental emphasis, is positive and statistically significant throughout. A country's environmental emphasis rises following increases in the emphasis of its geographic neighbors, net of all time-invariant national characteristics and the global trajectory captured by year effects. The effect is essentially unchanged when income and democracy are added, and democracy enters as a positive and independent predictor. Switch between the spatial-lag effect across models and the full specification with all controls.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="coef-title">Spatial Exposure Effect Across Models (M1 to M3)</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showCoef('main',this)">Spatial lag by model</button>
+          <button class="viz-btn" onclick="showCoef('full',this)">Full model</button>
+        </div>
+      </div>
+      <div id="coef-div" style="height:400px;"></div>
+      <div class="viz-note">N = 5,074 country-years, 189 countries. Two-way fixed-effects panels with country-clustered standard errors and 95 percent confidence intervals. All models include country and year fixed effects.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 4. Robustness: Nearest-Neighbor Exposure</h2>
+    <p>The central result is robust to the formulation of the spatial weights. Replacing inverse-distance exposure with a nearest-neighbor measure leaves the pattern unchanged: the spatial exposure effect remains positive and significant, democracy remains a positive and independent predictor, and the additional economic and vulnerability controls remain null. Whether proximity is operationalized as inverse-distance or nearest-neighbor exposure, a country's environmental emphasis follows its neighbors'.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Nearest-Neighbor Spatial Exposure (Robustness)</span></div>
+      <div id="knn-div" style="height:400px;"></div>
+      <div class="viz-note">Nearest-neighbor spatial weights. Coefficient estimates with 95 percent confidence intervals from country-clustered standard errors. Country and year fixed effects included.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Key Findings</h2>
+    <p>Environmental discourse spread across nations through geographic proximity. A country's environmental emphasis followed the prior environmental emphasis of its neighbors, net of its own characteristics, its own discursive trajectory, the global trend, and a range of economic controls. The spatial-lag coefficient is positive and significant in every specification, and it survives the inclusion of a lagged dependent variable, which rules out the objection that the result is just national momentum.</p>
+    <p>The economic-structure account carried no comparable influence. Measures of income, fossil-fuel dependence, economic globalization, and climate vulnerability left the spatial effect intact. This is the paper's pivot: the spread tracked the map, not the trade network. Democratic governance was independently associated with a higher environmental share of speech, framed as a complementary channel rather than a rival to proximity.</p>
+    <p>Viewed through the words that states speak, the global rise of environmental discourse appears not as a uniform awakening to a shared planetary danger but as a structured social process organized by geography and democratic institutions. The finding connects the world-society tradition, in which models of legitimate state conduct travel between proximate states, to a concrete and well-powered measurement of how that travel actually happened.</p>
+  </section>
+
+</main>
+
+<aside class="sidebar">
+  <div class="card">
+    <p class="card-title">Project Details</p>
+    <div class="info-row"><span class="info-label">Status</span><span class="info-val">In progress</span></div>
+    <div class="info-row"><span class="info-label">Target</span><span class="info-val">Sociological Science</span></div>
+    <div class="info-row"><span class="info-label">Corpus</span><span class="info-val">UN General Debate</span></div>
+    <div class="info-row"><span class="info-label">Period</span><span class="info-val">1962 to 2024</span></div>
+    <div class="info-row"><span class="info-label">Countries</span><span class="info-val">189</span></div>
+    <div class="info-row"><span class="info-label">Observations</span><span class="info-val">5,074</span></div>
+    <div class="info-row"><span class="info-label">Estimator</span><span class="info-val">Two-Way FE Panel</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Key Results</p>
+    <div class="finding"><span class="finding-icon">+</span><span class="finding-text">Neighbors' prior environmental share predicts a country's own (&beta; = .50 to .62, p &lt; .001).</span></div>
+    <div class="finding"><span class="finding-icon">+</span><span class="finding-text">Holds with a lagged DV: not just national momentum.</span></div>
+    <div class="finding"><span class="finding-icon">~</span><span class="finding-text">Economic integration measures leave the spatial effect intact.</span></div>
+    <div class="finding"><span class="finding-icon">+</span><span class="finding-text">Democracy independently raises environmental emphasis.</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Method Pipeline</p>
+    <span class="tag">Sentence Transformer</span>
+    <span class="tag">all-MiniLM-L6-v2</span>
+    <span class="tag">Nine Registers</span>
+    <span class="tag">Spatial Lag</span>
+    <span class="tag">Two-Way FE</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Data Sources</p>
+    <span class="tag">UN General Debate Corpus</span>
+    <span class="tag">Freedom House</span>
+    <span class="tag">World Bank WDI</span>
+    <span class="tag">KOF Globalization</span>
+    <span class="tag">ND-GAIN</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Keywords</p>
+    <span class="tag">Diffusion</span>
+    <span class="tag">Environmental Discourse</span>
+    <span class="tag">World Society</span>
+    <span class="tag">Spatial Analysis</span>
+    <span class="tag">Text as Data</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Related Work</p>
+    <div class="info-row"><span class="info-label"><a href="project-eue.html" style="color:var(--navy-light);text-decoration:none;">Subnational EUE &amp; Air Pollution</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-worldsystem.html" style="color:var(--navy-light);text-decoration:none;">World-System Position &amp; Mobility</a></span></div>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <p>&copy; Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+function toggleDropdown(e,el){e.preventDefault();el.parentElement.classList.toggle('open');}
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.nav-links li.has-dropdown.open').forEach(function(li){
+    if(!li.contains(e.target)) li.classList.remove('open');
+  });
+});
+
+// ===== REAL DATA from working.dta + analysis_dataset_full_span.csv =====
+var TREND={"yr":[1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"env":[0.0123,0.017,0.0115,0.0089,0.0077,0.0101,0.023,0.0517,0.0406,0.0703,0.1024,0.0662,0.054,0.0133,0.0261,0.0452,0.0409,0.0774,0.0442,0.0338,0.0168,0.0315,0.0465,0.0211,0.038,0.063,0.1563,0.2395,0.2317,0.2213,0.1925,0.1741,0.165,0.1557,0.1337,0.1331,0.1228,0.1168,0.118,0.0983,0.1608,0.1212,0.1027,0.1003,0.1753,0.3956,0.3563,0.4332,0.3723,0.3129,0.3001,0.3195,0.3461,0.3595,0.393,0.4384,0.405,0.4866,0.4208,0.5067,0.4372,0.5044,0.4361]};
+var MAP={"code":["AFG","AGO","ALB","AND","ARE","ARG","ARM","ATG","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLR","BLZ","BOL","BRA","BRB","BTN","BWA","CAN","CHE","CHL","CHN","CIV","CMR","COD","COG","COL","COM","CPV","CRI","CUB","CZE","DEU","DJI","DMA","DNK","DOM","ECU","EGY","ESP","EST","ETH","FIN","FJI","FRA","FSM","GAB","GBR","GEO","GHA","GIN","GMB","GRC","GRD","GTM","GUY","HND","HRV","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR","KNA","KOR","KWT","LBR","LBY","LCA","LIE","LKA","LSO","LTU","LUX","LVA","MAR","MCO","MDA","MDG","MDV","MEX","MHL","MKD","MLI","MLT","MMR","MNE","MNG","MOZ","MRT","MUS","MWI","MYS","NAM","NER","NGA","NIC","NLD","NOR","NPL","NRU","NZL","PAK","PAN","PER","PHL","PLW","PNG","POL","PRK","PRT","PRY","PSE","QAT","ROU","RUS","SAU","SGP","SLB","SLE","SLV","SMR","SOM","SRB","SUR","SVK","SVN","SWE","SWZ","SYC","SYR","TCD","TGO","THA","TJK","TKM","TLS","TON","TTO","TUR","TUV","TZA","UGA","UKR","URY","USA","UZB","VAT","VCT","VEN","VUT","WSM","YEM","ZAF","ZMB","ZWE"],"env":[0.0,0.354,0.325,0.572,0.156,0.171,0.2,0.475,0.439,0.062,0.38,0.123,0.399,0.444,0.083,0.271,0.311,0.252,0.554,0.348,0.194,0.596,0.35,0.346,0.638,0.609,0.544,0.332,0.429,0.508,0.467,0.657,0.55,0.416,0.544,0.472,0.522,0.679,0.463,0.266,0.324,0.389,0.411,0.8,0.679,0.346,0.263,0.213,0.416,0.319,0.433,0.667,0.773,0.53,0.836,0.551,0.343,0.103,0.176,0.586,0.371,0.692,0.589,0.226,0.788,0.337,0.649,0.529,0.114,0.8,0.334,0.307,0.0,0.143,0.435,0.042,0.274,0.448,0.0,0.179,0.36,0.585,0.436,0.437,0.728,0.623,0.667,0.533,0.875,0.0,0.599,0.317,0.479,0.531,0.426,0.316,0.275,0.4,0.756,0.3,0.6,0.557,0.233,0.91,0.388,0.1,0.397,0.25,0.5,0.462,0.667,0.383,0.665,0.5,0.3,0.417,0.388,0.42,0.0,0.701,0.672,0.373,0.746,0.461,0.158,0.248,0.378,0.358,0.882,0.677,0.309,0.137,0.633,0.29,0.0,0.1,0.464,0.087,0.45,0.483,0.643,0.244,0.105,0.444,0.2,0.259,0.582,0.578,0.537,0.515,0.55,0.849,0.0,0.514,0.433,0.701,0.625,0.917,0.111,0.898,0.527,0.22,0.891,0.619,0.534,0.141,0.342,0.174,0.393,0.334,0.389,0.112,0.754,0.838,0.0,0.549,0.365,0.6]};
+var SCAT={"w":[0.002,0.003,0.003,0.003,0.004,0.004,0.004,0.004,0.004,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.006,0.006,0.006,0.006,0.006,0.007,0.007,0.008,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.009,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.013,0.013,0.013,0.013,0.013,0.013,0.014,0.014,0.014,0.014,0.014,0.014,0.014,0.014,0.014,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.016,0.016,0.016,0.016,0.016,0.017,0.017,0.017,0.017,0.017,0.017,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.019,0.019,0.019,0.019,0.019,0.019,0.02,0.02,0.02,0.021,0.021,0.021,0.021,0.021,0.021,0.021,0.021,0.021,0.021,0.022,0.022,0.022,0.022,0.022,0.022,0.022,0.022,0.023,0.023,0.023,0.023,0.023,0.023,0.023,0.023,0.024,0.024,0.024,0.024,0.024,0.024,0.024,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.026,0.026,0.026,0.026,0.026,0.026,0.026,0.026,0.026,0.027,0.027,0.027,0.027,0.027,0.028,0.028,0.028,0.028,0.028,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.031,0.031,0.031,0.031,0.031,0.031,0.031,0.031,0.031,0.031,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.033,0.033,0.034,0.034,0.034,0.034,0.034,0.034,0.034,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.036,0.036,0.036,0.036,0.036,0.036,0.036,0.036,0.036,0.036,0.037,0.037,0.037,0.037,0.037,0.037,0.037,0.038,0.038,0.038,0.038,0.038,0.038,0.038,0.039,0.039,0.039,0.039,0.039,0.04,0.04,0.04,0.04,0.041,0.041,0.041,0.042,0.042,0.042,0.042,0.042,0.042,0.043,0.043,0.043,0.043,0.043,0.043,0.043,0.044,0.044,0.044,0.044,0.044,0.044,0.045,0.045,0.045,0.045,0.046,0.046,0.046,0.046,0.047,0.047,0.047,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.049,0.049,0.049,0.05,0.05,0.05,0.05,0.051,0.051,0.052,0.052,0.052,0.052,0.052,0.053,0.053,0.053,0.054,0.054,0.054,0.054,0.055,0.055,0.055,0.055,0.055,0.056,0.056,0.056,0.056,0.056,0.056,0.057,0.057,0.057,0.057,0.057,0.058,0.058,0.058,0.058,0.059,0.059,0.059,0.059,0.06,0.06,0.06,0.06,0.06,0.061,0.061,0.061,0.061,0.062,0.062,0.062,0.062,0.062,0.063,0.063,0.063,0.063,0.063,0.063,0.064,0.064,0.064,0.065,0.065,0.065,0.065,0.065,0.066,0.066,0.066,0.066,0.066,0.066,0.067,0.067,0.067,0.067,0.067,0.068,0.068,0.068,0.069,0.069,0.069,0.069,0.07,0.071,0.071,0.071,0.071,0.071,0.071,0.072,0.072,0.073,0.073,0.073,0.073,0.073,0.074,0.074,0.074,0.075,0.075,0.075,0.076,0.077,0.077,0.077,0.077,0.078,0.078,0.078,0.078,0.078,0.079,0.079,0.079,0.08,0.08,0.081,0.081,0.081,0.081,0.081,0.081,0.082,0.082,0.082,0.083,0.083,0.083,0.083,0.083,0.083,0.083,0.083,0.084,0.084,0.084,0.084,0.085,0.085,0.085,0.086,0.086,0.087,0.087,0.087,0.087,0.087,0.087,0.088,0.088,0.088,0.088,0.089,0.089,0.09,0.09,0.09,0.091,0.091,0.091,0.091,0.092,0.092,0.092,0.093,0.093,0.093,0.094,0.094,0.094,0.094,0.094,0.094,0.095,0.095,0.096,0.096,0.098,0.098,0.098,0.098,0.098,0.098,0.099,0.1,0.101,0.101,0.101,0.101,0.101,0.101,0.101,0.101,0.101,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.104,0.105,0.105,0.105,0.106,0.106,0.106,0.106,0.106,0.107,0.107,0.107,0.108,0.108,0.109,0.109,0.109,0.109,0.109,0.109,0.11,0.11,0.11,0.112,0.112,0.112,0.112,0.112,0.112,0.112,0.112,0.113,0.113,0.113,0.113,0.113,0.113,0.114,0.114,0.114,0.115,0.115,0.115,0.115,0.116,0.116,0.116,0.116,0.117,0.118,0.118,0.118,0.118,0.118,0.119,0.119,0.119,0.12,0.12,0.12,0.121,0.121,0.122,0.122,0.122,0.122,0.122,0.122,0.122,0.123,0.123,0.124,0.124,0.125,0.126,0.126,0.126,0.127,0.127,0.127,0.128,0.128,0.128,0.128,0.128,0.131,0.131,0.131,0.131,0.131,0.134,0.135,0.135,0.136,0.136,0.137,0.138,0.138,0.139,0.139,0.139,0.14,0.14,0.14,0.141,0.141,0.142,0.143,0.143,0.143,0.144,0.144,0.144,0.144,0.145,0.146,0.146,0.146,0.147,0.147,0.147,0.147,0.148,0.148,0.148,0.148,0.149,0.149,0.15,0.151,0.152,0.153,0.153,0.153,0.154,0.155,0.156,0.156,0.156,0.157,0.158,0.158,0.158,0.158,0.159,0.159,0.159,0.16,0.16,0.164,0.164,0.164,0.165,0.165,0.166,0.166,0.167,0.167,0.167,0.168,0.168,0.17,0.173,0.174,0.174,0.174,0.175,0.175,0.175,0.175,0.176,0.177,0.177,0.178,0.179,0.18,0.182,0.182,0.183,0.184,0.185,0.185,0.186,0.187,0.188,0.189,0.19,0.191,0.192,0.192,0.194,0.195,0.195,0.195,0.196,0.196,0.197,0.197,0.198,0.198,0.201,0.203,0.203,0.205,0.206,0.207,0.208,0.209,0.21,0.21,0.21,0.211,0.211,0.211,0.211,0.212,0.212,0.213,0.213,0.214,0.214,0.215,0.216,0.216,0.216,0.217,0.218,0.219,0.219,0.219,0.219,0.22,0.22,0.221,0.221,0.222,0.222,0.222,0.224,0.224,0.225,0.225,0.227,0.228,0.229,0.229,0.231,0.231,0.231,0.235,0.235,0.236,0.237,0.237,0.238,0.238,0.238,0.239,0.239,0.24,0.241,0.241,0.241,0.243,0.245,0.246,0.247,0.248,0.248,0.248,0.248,0.249,0.249,0.251,0.253,0.257,0.257,0.259,0.26,0.26,0.26,0.262,0.264,0.264,0.265,0.265,0.266,0.266,0.266,0.267,0.268,0.269,0.269,0.272,0.273,0.273,0.273,0.275,0.275,0.276,0.277,0.279,0.281,0.282,0.284,0.285,0.286,0.288,0.289,0.289,0.29,0.29,0.291,0.292,0.292,0.293,0.294,0.294,0.294,0.295,0.295,0.295,0.297,0.297,0.297,0.299,0.301,0.302,0.302,0.304,0.305,0.305,0.305,0.305,0.305,0.305,0.307,0.307,0.308,0.309,0.31,0.31,0.31,0.311,0.311,0.311,0.312,0.312,0.312,0.312,0.313,0.315,0.315,0.316,0.317,0.317,0.317,0.319,0.32,0.32,0.32,0.32,0.321,0.322,0.322,0.322,0.322,0.323,0.323,0.323,0.323,0.324,0.325,0.325,0.327,0.328,0.328,0.328,0.33,0.33,0.331,0.332,0.332,0.333,0.333,0.334,0.335,0.337,0.339,0.339,0.339,0.34,0.34,0.341,0.341,0.342,0.342,0.343,0.343,0.344,0.344,0.345,0.345,0.345,0.345,0.345,0.346,0.348,0.348,0.349,0.35,0.35,0.351,0.352,0.352,0.353,0.354,0.354,0.354,0.354,0.354,0.356,0.356,0.356,0.356,0.357,0.357,0.358,0.359,0.36,0.361,0.361,0.362,0.362,0.362,0.362,0.363,0.364,0.365,0.367,0.368,0.369,0.37,0.371,0.371,0.371,0.372,0.372,0.372,0.373,0.374,0.375,0.379,0.379,0.38,0.382,0.383,0.385,0.386,0.387,0.388,0.391,0.391,0.393,0.394,0.394,0.394,0.394,0.394,0.395,0.397,0.398,0.399,0.399,0.401,0.401,0.402,0.402,0.402,0.403,0.403,0.404,0.404,0.405,0.405,0.405,0.405,0.406,0.409,0.409,0.409,0.41,0.411,0.411,0.411,0.412,0.412,0.413,0.413,0.414,0.414,0.414,0.416,0.417,0.417,0.418,0.418,0.418,0.419,0.419,0.421,0.421,0.421,0.422,0.423,0.423,0.423,0.425,0.425,0.426,0.426,0.426,0.428,0.428,0.433,0.433,0.433,0.433,0.433,0.435,0.436,0.437,0.437,0.437,0.437,0.439,0.439,0.441,0.441,0.441,0.441,0.443,0.444,0.444,0.445,0.445,0.445,0.446,0.448,0.448,0.449,0.449,0.449,0.45,0.451,0.452,0.452,0.452,0.453,0.454,0.455,0.455,0.456,0.456,0.456,0.457,0.457,0.46,0.461,0.463,0.464,0.465,0.466,0.466,0.466,0.467,0.467,0.468,0.469,0.471,0.471,0.471,0.473,0.475,0.475,0.475,0.475,0.476,0.477,0.477,0.477,0.479,0.479,0.482,0.484,0.484,0.485,0.485,0.487,0.487,0.488,0.489,0.489,0.489,0.494,0.495,0.496,0.498,0.499,0.499,0.5,0.501,0.501,0.502,0.502,0.504,0.505,0.509,0.509,0.51,0.51,0.511,0.512,0.513,0.514,0.514,0.515,0.516,0.516,0.517,0.517,0.519,0.519,0.52,0.524,0.525,0.526,0.527,0.528,0.53,0.531,0.534,0.534,0.539,0.541,0.543,0.543,0.545,0.547,0.548,0.548,0.55,0.551,0.552,0.566,0.57,0.573,0.576,0.576,0.583,0.587,0.601,0.601,0.608,0.612],"e":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.067,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2,0.0,0.2,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.333,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.286,0.0,0.0,0.0,0.0,0.067,0.0,0.0,0.0,0.0,0.0,0.111,0.0,0.0,0.091,0.0,0.0,0.0,0.0,0.0,0.0,0.091,0.111,0.05,0.125,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2,0.667,0.5,0.0,0.0,0.111,0.0,0.167,0.0,0.0,0.0,0.0,0.083,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.222,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.143,0.0,0.2,0.0,0.2,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.273,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.235,0.071,0.143,0.0,0.0,0.222,0.0,0.0,0.0,0.0,0.0,0.231,0.0,0.0,0.0,0.048,0.111,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1,0.0,0.143,0.0,0.0,0.0,0.2,0.0,0.667,0.0,0.0,0.0,0.0,0.143,0.0,0.0,0.0,0.0,0.091,0.0,0.05,0.0,0.0,0.111,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.143,0.0,0.0,0.0,0.0,0.125,0.0,0.0,0.091,0.0,0.0,0.167,0.091,0.0,0.0,0.0,0.0,0.143,0.0,0.1,0.0,0.333,0.0,0.0,0.083,0.0,0.0,0.071,0.0,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.083,0.0,0.0,0.0,0.111,0.0,0.0,0.167,0.0,0.0,0.0,0.0,0.0,0.0,0.167,0.0,0.0,0.0,0.111,0.0,0.0,0.2,0.1,0.0,0.111,0.375,0.0,0.182,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.0,0.083,0.0,0.286,0.0,0.143,0.0,0.0,0.0,0.0,0.429,0.0,0.2,0.0,0.0,0.6,0.222,0.143,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.077,0.0,0.222,0.6,0.0,0.0,0.0,0.0,0.0,0.143,0.0,0.143,0.0,0.0,0.0,0.333,0.048,0.125,0.25,0.0,0.167,0.0,0.0,0.0,0.2,0.143,0.0,0.111,0.0,0.0,0.0,0.0,0.0,0.0,0.083,0.0,0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.125,0.0,0.077,0.0,0.0,0.0,0.0,0.0,0.667,0.0,0.0,0.0,0.25,0.111,0.333,0.0,0.167,0.222,0.286,0.286,0.0,0.4,0.0,0.0,0.0,0.125,0.0,0.0,0.0,0.0,0.2,0.0,0.0,0.0,0.4,0.0,0.0,0.0,0.0,0.2,0.143,0.0,0.214,0.0,0.0,0.25,0.0,0.273,0.0,0.0,0.0,0.25,0.05,0.3,0.286,0.2,0.125,0.0,0.167,0.0,0.143,0.0,0.0,0.0,0.0,0.0,0.167,0.143,0.0,0.2,0.0,0.0,0.0,0.0,0.0,0.0,0.5,0.2,0.2,0.0,0.143,0.125,0.0,0.0,0.143,0.0,0.0,0.222,0.4,0.2,0.0,0.143,0.167,0.0,0.0,0.0,0.167,0.2,0.0,0.167,0.0,0.0,0.0,0.0,0.6,0.0,0.0,0.0,0.1,0.222,0.125,0.0,0.0,0.2,0.0,0.0,0.1,0.0,0.0,0.0,0.143,0.143,0.1,0.0,0.333,0.0,0.222,0.0,0.0,0.167,0.0,0.0,0.0,0.25,0.231,0.3,0.0,0.2,0.0,0.286,0.0,0.083,0.25,0.0,0.0,0.0,0.444,0.167,0.0,0.0,0.0,0.167,0.0,0.0,0.091,0.0,0.333,0.444,0.0,0.0,0.667,0.167,0.182,0.286,0.0,0.429,0.0,0.0,0.0,0.0,0.2,0.0,0.042,0.0,0.0,0.429,0.0,0.2,0.167,0.0,0.444,0.6,0.111,0.143,0.0,0.0,0.333,0.143,0.0,0.0,0.182,0.333,0.154,0.143,0.0,0.4,0.25,0.375,0.5,0.0,0.0,0.667,0.4,0.0,0.375,0.0,0.167,0.083,0.0,0.0,0.4,0.0,0.667,0.333,0.0,0.143,0.105,0.0,0.125,0.0,0.067,0.143,0.25,0.111,0.0,0.2,0.4,0.125,0.125,0.0,0.25,0.0,0.091,1.0,0.25,0.286,0.182,0.4,0.1,0.8,0.182,0.143,0.0,0.375,0.0,0.0,1.0,0.0,0.125,0.0,0.0,0.25,0.0,0.0,0.2,0.0,0.0,0.2,0.091,0.0,0.111,0.167,0.667,0.167,0.167,0.4,0.167,0.0,0.167,0.0,0.5,0.0,0.75,0.333,0.0,0.375,0.167,0.125,0.562,0.778,0.333,0.3,0.333,0.0,0.0,0.0,0.2,0.667,0.333,0.333,0.091,0.857,0.0,0.133,0.0,1.0,0.571,0.4,0.444,0.5,0.2,0.0,0.0,0.167,0.667,0.0,0.125,0.167,0.0,0.2,0.0,0.0,0.0,0.667,0.0,0.091,0.667,0.0,0.0,0.333,0.2,0.0,0.4,0.0,0.429,0.2,0.286,0.0,0.286,0.5,0.4,0.714,0.0,0.429,0.571,0.375,0.0,0.25,0.222,0.0,0.923,0.0,0.188,0.4,0.8,0.4,0.0,0.0,0.154,0.2,0.286,0.111,0.5,0.2,0.571,0.25,0.0,0.571,0.1,0.143,0.111,0.167,0.167,0.0,0.0,0.143,0.375,0.167,0.2,0.429,0.1,0.6,0.125,0.0,0.4,0.0,0.167,0.333,0.0,0.4,0.167,0.0,0.0,0.125,0.167,0.0,0.333,0.111,0.0,0.417,0.0,0.1,0.2,0.2,0.0,0.25,0.4,0.625,0.083,0.1,0.111,0.4,0.2,0.4,0.0,0.4,0.167,0.222,0.0,0.2,0.0,0.0,0.714,0.5,0.0,0.8,0.1,0.286,0.0,0.2,0.0,0.125,0.667,0.3,0.25,0.5,0.0,0.833,0.667,0.25,0.571,0.091,0.0,0.0,0.167,0.5,0.5,0.167,0.25,0.0,0.333,0.0,0.143,0.5,0.375,0.286,0.2,0.429,0.625,0.909,0.556,0.2,0.0,0.0,0.0,0.6,0.0,0.556,0.4,0.615,0.167,0.167,0.0,0.0,0.1,0.059,0.25,0.2,0.5,0.286,0.25,0.6,0.364,0.5,0.333,0.308,0.333,0.125,0.25,0.375,0.0,0.9,0.5,0.5,0.0,0.4,0.625,0.0,0.25,0.6,0.571,0.8,0.333,0.0,0.5,0.0,0.286,0.667,0.5,0.6,0.429,0.1,0.333,0.333,0.429,0.667,0.6,0.545,0.714,0.714,0.571,0.6,0.0,0.286,0.0,0.2,0.8,0.714,0.429,0.0,0.4,0.0,0.333,0.571,0.286,0.25,0.4,0.286,0.5,0.4,0.0,0.571,0.182,0.143,0.375,0.4,0.4,0.167,0.545,0.167,0.125,0.0,0.2,0.2,0.5,0.333,0.25,0.818,0.375,0.0,0.857,0.333,0.286,0.333,0.143,0.8,0.2,0.714,0.5,0.2,0.714,0.556,0.4,0.3,0.333,0.0,0.286,0.8,0.5,0.0,0.4,0.5,0.625,0.625,0.2,0.333,0.182,0.0,0.0,0.333,0.455,0.0,0.2,0.0,0.6,0.5,0.333,0.429,0.143,0.4,0.571,0.556,0.4,0.5,0.833,0.364,0.7,0.25,0.667,0.167,0.545,0.2,0.25,0.333,0.333,0.833,0.375,0.0,0.3,0.429,0.286,0.5,0.5,0.0,0.5,0.167,0.714,0.714,0.857,0.714,0.1,0.333,0.0,0.0,0.6,0.286,0.125,0.462,0.625,0.75,0.75,0.5,0.167,0.2,0.125,0.857,0.143,0.286,0.0,0.444,0.2,0.75,0.2,0.5,0.333,0.625,0.5,0.692,0.5,0.5,0.625,0.2,0.625,0.5,0.5,0.222,0.5,0.286,0.625,0.5,0.125,0.4,0.4,0.4,0.6,0.385,0.167,0.111,0.429,0.8,0.556,0.667,0.125,0.714,0.429,0.2,0.143,0.375,0.231,1.0,0.429,0.333,0.429,0.429,0.286,0.4,0.429,0.0,0.167,0.286,0.0,0.538,0.6,0.417,0.25,0.333,0.833,0.0,0.2,0.556,0.0,0.333,0.333,0.714,0.167,0.714,0.5,0.0,0.75,0.6,0.625,0.333,0.143,0.2,0.333,0.333,0.5,0.75,0.6,0.4,0.8,0.778,0.125,0.4,0.2,0.8,0.5,0.667,0.429,0.2,0.286,0.6,0.286,0.0,0.2,0.429,0.429,1.0,1.0,0.571,0.4,1.0,0.8,0.333,0.571,0.0,0.222,0.8,0.875,0.333,0.4,0.2,0.0,0.429,0.143,0.538,0.667,0.333,1.0,1.0,0.375,0.222,0.0,0.818,0.5,0.833,1.0,0.2,0.0,0.625,0.667,0.4,0.8,0.143,0.6,0.7,0.75,0.889,0.375,0.833,0.5,0.6,0.5,1.0,0.5,0.6,0.6,0.375,0.5,0.8,0.333,0.5,1.0,0.6,0.889,0.667,0.25,0.571,0.75,0.6,0.667,0.909,0.529,0.571]};
+var COEF={"labels":["M1 Baseline","M2 + Income & Democracy","M3 + Lagged DV"],"beta":[0.616,0.616,0.496],"se":[0.122,0.120,0.104]};
+var FULLM3={"labels":["Spatial exposure (inverse-distance)","Lagged env. share","log GDP per capita","Democracy (Freedom House)"],"beta":[0.496,0.197,0.016,0.050],"se":[0.104,0.018,0.009,0.018]};
+var KNN={"labels":["M1 Baseline","M2 + Income & Democracy","M3 + Lagged DV"],"beta":[0.154,0.157,0.120],"se":[0.029,0.028,0.025]};
+var KNN_FULL={"labels":["Spatial exposure (nearest-neighbor)","Lagged env. share","log GDP per capita","Democracy (Freedom House)"],"beta":[0.120,0.196,0.017,0.050],"se":[0.025,0.018,0.009,0.018]};
+var ADOPT={"iso":["AND","ATG","AUS","AZE","BEL","BEN","BGD","BHR","BHS","BLZ","BOL","BRA","BRB","BTN","BWA","CAF","CAN","CHL","CMR","COD","COL","CPV","CRI","CZE","DMA","DNK","ECU","ESP","EST","FIN","FJI","FRA","FSM","GAB","GBR","GMB","GRC","GRD","GUY","HND","HRV","HUN","IDN","ISL","ITA","JAM","JPN","KAZ","KEN","KGZ","KHM","KIR","KNA","LBR","LBY","LCA","LKA","LSO","LUX","MDG","MDV","MEX","MHL","MKD","MLT","MNG","MOZ","MUS","MYS","NLD","NOR","NPL","NRU","NZL","PLW","PNG","POL","ROU","RWA","SEN","SGP","SLB","SLV","SMR","SOM","SUR","SVN","SWE","SWZ","SYC","TGO","THA","TJK","TON","TTO","TUV","TZA","UGA","URY","USA","VCT","VUT","WSM","ZMB","ZWE"],"yr":[2019,1989,1969,2021,2018,2019,1988,2008,2017,2015,2009,2015,2009,2015,2017,2009,1988,2017,2019,2019,2008,1983,1990,2019,2007,2019,2009,2019,2018,1989,1990,2017,1991,2016,2008,1972,2009,2009,2007,2019,2013,2012,2009,1989,1989,2010,1989,2022,2022,2013,2011,2008,2008,2021,1991,2009,2022,1989,2007,2019,1997,2011,1996,2016,1988,2010,2007,2007,2008,1989,1988,2013,2000,2011,1999,1990,2016,2007,1989,2007,2010,1991,2007,2017,2022,2019,2023,2023,2016,1989,2017,2018,2001,2012,1994,2004,2016,2021,2018,2021,2018,1989,1988,2009,2022]};
+
+var PLOT_FONT = {family:'Source Sans 3, sans-serif'};
+
+function drawTrend(){
+  var trace = {
+    type:'scatter', mode:'lines', x:TREND.yr, y:TREND.env,
+    line:{color:'#1b6b4f', width:2.6, shape:'spline', smoothing:0.6},
+    fill:'tozeroy', fillcolor:'rgba(27,107,79,0.10)',
+    hovertemplate:'<b>%{x}</b><br>env share: %{y:.3f}<extra></extra>', name:'Global mean'
+  };
+  var events = [[1972,'Stockholm'],[1992,'Rio'],[2015,'Paris']];
+  var markers = {type:'scatter', mode:'markers', x:events.map(function(e){return e[0];}),
+    y:events.map(function(e){var i=TREND.yr.indexOf(e[0]); return i>=0?TREND.env[i]:null;}),
+    marker:{size:9,color:'#b8972a',line:{color:'#fff',width:1.5},symbol:'diamond'},
+    text:events.map(function(e){return e[1];}),
+    hovertemplate:'<b>%{text} (%{x})</b><br>env share: %{y:.3f}<extra></extra>', showlegend:false};
+  var anns = events.map(function(e){var i=TREND.yr.indexOf(e[0]); 
+    return {x:e[0], y:(i>=0?TREND.env[i]:0), text:e[1], showarrow:true, arrowhead:0, ax:0, ay:-28,
+      font:{size:9.5,color:'#7d6608'}, arrowcolor:'#b8972a', arrowwidth:1};});
+  var layout = {
+    xaxis:{tickfont:{size:10}, gridcolor:'#eee', dtick:10, range:[1961,2025]},
+    yaxis:{tickfont:{size:10}, gridcolor:'#eee', rangemode:'tozero',
+      title:{text:'Environmental share of speech', font:{size:11,color:'#5a5a5a'}}},
+    margin:{t:20,b:35,l:60,r:20}, paper_bgcolor:'#fff', plot_bgcolor:'#fff',
+    height:400, font:PLOT_FONT, showlegend:false, annotations:anns
+  };
+  Plotly.newPlot('trend-div',[trace,markers],layout,{responsive:true,displayModeBar:false});
+}
+
+function showAdopt(year, btn){
+  var btns=btn.parentElement.querySelectorAll('.viz-btn');
+  btns.forEach(function(b){b.classList.remove('active');}); btn.classList.add('active');
+  document.getElementById('adopt-title').textContent='Cumulative Adoption by '+year;
+  var codes=[], yrs=[];
+  for(var i=0;i<ADOPT.iso.length;i++){ if(ADOPT.yr[i]<=year){ codes.push(ADOPT.iso[i]); yrs.push(ADOPT.yr[i]); } }
+  var trace={type:'choropleth',locationmode:'ISO-3',locations:codes,z:yrs,
+    zmin:1969,zmax:2024,colorscale:[[0,'#d4b483'],[0.5,'#5a9367'],[1,'#1b5e3f']],
+    text:codes.map(function(c,i){return '<b>'+c+'</b><br>adopted '+yrs[i];}),
+    hovertemplate:'%{text}<extra></extra>',marker:{line:{color:'white',width:0.5}},
+    colorbar:{thickness:14,len:0.8,tickfont:{size:10},title:{text:'Adopted',font:{size:10}},dtick:10}};
+  var layout={geo:{showframe:false,showcoastlines:true,coastlinecolor:'#aaa',showland:true,
+      landcolor:'#eef2ee',showocean:true,oceancolor:'#d4e5f5',projection:{type:'natural earth'}},
+    margin:{t:0,b:0,l:0,r:0},paper_bgcolor:'#fff',height:440,font:PLOT_FONT};
+  Plotly.react('adopt-div',[trace],layout,{responsive:true,displayModeBar:false,scrollZoom:true});
+}
+
+function coefPlot(divId, d, range, sigColor){
+  var colors=d.beta.map(function(b,i){return Math.abs(b)>1.96*d.se[i]?sigColor:'#c9c9c9';});
+  var trace={type:'bar',orientation:'h',x:d.beta,y:d.labels,
+    error_x:{type:'data',array:d.se.map(function(s){return s*1.96;}),color:'#555',thickness:1.5,width:5},
+    marker:{color:colors,opacity:0.9},
+    text:d.beta.map(function(b){return (b>0?'+':'')+b.toFixed(3);}),textposition:'outside',
+    textfont:{size:11,color:'#333'},cliponaxis:false,
+    hovertemplate:'<b>%{y}</b><br>\u03b2 = %{x:.3f}<extra></extra>'};
+  var layout={xaxis:{zeroline:true,zerolinecolor:'#999',zerolinewidth:1.4,gridcolor:'#eee',tickfont:{size:10},
+      title:{text:'Coefficient on own environmental share',font:{size:11,color:'#5a5a5a'}},range:range},
+    yaxis:{tickfont:{size:10.5},automargin:true,autorange:'reversed'},
+    margin:{t:15,b:45,l:160,r:55},paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:400,font:PLOT_FONT};
+  Plotly.react(divId,[trace],layout,{responsive:true,displayModeBar:false});
+}
+
+function showCoef(which, btn){
+  var btns=btn.parentElement.querySelectorAll('.viz-btn');
+  btns.forEach(function(b){b.classList.remove('active');}); btn.classList.add('active');
+  if(which==='main'){
+    document.getElementById('coef-title').textContent='Spatial Exposure Effect Across Models (M1 to M3)';
+    coefPlot('coef-div', COEF, [0,0.8], '#1b6b4f');
+  } else {
+    document.getElementById('coef-title').textContent='Full Model: All Predictors';
+    coefPlot('coef-div', FULLM3, [0,0.6], '#1b6b4f');
+  }
+}
+
+function drawKnn(){ coefPlot('knn-div', KNN, [0,0.8], '#2166ac'); }
+
+window.addEventListener('load', function(){
+  drawTrend();
+  showAdopt(1975, document.querySelector('#adopt-div').closest('.viz-panel').querySelector('.viz-btn'));
+  showCoef('main', document.querySelector('#coef-div').closest('.viz-panel').querySelector('.viz-btn'));
+  drawKnn();
+});
+</script>
+</body>
+</html>

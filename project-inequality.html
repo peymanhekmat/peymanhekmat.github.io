@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core Capital Dependency &amp; Income Inequality &mdash; Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' \25BE';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;position:fixed;top:65px;left:0;right:0;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.4);max-height:calc(100vh - 65px);overflow-y:auto;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;line-height:1.25;}
+    .page-header .subtitle{color:#b8c8e0;font-size:0.9rem;}
+    .status-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:2px;margin-top:0.75rem;}
+    .copyright-banner{background:#f0ebe0;border-bottom:1px solid var(--border);padding:0.55rem 2rem;text-align:center;}
+    .copyright-banner p{font-size:0.74rem;color:var(--text-muted);margin:0;}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:var(--navy);padding:1rem 0.75rem;border-radius:4px;border-bottom:3px solid var(--gold);text-align:center;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block;}
+    .stat-label{font-size:0.68rem;color:#b8c8e0;letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem;line-height:1.3;}
+    .index-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+    .index-card h4{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--navy);margin-bottom:0.75rem;}
+    .formula-step{display:flex;gap:0.75rem;margin-bottom:0.65rem;align-items:flex-start;}
+    .step-num{background:var(--navy);color:var(--gold-light);font-size:0.7rem;font-weight:700;width:1.4rem;height:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .formula-text{font-size:0.85rem;color:var(--text-muted);line-height:1.55;}
+    .formula-eq{font-family:monospace;font-size:0.82rem;background:var(--cream-dark);padding:0.35rem 0.6rem;border-radius:3px;color:var(--navy-mid);display:inline-block;margin:0.25rem 0;}
+    .viz-panel{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .viz-header{background:var(--navy);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;}
+    .viz-title{color:var(--white);font-size:0.85rem;font-weight:600;}
+    .viz-btns{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .viz-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .viz-btn:hover,.viz-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+    .viz-note{padding:0.55rem 1.2rem;background:var(--cream-dark);border-top:1px solid var(--border);font-size:0.73rem;color:var(--text-muted);}
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .info-row{display:flex;justify-content:space-between;padding:0.42rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:var(--text-muted);}
+    .info-val{color:var(--navy);font-weight:600;text-align:right;}
+    .tag{display:inline-block;background:var(--navy);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:2px;border-left:3px solid var(--gold);margin:0.18rem;}
+    .finding{display:flex;gap:0.6rem;margin-bottom:0.8rem;font-size:0.83rem;}
+    .finding-icon{color:var(--gold);flex-shrink:0;font-weight:700;}
+    .finding-text{color:var(--text-muted);line-height:1.5;}
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C0CB4TPWCY');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)" class="active">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+          <a href="project-worldsystem.html">World-System Position &amp; Mobility</a>
+          <a href="project-abm.html">Generative ABM of Dependency</a>
+          <a href="project-inequality.html">Core Capital &amp; Income Inequality</a>
+          <a href="project-diffusion.html">Diffusion of Environmental Discourse</a>
+        </div>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="in-the-news.html">In the News</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="project-worldsystem.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">World-System Position &amp; Mobility</a>
+  <a href="project-abm.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Generative ABM of Dependency</a>
+  <a href="project-inequality.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Core Capital &amp; Income Inequality</a>
+  <a href="project-diffusion.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Diffusion of Environmental Discourse</a>
+  <a href="publications.html">Publications</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="in-the-news.html">In the News</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Research &rsaquo; Current Projects</p>
+    <h1>Core Capital Dependency and Income Inequality</h1>
+    <p class="subtitle">A network analysis of foreign direct investment and the Gini coefficient across 152 countries, 2009 to 2023</p>
+    <span class="status-badge">Under Review</span>
+  </div>
+</div>
+
+<div class="copyright-banner">
+  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+</div>
+
+<div class="main">
+<main>
+
+  <section>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">1,820</span><span class="stat-label">Country-Year Observations</span></div>
+      <div class="stat-box"><span class="stat-num">152</span><span class="stat-label">Countries</span></div>
+      <div class="stat-box"><span class="stat-num">15</span><span class="stat-label">Years (2009 to 2023)</span></div>
+      <div class="stat-box"><span class="stat-num">+.51</span><span class="stat-label">CCDI Effect on Gini (M4)</span></div>
+    </div>
+    <p>Does foreign direct investment widen or narrow income inequality? The mainstream development literature reports that FDI promotes convergence, but it typically measures FDI as a simple volume or stock. This project argues that what matters is not how much foreign capital a country receives but its structure: where the capital comes from, how core-like its senders are, and how concentrated the dependency is. Using the Core Capital Dependency Index built from IMF bilateral FDI position data, the study estimates the effect of structural dependency on the Gini coefficient across 152 countries from 2009 to 2023.</p>
+    <p>Income inequality is measured with the SWIID net-income Gini. The analysis uses growth curve models with hierarchical linear modeling, region-specific and OECD curvilinear time trajectories, and cluster-robust standard errors. Across four nested specifications, Core Capital Dependency carries a consistent positive effect on inequality, robust to FDI stock, sector composition, demographic structure, education, trade openness, institutions, and labor-market controls. The effect operates through network structure, not FDI volume.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">The Core Capital Dependency Index</h2>
+    <p>The index is a relational measure of FDI that captures the source of foreign capital, the receiver's structural position in the global investment network, and its reliance on foreign capital relative to its own outward investments. It is derived from IMF bilateral FDI position data and recomputed for each country in each year, scaled to a 0 to 1 range.</p>
+    <div class="index-card">
+      <h4>Construction in Brief</h4>
+      <div class="formula-step">
+        <span class="step-num">1</span>
+        <div class="formula-text"><strong>Coreness.</strong> Countries are ranked each year by total outward FDI position and normalized to a 0 to 1 coreness score, where 1 is the largest outward investor.<br>
+          <span class="formula-eq">Core&#7522;&#8348; = (N&#8348; &minus; rank&#7522;&#8348;) / (N&#8348; &minus; 1)</span></div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">2</span>
+        <div class="formula-text"><strong>Composition.</strong> For each receiver, the share of inward FDI from each sender is weighted by the sender's coreness, scoring higher when inflows come from more core-like economies.<br>
+          <span class="formula-eq">Comp&#7522;&#8348; = &Sigma; S&#7522;&#11388;&#8348; &times; Core&#11388;&#8348;</span></div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">3</span>
+        <div class="formula-text"><strong>Reliance and the index.</strong> Reliance is inflows over total flows; the index rises when a country relies on core capital and is itself less central.<br>
+          <span class="formula-eq">Dependency&#7522;&#8348; = Comp&#7522;&#8348; &times; &rho;&#7522;&#8348; &times; (1 &minus; Core&#7522;&#8348;)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 1. The Global Distribution of Inequality and Dependency</h2>
+    <p>The two maps show the global distribution of income inequality and core capital dependency. The top panel maps the net-income Gini coefficient: the Global North enjoys lower within-country inequality relative to the Global South, with the highest concentrations in southern Africa, where Namibia (64.3), South Africa (61.2), and Botswana (57.5) rank among the most unequal in the world, while Czechia (24.6), Slovenia (23.9), and the Slovak Republic (22.3) show the lowest. The bottom panel maps the Core Capital Dependency Index: high dependency concentrates in sub-Saharan Africa, central Asia, the western Andes, and the post-Soviet region, while western Europe and North America show the lowest scores. Use the buttons to switch panels; hover for country values.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="map-title">Income Inequality (Gini Coefficient)</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showMap('gini','Income Inequality (Gini Coefficient)','Reds',false,this)">Gini (top panel)</button>
+          <button class="viz-btn" onclick="showMap('dep','Core Capital Dependency Index','YlOrRd',true,this)">Dependency (bottom panel)</button>
+        </div>
+      </div>
+      <div id="map-div" style="height:460px;"></div>
+      <div class="viz-note">Gini (net income) shown as latest available per country through 2023, N = 185; Core Capital Dependency for 2023, N = 168. Dependency from IMF DIPCE bilateral FDI positions; Gini from SWIID. Hover for country values and the Gini reference year.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Figure 2. Estimated Effects on Income Inequality</h2>
+    <p>The coefficient plot presents the full model (M4), displaying point estimates and 95 percent confidence intervals for all predictors. The most prominent feature is the Core Capital Dependency coefficient, which is positive, significant, and among the largest in magnitude relative to the scale of the other predictors. The non-significant FDI stock terms, whose intervals span zero, stand in clear contrast, reinforcing that it is the structural rather than the volumetric dimension of foreign investment that drives the inequality effect. Among the controls, sector pluralism and migrant population are positive and industrial employment negative, while the remaining predictors cluster around zero. Switch between the dependency effect across the four models and the full M4 specification.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="coef-title">Full Model (M4): All Predictors</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showCoef('full',this)">Full model (M4)</button>
+          <button class="viz-btn" onclick="showCoef('main',this)">CCDI by model</button>
+        </div>
+      </div>
+      <div id="coef-div" style="height:520px;"></div>
+      <div class="viz-note">N = 1,820 country-year observations, 152 countries. Growth curve models with region-specific and OECD curvilinear time trajectories. Cluster-robust SEs. &dagger; p &lt; .10; * p &lt; .05; ** p &lt; .01; *** p &lt; .001.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Key Findings</h2>
+    <p>Core Capital Dependency raises the Gini coefficient. The effect is positive and significant in every specification, from 0.483 in the baseline to 0.514 in the fully saturated model, and it survives the inclusion of FDI stock and its square, sector composition, demographic structure, education, trade openness, institutions, and labor-market controls. A one-unit move across the full range of the index is associated with roughly half a Gini point on average, net of everything else.</p>
+    <p>The result matters because the index measures structure, not volume. Raw FDI stock as a share of GDP carries only a marginal effect, and its square is null, so the inequality consequence of foreign investment is not about how much a country receives. It is about the configuration of who sends it and how concentrated and core-origin that capital is. This directly challenges the convergence claim built on volume measures.</p>
+    <p>Among the controls, the pattern is coherent with stratification theory: sector pluralism and migrant population share raise inequality, while industrial and agricultural employment lower it. The dependency effect holds alongside all of them, which is the paper's central empirical claim: structural dependency on core capital is an independent driver of income inequality.</p>
+  </section>
+
+</main>
+
+<aside class="sidebar">
+  <div class="card">
+    <p class="card-title">Project Details</p>
+    <div class="info-row"><span class="info-label">Status</span><span class="info-val">Under review</span></div>
+    <div class="info-row"><span class="info-label">Target</span><span class="info-val">Social Forces</span></div>
+    <div class="info-row"><span class="info-label">Unit</span><span class="info-val">Country-Year</span></div>
+    <div class="info-row"><span class="info-label">Period</span><span class="info-val">2009 to 2023</span></div>
+    <div class="info-row"><span class="info-label">Countries</span><span class="info-val">152</span></div>
+    <div class="info-row"><span class="info-label">Observations</span><span class="info-val">1,820</span></div>
+    <div class="info-row"><span class="info-label">Estimator</span><span class="info-val">Growth Curve Model</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Key Results</p>
+    <div class="finding"><span class="finding-icon">+</span><span class="finding-text">CCDI raises the Gini in every model (&beta; = .48 to .51, p &lt; .05).</span></div>
+    <div class="finding"><span class="finding-icon">~</span><span class="finding-text">Raw FDI stock is only marginal; its square is null.</span></div>
+    <div class="finding"><span class="finding-icon">+</span><span class="finding-text">Sector pluralism and migrant share raise inequality.</span></div>
+    <div class="finding"><span class="finding-icon">-</span><span class="finding-text">Industrial and agricultural employment lower it.</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Data Sources</p>
+    <span class="tag">IMF DIPCE 2025</span>
+    <span class="tag">SWIID v9.0</span>
+    <span class="tag">World Bank WDI</span>
+    <span class="tag">V-Dem</span>
+    <span class="tag">Fraser Institute</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Keywords</p>
+    <span class="tag">FDI</span>
+    <span class="tag">Income Inequality</span>
+    <span class="tag">Network Analysis</span>
+    <span class="tag">Dependency Theory</span>
+    <span class="tag">Growth Curve Model</span>
+    <span class="tag">World Systems</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Replication</p>
+    <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">Full replication package on OSF under CC-BY 4.0: data, build script, and Stata analysis.</p>
+    <a href="https://doi.org/10.17605/OSF.IO/243FB" target="_blank" style="font-size:0.79rem;color:var(--navy-light);text-decoration:none;font-weight:600;">OSF replication archive &rarr;</a>
+  </div>
+  <div class="card">
+    <p class="card-title">Related Work</p>
+    <div class="info-row"><span class="info-label"><a href="project-worldsystem.html" style="color:var(--navy-light);text-decoration:none;">World-System Position &amp; Mobility</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-abm.html" style="color:var(--navy-light);text-decoration:none;">Generative ABM of Dependency</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-fdi.html" style="color:var(--navy-light);text-decoration:none;">FDI &amp; Climate Adaptability</a></span></div>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <p>&copy; Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+function toggleDropdown(e,el){e.preventDefault();el.parentElement.classList.toggle('open');}
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.nav-links li.has-dropdown.open').forEach(function(li){
+    if(!li.contains(e.target)) li.classList.remove('open');
+  });
+});
+
+// ===== REAL DATA: 2016 cross-section (SWIID Gini + CCDI), N=133 =====
+var FI = {"code":["AFG","AGO","AIA","ALB","AND","ARE","ARG","ARM","ATG","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLR","BLZ","BOL","BRA","BRB","BTN","BWA","CAF","CAN","CHE","CHL","CHN","CIV","CMR","COD","COG","COL","COM","CPV","CRI","CUB","CYP","CZE","DEU","DJI","DMA","DNK","DOM","DZA","ECU","EGY","ERI","ESP","EST","ETH","FIN","FJI","FRA","FSM","GAB","GBR","GEO","GHA","GIN","GMB","GNB","GNQ","GRC","GRD","GRL","GTM","GUY","HKG","HND","HRV","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR","KWT","LAO","LBN","LBR","LBY","LCA","LKA","LSO","LTU","LUX","LVA","MAR","MCO","MDA","MDG","MDV","MEX","MHL","MKD","MLI","MLT","MMR","MNE","MNG","MOZ","MRT","MTQ","MUS","MWI","MYS","NAM","NER","NGA","NIC","NLD","NOR","NPL","NRU","NZL","OMN","PAK","PAN","PER","PHL","PLW","PNG","POL","PRI","PRK","PRT","PRY","QAT","ROU","RUS","RWA","SAU","SDN","SEN","SGP","SLB","SLE","SLV","SMR","SOM","SRB","SSD","STP","SUR","SVK","SVN","SWE","SWZ","SYC","SYR","TCA","TCD","TGO","THA","TJK","TKM","TLS","TON","TTO","TUN","TUV","TWN","TZA","UGA","UKR","URY","USA","UZB","VCT","VEN","VNM","VUT","WSM","YEM","ZAF","ZMB","ZWE"],"name":["Afghanistan","Angola","","Albania","Andorra","United Arab Emirates","Argentina","Armenia","Antigua and Barbuda","Australia","Austria","Azerbaijan","Burundi","Belgium","Benin","Burkina Faso","Bangladesh","Bulgaria","Bahrain","Bahamas, The","Bosnia and Herzegovina","Belarus","Belize","Bolivia","Brazil","Barbados","Bhutan","Botswana","Central African Republic","Canada","Switzerland","Chile","China","Cote d'Ivoire","Cameroon","Congo, Dem. Rep.","Congo, Rep.","Colombia","Comoros","Cabo Verde","Costa Rica","Cuba","Cyprus","Czechia","Germany","Djibouti","Dominica","Denmark","Dominican Republic","Algeria","Ecuador","Egypt, Arab Rep.","Eritrea","Spain","Estonia","Ethiopia","Finland","Fiji","France","Micronesia, Fed. Sts.","Gabon","United Kingdom","Georgia","Ghana","Guinea","Gambia, The","Guinea-Bissau","Equatorial Guinea","Greece","Grenada","Greenland","Guatemala","Guyana","Hong Kong SAR, China","Honduras","Croatia","Haiti","Hungary","Indonesia","India","Ireland","Iran, Islamic Rep.","Iraq","Iceland","Israel","Italy","Jamaica","Jordan","Japan","Kazakhstan","Kenya","Kyrgyz Republic","Cambodia","Kiribati","Kuwait","Lao PDR","Lebanon","Liberia","Libya","St. Lucia","Sri Lanka","Lesotho","Lithuania","Luxembourg","Latvia","Morocco","Monaco","Moldova","Madagascar","Maldives","Mexico","Marshall Islands","North Macedonia","Mali","Malta","Myanmar","Montenegro","Mongolia","Mozambique","Mauritania","","Mauritius","Malawi","Malaysia","Namibia","Niger","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","New Zealand","Oman","Pakistan","Panama","Peru","Philippines","Palau","Papua New Guinea","Poland","Puerto Rico (US)","Korea, Dem. People's Rep.","Portugal","Paraguay","Qatar","Romania","Russian Federation","Rwanda","Saudi Arabia","Sudan","Senegal","Singapore","Solomon Islands","Sierra Leone","El Salvador","San Marino","Somalia, Fed. Rep.","Serbia","South Sudan","Sao Tome and Principe","Suriname","Slovak Republic","Slovenia","Sweden","Eswatini","Seychelles","Syrian Arab Republic","Turks and Caicos Islands","Chad","Togo","Thailand","Tajikistan","Turkmenistan","Timor-Leste","Tonga","Trinidad and Tobago","Tunisia","Tuvalu","","Tanzania","Uganda","Ukraine","Uruguay","United States","Uzbekistan","St. Vincent and the Grenadines","Venezuela, RB","Viet Nam","Vanuatu","Samoa","Yemen, Rep.","South Africa","Zambia","Zimbabwe"],"dep":[0.108,0.268,null,0.535,null,0.063,0.205,null,null,0.056,0.045,0.086,0.661,0.027,0.641,0.596,0.443,0.295,0.327,0.125,0.541,0.251,0.316,0.455,0.147,0.146,0.958,0.336,null,0.018,0.018,0.148,0.051,null,0.738,0.788,0.68,0.191,0.066,0.097,0.307,0.181,0.044,0.151,0.009,0.116,0.72,0.046,0.514,0.391,0.452,0.362,0.887,0.036,0.221,0.699,0.069,0.728,0.014,null,0.519,0.009,0.566,0.566,0.751,null,0.565,0.822,0.194,0.107,0.779,0.27,0.274,null,0.324,null,0.956,0.09,0.137,0.125,0.027,0.27,0.751,0.223,0.107,0.039,0.454,0.497,0.003,0.238,0.297,null,0.497,0.91,0.036,0.717,0.112,0.228,0.276,0.29,0.143,0.611,null,0.005,null,0.272,0.143,0.616,0.476,0.569,0.107,null,0.561,0.626,0.052,0.4,null,0.834,null,0.712,0.018,0.043,0.663,0.079,0.571,0.776,0.306,0.398,0.003,0.051,0.707,0.822,0.232,0.273,0.438,0.174,0.458,0.278,1.0,0.689,0.219,null,0.405,0.142,0.51,0.061,0.748,0.093,0.438,0.101,null,0.486,0.05,null,0.441,0.295,0.122,null,0.372,0.072,null,0.407,0.237,0.27,0.038,0.305,null,0.02,0.706,0.794,0.426,0.118,0.828,0.885,null,0.507,0.358,0.476,null,null,0.627,0.725,0.278,0.207,0.0,0.874,0.143,0.374,0.443,null,null,0.813,0.096,0.66,0.411],"gini":[31.9,49.9,38.2,34.7,30.0,29.5,38.4,33.9,48.4,32.6,28.2,28.8,38.7,25.2,43.1,40.7,33.5,37.8,47.9,44.7,38.2,25.3,49.2,38.9,45.2,42.4,36.7,57.5,50.3,30.3,31.0,43.4,40.8,48.7,45.0,null,null,50.9,40.8,null,44.7,null,29.4,24.6,30.9,43.0,46.3,28.8,37.0,33.7,41.5,32.0,null,31.4,30.7,33.1,26.2,36.9,29.9,42.8,40.6,31.6,35.4,43.9,36.0,40.5,40.0,43.7,31.1,47.0,34.9,42.1,47.3,40.0,44.3,28.2,54.3,26.5,45.0,46.8,28.0,35.4,33.0,25.3,34.2,32.9,43.1,37.0,31.5,27.9,41.7,32.4,35.4,30.4,36.2,36.8,36.1,36.7,32.3,null,48.2,48.2,35.4,28.8,33.8,40.6,null,31.7,41.7,35.6,40.2,36.4,30.9,36.5,29.6,33.9,33.0,33.6,48.9,35.7,null,38.2,44.0,38.5,64.3,null,38.4,43.5,26.9,25.7,34.8,38.9,31.2,35.1,34.6,45.1,41.7,37.3,46.6,47.1,29.2,51.2,31.4,31.6,45.0,37.0,27.7,30.6,47.0,47.7,48.3,39.9,35.8,42.6,39.1,37.2,23.7,35.5,30.6,46.7,35.3,45.5,22.3,23.9,28.6,60.2,37.0,33.4,40.2,40.7,42.9,36.5,48.6,35.6,32.6,33.5,43.3,37.4,40.6,29.0,45.5,43.9,27.1,38.4,39.4,31.1,null,36.1,34.8,37.2,42.4,37.2,61.2,55.0,47.7],"gyr":[2017,2018,2009,2022,2016,2018,2024,2024,2007,2020,2023,2008,2020,2023,2021,2021,2022,2023,2014,2013,2021,2024,2018,2024,2024,2017,2022,2015,2021,2023,2023,2024,2023,2021,2021,null,null,2024,2024,null,2024,null,2023,2023,2023,2017,2010,2024,2024,2011,2024,2023,null,2023,2024,2021,2023,2019,2023,2013,2017,2024,2024,2016,2018,2020,2021,2022,2023,2018,2024,2023,2007,2021,2024,2023,2012,2023,2024,2022,2023,2023,2023,2019,2022,2024,2021,2017,2021,2024,2022,2024,2012,2023,1999,2024,2022,2016,2008,null,2019,2017,2023,2023,2023,2020,null,2024,2021,2019,2024,2019,2022,2024,2023,2017,2021,2022,2022,2019,null,2017,2019,2022,2016,null,2022,2014,2023,2023,2022,2012,2022,2019,2024,2024,2024,2023,2014,2009,2023,2023,2024,2023,2024,2017,2023,2023,2023,2018,2014,2021,2024,2012,2018,2023,2018,2002,2023,2016,2017,2022,2023,2023,2023,2016,2018,2022,1999,2022,2021,2024,2024,2005,2014,2021,2005,2021,2010,2024,2018,2019,2020,2024,2024,2024,null,2021,2023,2019,2013,2014,2022,2022,2019]};
+
+var VAR_LABELS = { dep:'Core Capital Dependency', gini:'Gini Coefficient' };
+var PLOT_FONT = {family:'Source Sans 3, sans-serif'};
+
+function showMap(varKey, title, colorscale, reverse, btn){
+  document.querySelectorAll('#map-div').forEach(function(){});
+  var btns = btn.parentElement.querySelectorAll('.viz-btn');
+  btns.forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('map-title').textContent = title;
+  var vals = FI[varKey];
+  // Filter to non-null for this variable
+  var locs=[], z=[], txt=[];
+  for(var i=0;i<FI.code.length;i++){
+    var v = FI[varKey][i];
+    if(v===null || v===undefined) continue;
+    locs.push(FI.code[i]); z.push(v);
+    var depStr = (FI.dep[i]===null||FI.dep[i]===undefined)?'n/a':FI.dep[i].toFixed(3);
+    var giniStr = (FI.gini[i]===null||FI.gini[i]===undefined)?'n/a':(FI.gini[i].toFixed(1)+(FI.gyr[i]?(' ('+FI.gyr[i]+')'):''));
+    txt.push('<b>'+(FI.name[i]||FI.code[i])+'</b><br>Dependency: '+depStr+'<br>Gini: '+giniStr);
+  }
+  var trace = {
+    type:'choropleth', locationmode:'ISO-3', locations:locs,
+    z:z, text:txt, hovertemplate:'%{text}<extra></extra>',
+    colorscale:colorscale, reversescale:reverse,
+    marker:{line:{color:'white',width:0.5}},
+    colorbar:{thickness:14,len:0.8,tickfont:{size:10}}
+  };
+  var layout = {
+    geo:{showframe:false,showcoastlines:true,coastlinecolor:'#aaa',showland:true,
+         landcolor:'#e8eef4',showocean:true,oceancolor:'#d4e5f5',projection:{type:'natural earth'}},
+    margin:{t:0,b:0,l:0,r:0}, paper_bgcolor:'#ffffff', height:460, font:PLOT_FONT
+  };
+  Plotly.react('map-div',[trace],layout,{responsive:true,displayModeBar:false,scrollZoom:true});
+}
+
+// M1-M4 CCDI coefficients and full M4 model (from Table 2)
+var CCDI_BY_MODEL = {
+  labels:['M1 Baseline','M2 + FDI stock','M3 + Sector','M4 Full'],
+  beta:[0.483,0.483,0.486,0.514], se:[0.203,0.203,0.199,0.201]
+};
+var FULL_M4 = {
+  labels:['Core Capital Dependency','FDI Stock % GDP','FDI Stock % GDP\u00b2','Sector Pluralism','Industrial Employment',
+    'Agricultural Employment','Population Growth','Tertiary Education','Trade Openness','Migrant Population (%)',
+    'Unemployment Rate','Government Size','Labor Regulation','Democracy (V-Dem)','Female Representation','Female Labor Force'],
+  beta:[0.514,0.016,0.004,0.095,-0.073,-0.030,-0.006,0.006,0.003,0.077,0.046,0.009,0.051,0.045,0.000,0.001],
+  se:[0.201,0.013,0.004,0.030,0.027,0.017,0.011,0.006,0.002,0.023,0.019,0.035,0.070,0.485,0.006,0.011]
+};
+
+function showCoef(which, btn){
+  var btns = btn.parentElement.querySelectorAll('.viz-btn');
+  btns.forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  if(which==='main'){
+    document.getElementById('coef-title').textContent='Core Capital Dependency Across Models (M1 to M4)';
+    var d=CCDI_BY_MODEL;
+    var trace={type:'bar',orientation:'h',x:d.beta,y:d.labels,
+      error_x:{type:'data',array:d.se.map(function(s){return s*1.96;}),color:'#555',thickness:1.6,width:5},
+      marker:{color:'#1b3a6b',opacity:0.88},
+      text:d.beta.map(function(b){return '+'+b.toFixed(3);}),textposition:'outside',
+      textfont:{size:11,color:'#333'},cliponaxis:false,
+      hovertemplate:'<b>%{y}</b><br>\u03b2 = %{x:.3f}<extra></extra>'};
+    var layout={xaxis:{zeroline:true,zerolinecolor:'#999',zerolinewidth:1.4,gridcolor:'#eee',tickfont:{size:10},
+        title:{text:'Coefficient on Gini coefficient',font:{size:11,color:'#5a5a5a'}},range:[0,0.8]},
+      yaxis:{tickfont:{size:11},automargin:true,autorange:'reversed'},
+      margin:{t:15,b:45,l:130,r:60},paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:420,font:PLOT_FONT,
+      shapes:[{type:'line',x0:0,x1:0,y0:-0.5,y1:3.5,line:{color:'#999',width:1.4,dash:'dash'}}]};
+    Plotly.react('coef-div',[trace],layout,{responsive:true,displayModeBar:false});
+  } else {
+    document.getElementById('coef-title').textContent='Full Model (M4): All Predictors';
+    var d=FULL_M4;
+    var colors=d.beta.map(function(b,i){
+      var sig=Math.abs(b)>1.96*d.se[i];
+      if(!sig) return '#c9c9c9';
+      return b>0?'#1b3a6b':'#c0392b';
+    });
+    var trace={type:'bar',orientation:'h',x:d.beta,y:d.labels,
+      error_x:{type:'data',array:d.se.map(function(s){return s*1.96;}),color:'#777',thickness:1.2,width:4},
+      marker:{color:colors,opacity:0.9},
+      hovertemplate:'<b>%{y}</b><br>\u03b2 = %{x:.3f}<extra></extra>'};
+    var layout={xaxis:{zeroline:true,zerolinecolor:'#999',zerolinewidth:1.4,gridcolor:'#eee',tickfont:{size:10},
+        title:{text:'Coefficient on Gini coefficient',font:{size:11,color:'#5a5a5a'}}},
+      yaxis:{tickfont:{size:9.5},automargin:true,autorange:'reversed'},
+      margin:{t:15,b:45,l:175,r:30},paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:520,font:PLOT_FONT,
+      annotations:[{x:0.4,y:0,text:'Navy = positive sig. | Red = negative sig. | Gray = n.s.',showarrow:false,
+        font:{size:9,color:'#999'},xanchor:'left',yanchor:'top'}]};
+    Plotly.react('coef-div',[trace],layout,{responsive:true,displayModeBar:false});
+  }
+}
+
+window.addEventListener('load', function(){
+  showMap('gini','Income Inequality (Gini Coefficient)','Reds',false, document.querySelector('#map-div').closest('.viz-panel').querySelector('.viz-btn'));
+  showCoef('full', document.querySelector('#coef-div').closest('.viz-panel').querySelector('.viz-btn'));
+});
+</script>
+</body>
+</html>
