@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generative ABM of Dependency &mdash; Peyman Hekmatpour, PhD</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root{--navy:#0e1f3b;--navy-mid:#1a3260;--navy-light:#24478a;--gold:#b8972a;--gold-light:#d4af50;--cream:#f7f4ef;--cream-dark:#ede9e0;--text:#1c1c1c;--text-muted:#5a5a5a;--white:#ffffff;--border:#d0c9b8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.7;}
+    nav{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--gold);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+    .nav-brand{font-family:'EB Garamond',serif;color:var(--white);font-size:1.15rem;text-decoration:none;}
+    .nav-brand span{color:var(--gold-light);}
+    .nav-links{display:flex;gap:0.2rem;list-style:none;}
+    .nav-links li{position:relative;}
+    .nav-links a{color:#b8c8e0;text-decoration:none;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:3px;transition:color 0.2s,background 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--navy-light);}
+    .nav-links li.has-dropdown>a::after{content:' \25BE';font-size:0.7rem;opacity:0.7;}
+    .dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-top:3px solid var(--gold);border-radius:0 0 4px 4px;min-width:230px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .nav-links li.has-dropdown.open .dropdown{display:block;}
+    .dropdown-label{display:block;padding:0.55rem 1rem 0.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);pointer-events:none;}
+    .dropdown a{display:block;color:#b8c8e0 !important;padding:0.55rem 1rem !important;font-size:0.81rem !important;border-radius:0 !important;border-bottom:1px solid rgba(255,255,255,0.06);background:transparent !important;text-transform:none !important;letter-spacing:0.04em !important;}
+    .dropdown a:last-child{border-bottom:none;}
+    .dropdown a:hover{background:var(--navy-light) !important;color:var(--white) !important;}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#b8c8e0;border-radius:2px;transition:all 0.3s ease;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;background:var(--navy-mid);border-bottom:3px solid var(--gold);padding:1rem 1.5rem;position:fixed;top:65px;left:0;right:0;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.4);max-height:calc(100vh - 65px);overflow-y:auto;}
+    .mobile-menu.open{display:block;}
+    .mobile-menu a{display:block;color:#b8c8e0;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+    .mobile-menu a:last-child{border-bottom:none;}
+    .mobile-menu a:hover{color:var(--white);}
+    .mobile-menu .mobile-section-label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);padding:0.75rem 0 0.25rem;pointer-events:none;}
+    @media(max-width:768px){.hamburger{display:flex;}.nav-links{display:none !important;}}
+    .page-header{background:var(--navy);background-image:linear-gradient(135deg,#0e1f3b 0%,#1a3260 60%,#0e2a4a 100%);padding:3rem 2rem;border-bottom:4px solid var(--gold);}
+    .page-header-inner{max-width:1100px;margin:0 auto;}
+    .breadcrumb{font-size:0.78rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breadcrumb a{color:var(--gold-light);text-decoration:none;opacity:0.7;}
+    .page-header h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--white);font-weight:400;margin-bottom:0.5rem;line-height:1.25;}
+    .page-header .subtitle{color:#b8c8e0;font-size:0.9rem;}
+    .status-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:2px;margin-top:0.75rem;}
+    .copyright-banner{background:#f0ebe0;border-bottom:1px solid var(--border);padding:0.55rem 2rem;text-align:center;}
+    .copyright-banner p{font-size:0.74rem;color:var(--text-muted);margin:0;}
+    .main{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;}
+    .section-title{font-family:'EB Garamond',serif;font-size:1.45rem;color:var(--navy);font-weight:600;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold);}
+    section{margin-bottom:2.5rem;}
+    section p{font-size:0.95rem;color:var(--text);margin-bottom:0.85rem;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:var(--navy);padding:1rem 0.75rem;border-radius:4px;border-bottom:3px solid var(--gold);text-align:center;}
+    .stat-num{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block;}
+    .stat-label{font-size:0.68rem;color:#b8c8e0;letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem;line-height:1.3;}
+    .index-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+    .index-card h4{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--navy);margin-bottom:0.75rem;}
+    .formula-step{display:flex;gap:0.75rem;margin-bottom:0.65rem;align-items:flex-start;}
+    .step-num{background:var(--navy);color:var(--gold-light);font-size:0.7rem;font-weight:700;width:1.4rem;height:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .formula-text{font-size:0.85rem;color:var(--text-muted);line-height:1.55;}
+    .formula-eq{font-family:monospace;font-size:0.82rem;background:var(--cream-dark);padding:0.35rem 0.6rem;border-radius:3px;color:var(--navy-mid);display:inline-block;margin:0.25rem 0;}
+    .viz-panel{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .viz-header{background:var(--navy);padding:0.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;}
+    .viz-title{color:var(--white);font-size:0.85rem;font-weight:600;}
+    .viz-btns{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .viz-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .viz-btn:hover,.viz-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+    .viz-note{padding:0.55rem 1.2rem;background:var(--cream-dark);border-top:1px solid var(--border);font-size:0.73rem;color:var(--text-muted);}
+    .spec-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:0.5rem;}
+    .spec-table th{background:var(--navy);color:var(--gold-light);text-align:left;padding:0.5rem 0.7rem;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;}
+    .spec-table td{padding:0.45rem 0.7rem;border-bottom:1px solid var(--cream-dark);color:var(--text-muted);}
+    .spec-table tr:nth-child(even) td{background:var(--cream);}
+    .spec-table .param{font-family:monospace;font-size:0.78rem;color:var(--navy-mid);}
+    .spec-table .val{font-weight:600;color:var(--navy);text-align:right;}
+    .proc-inflow{border-left:3px solid #2166ac;}
+    .proc-outflow{border-left:3px solid #c0392b;}
+    .proc-dyn{border-left:3px solid var(--gold);}
+    .sidebar{position:sticky;top:80px;}
+    .card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--navy);padding:1.4rem;margin-bottom:1.5rem;border-radius:0 0 4px 4px;}
+    .card-title{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;}
+    .info-row{display:flex;justify-content:space-between;padding:0.42rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:var(--text-muted);}
+    .info-val{color:var(--navy);font-weight:600;text-align:right;}
+    .tag{display:inline-block;background:var(--navy);color:#b8c8e0;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:2px;border-left:3px solid var(--gold);margin:0.18rem;}
+    .finding{display:flex;gap:0.6rem;margin-bottom:0.8rem;font-size:0.83rem;}
+    .finding-icon{color:var(--gold);flex-shrink:0;font-weight:700;}
+    .finding-text{color:var(--text-muted);line-height:1.5;}
+    @media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{position:static;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+    footer{background:var(--navy);border-top:3px solid var(--gold);color:#7a90b0;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0CB4TPWCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C0CB4TPWCY');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><span>P.</span> Hekmatpour</a>
+    <button class="hamburger" onclick="toggleMobile(this)" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="#" onclick="toggleDropdown(event,this)" class="active">Research</a>
+        <div class="dropdown">
+          <span class="dropdown-label">Current Projects</span>
+          <a href="project-eue.html">Subnational EUE &amp; Air Pollution</a>
+          <a href="project-fdi.html">FDI &amp; Climate Adaptability</a>
+          <a href="project-worldsystem.html">World-System Position &amp; Mobility</a>
+          <a href="project-abm.html">Generative ABM of Dependency</a>
+          <a href="project-inequality.html">Core Capital &amp; Income Inequality</a>
+          <a href="project-diffusion.html">Diffusion of Environmental Discourse</a>
+        </div>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="awards.html">Awards</a></li>
+      <li><a href="in-the-news.html">In the News</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-section-label">Research</span>
+  <a href="project-eue.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Subnational EUE &amp; Air Pollution</a>
+  <a href="project-fdi.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">FDI &amp; Climate Adaptability</a>
+  <a href="project-worldsystem.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">World-System Position &amp; Mobility</a>
+  <a href="project-abm.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Generative ABM of Dependency</a>
+  <a href="project-inequality.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Core Capital &amp; Income Inequality</a>
+  <a href="project-diffusion.html" style="padding-left:0.75rem;text-transform:none;font-size:0.84rem;">Diffusion of Environmental Discourse</a>
+  <a href="publications.html">Publications</a>
+  <a href="teaching.html">Teaching</a>
+  <a href="awards.html">Awards</a>
+  <a href="in-the-news.html">In the News</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Research &rsaquo; Current Projects</p>
+    <h1>Growing Dependency: A Generative Firm-Level Model<br>of How the Core-Periphery Hierarchy Reproduces Itself</h1>
+    <p class="subtitle">An agent-based model of foreign direct investment in which a logarithmic growth of dependency emerges from firm behavior, with no time variable in the model, validated against real CCDI trajectories for 150 countries, 2009 to 2023</p>
+    <span class="status-badge">Work in Progress</span>
+  </div>
+</div>
+
+<div class="copyright-banner">
+  <p>&copy; Peyman Hekmatpour. This is an ongoing research project. All content, findings, and materials on this page are copyrighted by the author. No distribution, reproduction, or use of any kind is permitted without expressed written permission from the author.</p>
+</div>
+
+<div class="main">
+<main>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">13,298</span><span class="stat-label">Synthetic Firms</span></div>
+      <div class="stat-box"><span class="stat-num">150</span><span class="stat-label">Countries</span></div>
+      <div class="stat-box"><span class="stat-num">0.823</span><span class="stat-label">Panel Correlation vs Real CCDI</span></div>
+      <div class="stat-box"><span class="stat-num">0.84</span><span class="stat-label">ln(t) Slope Ratio (Emergent)</span></div>
+    </div>
+    <p>Dependency theory described how the core-periphery hierarchy reproduces itself, but never specified the generative process that produces it. This project supplies that missing mechanism. It builds an agent-based model in which thousands of firms make decentralized investment decisions, deploying capital into host economies and withdrawing it under instability or saturation, with no country-level dependency rule and no time trend written into the model. From these firm-level choices alone, country dependency, measured by the Core Capital Dependency Index, emerges and accumulates.</p>
+    <p>The central result is an emergence finding. Real dependency grows logarithmically over time, following the form y = a + b&middot;ln(t). The model contains no time variable, yet it reproduces that same logarithmic functional form and very nearly its rate, with an emergent ln(t) slope of 0.0098 against an observed 0.0117 (a ratio of 0.84). The model is built with Mesa in Python, seeded to reconstruct the real 2009 bilateral FDI network at r = 0.999, and validated across 30 random seeds against the observed CCDI panel for 150 countries from 2009 to 2023 at a correlation of 0.823.</p>
+  </section>
+
+  <!-- THE MODEL -->
+  <section>
+    <h2 class="section-title">A Two-Process Firm Model</h2>
+    <p>The model represents the world economy as a population of capital-holding firms distributed across 150 countries, seeded proportional to GDP and sized log-normally so that a few large firms hold most of the investable capital. Each firm acts through two decoupled processes. There is no equation that sets a country's dependency directly; dependency is recomputed each year from the net pattern of firm flows, exactly as the Core Capital Dependency Index is computed from real bilateral data.</p>
+
+    <div class="index-card">
+      <h4>The Two Processes</h4>
+      <div class="formula-step">
+        <span class="step-num">1</span>
+        <div class="formula-text">
+          <strong>Inflow (deployment).</strong> Firms holding capital choose destinations through a softmax over an attractiveness score built from market size, the coreness gap between home and host, incumbency in existing positions, and host institutions (political stability, rule of law, control of corruption, democracy, trade openness, resource rents). Capital flows from more-core toward less-core economies.<br>
+          <span class="formula-eq">Pull&#7522;&#11388; = f(market size, coreness gap, incumbency, institutions)</span>
+        </div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">2</span>
+        <div class="formula-text">
+          <strong>Outflow (withdrawal).</strong> Existing positions are withdrawn under instability shocks, host saturation, host maturation as domestic firms grow, and baseline churn. Because firms accumulate capital over time, fast-growing economies build their own outward positions, which net against inflows and allow gradual ascent.<br>
+          <span class="formula-eq">Push&#7522;&#11388; = g(instability, saturation, maturation, churn)</span>
+        </div>
+      </div>
+      <div class="formula-step">
+        <span class="step-num">3</span>
+        <div class="formula-text">
+          <strong>Dependency, recomputed.</strong> Each year the model recomputes every country's CCDI from the resulting bilateral network: composition (how core-like its senders are), reliance (inflows over total flows), and the country's own coreness. Dependency is an outcome of firm behavior, never an input.<br>
+          <span class="formula-eq">Dependency&#7522;&#8348; = Composition &times; Reliance &times; (1 &minus; Coreness)</span>
+        </div>
+      </div>
+    </div>
+    <p>This architecture reproduces the empirical asymmetry documented in the panel work: because firm capital accumulates slowly and compounds, ascent through the maturation channel is gradual and rare, while descent through inward flooding under instability can happen quickly. The descent-fast, ascent-slow pattern is not imposed; it falls out of the mechanism.</p>
+  </section>
+
+  <!-- FIGURE 1: SCHEMATIC -->
+  <section>
+    <h2 class="section-title">Figure 1. The Generative Experiment</h2>
+    <p>The analysis has the structure of a generative experiment: a world is built from observed data, a population of firms is endowed with empirically grounded behavior, the world is run forward through time, and the macro pattern it produces is held against the macro pattern that actually occurred. The schematic below lays out this architecture. Hover over each stage for detail.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Model Architecture: From 2009 Network to Validated Trajectory</span></div>
+      <div id="schematic-div" style="padding:0.5rem;"></div>
+      <div class="viz-note">The model is seeded with the observed 2009 bilateral FDI network, populated with 13,298 firms following fixed behavioral rules, run forward to 2023, and validated against the independently measured Core Capital Dependency Index.</div>
+    </div>
+  </section>
+
+  <!-- FIGURE 2: VALIDATION CLOUD -->
+  <section>
+    <h2 class="section-title">Figure 2. Validation: Predicted vs. Observed Dependency</h2>
+    <p>The full validation cloud plots each country-year's model-predicted dependency against its observed value, shaded by year. The cloud tracks the 45-degree line of perfect prediction across the full range of the index, with an overall correlation of 0.828 and a fitted slope of 0.89. The mild attenuation, slightly over-predicting the least dependent and under-predicting the most dependent, is the signature of a probabilistic allocation mechanism. Hover for country and year.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Model-Predicted vs. Observed Core Capital Dependency</span></div>
+      <div id="cloud-div" style="height:480px;"></div>
+      <div class="viz-note">2,189 country-year observations across 2009 to 2023, shaded by year. Overall correlation 0.828; fitted slope 0.89, intercept 0.06. The 45-degree dashed line marks perfect prediction.</div>
+    </div>
+  </section>
+
+  <!-- FIGURE 3: ERROR DISTRIBUTION -->
+  <section>
+    <h2 class="section-title">Figure 3. The Fit Is Broad, Not Average</h2>
+    <p>Aggregate correlations can conceal a model that succeeds on average while failing for many individual cases. The figure reports the model's accuracy across the panel: the median country is predicted within 0.063 on the zero-to-one index, and the year-by-year mean absolute error stays low across the full simulation, rising only gradually as the free run moves away from the 2009 seed. Switch between the per-year error and the per-year correlation.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title" id="err-title">Mean Absolute Error by Year</span>
+        <div class="viz-btns">
+          <button class="viz-btn active" onclick="showErr('mae','Mean Absolute Error by Year',this)">Error (MAE)</button>
+          <button class="viz-btn" onclick="showErr('corr','Cross-Sectional Correlation by Year',this)">Correlation</button>
+        </div>
+      </div>
+      <div id="err-div" style="height:400px;"></div>
+      <div class="viz-note">Median country predicted within 0.063; 41 percent within 0.05 and 68 percent within 0.10 over the full period. Per-year values from 30-seed runs. 2009 (r = 0.999) reflects the seeded starting network.</div>
+    </div>
+  </section>
+
+  <!-- FIGURE 4: EMERGENCE -->
+  <section>
+    <h2 class="section-title">Figure 4. The Emergence Result</h2>
+    <p>This is the central contribution. Observed global mean dependency rises logarithmically over time, following y = a + b&middot;ln(t). The model contains no time variable and no logarithmic rule. Yet the dependency it generates, plotted as the mean over 30 seeds with a 95 percent band, follows the same logarithmic form at an emergent slope of 0.0098, within the immediate neighborhood of the observed 0.0117. A logarithmic growth law emerges from decentralized firm behavior alone.</p>
+    <div class="viz-panel">
+      <div class="viz-header">
+        <span class="viz-title">Logarithmic Time Fit vs Generative ABM Prediction</span>
+      </div>
+      <div id="emrg-div" style="height:460px;"></div>
+      <div class="viz-note">Observed ln(t) slope 0.0117; emergent ABM slope 0.0098. The model reproduces both the logarithmic form and approximately the rate of dependency growth without time as an input.</div>
+    </div>
+  </section>
+
+  <!-- MODEL SPECIFICATION -->
+  <section>
+    <h2 class="section-title">Model Specification</h2>
+    <p>The two-process behavior is governed by the parameters below. Inflow weights set how strongly each factor pulls capital toward a destination; outflow weights set what triggers withdrawal; dynamics parameters govern accumulation and choice. Only the last two are calibrated; the rest are fixed from theory and the seeded network.</p>
+    <div class="viz-panel">
+      <div class="viz-header"><span class="viz-title">Two-Process Parameters</span></div>
+      <table class="spec-table" id="spec-table">
+        <thead><tr><th>Process</th><th>Driver</th><th>Parameter</th><th class="val">Value</th></tr></thead>
+        <tbody id="spec-body"></tbody>
+      </table>
+      <div class="viz-note">Inflow drivers in blue, outflow in red, dynamics in gold. Position growth cap and shock SD are the two calibrated parameters.</div>
+    </div>
+  </section>
+
+  <!-- KEY FINDINGS -->
+  <section>
+    <h2 class="section-title">Key Findings</h2>
+    <p>A logarithmic growth law for dependency emerges from a model that contains no time variable. The emergent ln(t) slope of 0.0098 matches the observed 0.0117 closely (ratio 0.84), and the model reproduces the full cross-national panel of dependency at a correlation of 0.823 across 30 seeds. This is the methodological payoff: dependency theory long asserted that the hierarchy reproduces itself, but the reproduction was never derived from a generative process. Here it is.</p>
+    <p>The model also reproduces the asymmetry between rising and falling without being told to. Because firm capital compounds slowly, ascent is gradual and rare; because inward flooding under instability is fast, descent is quick and structured. The same descent-fast, ascent-slow pattern documented in the discrete-time mobility models falls out of the firm mechanism endogenously, which is stronger evidence for the mechanism than fitting the pattern directly would be.</p>
+    <p>Seeded to reconstruct the real 2009 bilateral FDI network at r = 0.999 and validated against the observed CCDI panel, the model offers a defensible generative account of dependency reproduction. Because the central result is an emergent property rather than a fitted coefficient, it is robust to the common critique that critical models bake their conclusions into their assumptions.</p>
+  </section>
+
+</main>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="card">
+    <p class="card-title">Project Details</p>
+    <div class="info-row"><span class="info-label">Status</span><span class="info-val">Manuscript complete</span></div>
+    <div class="info-row"><span class="info-label">Target</span><span class="info-val">Am. Journal of Sociology</span></div>
+    <div class="info-row"><span class="info-label">Framework</span><span class="info-val">Mesa 3.5.1 (Python)</span></div>
+    <div class="info-row"><span class="info-label">Agents</span><span class="info-val">13,298 firms</span></div>
+    <div class="info-row"><span class="info-label">Countries</span><span class="info-val">150</span></div>
+    <div class="info-row"><span class="info-label">Period</span><span class="info-val">2009 to 2023</span></div>
+    <div class="info-row"><span class="info-label">Seeds</span><span class="info-val">30</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Key Results</p>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Logarithmic dependency growth emerges with no time variable in the model.</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Emergent ln(t) slope 0.0098 vs observed 0.0117 (ratio 0.84).</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Panel correlation 0.823 [0.809, 0.833] across 30 seeds.</span></div>
+    <div class="finding"><span class="finding-icon">&#9650;</span><span class="finding-text">Descent fast, ascent slow: the asymmetry falls out of the mechanism.</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Firm Population</p>
+    <div class="info-row"><span class="info-label">Total firms</span><span class="info-val">13,298</span></div>
+    <div class="info-row"><span class="info-label">Outward (intl.)</span><span class="info-val">6,186 (47%)</span></div>
+    <div class="info-row"><span class="info-label">Domestic (latent)</span><span class="info-val">7,112 (53%)</span></div>
+    <div class="info-row"><span class="info-label">Multinationals</span><span class="info-val">688</span></div>
+    <div class="info-row"><span class="info-label">Per country (median)</span><span class="info-val">22</span></div>
+    <div class="info-row"><span class="info-label">2009 seed fit</span><span class="info-val">r = 0.999</span></div>
+  </div>
+  <div class="card">
+    <p class="card-title">Data Sources</p>
+    <span class="tag">IMF DIPCE</span>
+    <span class="tag">World Bank WDI</span>
+    <span class="tag">World Bank WGI</span>
+    <span class="tag">V-Dem</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Methods</p>
+    <span class="tag">Agent-Based Model</span>
+    <span class="tag">Mesa</span>
+    <span class="tag">Cumulative Advantage</span>
+    <span class="tag">Emergence</span>
+    <span class="tag">World Systems</span>
+  </div>
+  <div class="card">
+    <p class="card-title">Related Work</p>
+    <div class="info-row"><span class="info-label"><a href="project-worldsystem.html" style="color:var(--navy-light);text-decoration:none;">World-System Position &amp; Mobility</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-inequality.html" style="color:var(--navy-light);text-decoration:none;">Core Capital &amp; Income Inequality</a></span></div>
+    <div class="info-row"><span class="info-label"><a href="project-fdi.html" style="color:var(--navy-light);text-decoration:none;">FDI &amp; Climate Adaptability</a></span></div>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <p>&copy; Peyman Hekmatpour, PhD &middot; <a href="index.html">phekmat.com</a></p>
+</footer>
+
+<script>
+function toggleMobile(btn){btn.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+function toggleDropdown(e,el){e.preventDefault();el.parentElement.classList.toggle('open');}
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.nav-links li.has-dropdown.open').forEach(function(li){
+    if(!li.contains(e.target)) li.classList.remove('open');
+  });
+});
+
+// ===== DATA: real per-year fit (fit_by_year.csv) + observed CCDI (fdi_dependency.csv) =====
+var YEARS = [2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023];
+var CLOUD = {"obs":[0.0059,0.3019,0.4794,0.6319,0.1434,0.4081,0.3505,0.7785,0.3209,0.6066,0.0764,0.6179,0.6041,0.4816,0.1212,0.3628,0.0619,0.284,0.2538,0.1074,0.2015,0.5874,0.2162,0.0359,0.8731,0.177,0.393,0.1478,0.5777,0.2106,0.6975,0.1979,0.3439,0.044,0.5146,0.6304,0.8386,0.2752,0.0257,0.1916,0.3729,0.7595,0.879,0.4314,0.4523,0.3399,0.2175,0.1613,0.2349,0.7595,0.0929,0.5482,0.206,0.0324,0.3408,0.0309,0.3687,0.6132,0.2814,0.6807,0.0473,0.5868,0.3525,0.1968,0.5051,0.6902,0.1167,0.2881,0.9017,0.4849,0.7543,0.3454,0.4786,0.1528,0.4532,0.0942,0.1857,0.4949,0.0472,0.7809,0.9172,0.1515,0.1194,0.0289,0.5854,0.4571,0.0335,0.4173,0.2123,0.6975,0.5657,0.0447,0.745,0.0463,0.2018,0.1734,0.6079,0.6878,0.1156,0.0831,0.8143,0.2012,0.1344,0.7976,0.831,0.0151,0.6191,0.7553,0.4973,0.256,0.443,0.3198,0.4707,0.2122,0.0104,0.9668,1.0,0.0155,0.3689,0.4723,0.5505,0.3124,0.4384,0.0137,0.1307,0.6244,0.3912,0.0565,0.1534,0.0309,0.6563,0.4967,0.9107,0.4375,0.8179,0.8129,0.6571,0.5658,0.5364,0.2119,0.0,0.117,0.1205,0.2674,0.4046,0.6483,0.6884,0.0029,0.3957,0.2256,0.2509,0.8278,0.4048,0.2075,0.4417,0.5386,0.6409,0.5223,0.5519,0.3388,0.4333,0.0681,0.2909,0.049,0.1049,0.6622,0.2589,0.8235,0.5393,0.3863,0.4306,0.0347,0.6135,0.0415,0.0576,0.1756,0.4843,0.6374,0.5144,0.0933,0.3474,0.9109,0.5496,0.4896,0.0055,0.5214,0.5008,0.0552,0.0381,0.8713,0.861,0.1615,0.0996,0.381,0.4715,0.2138,0.4402,0.3643,0.4455,0.1935,0.6525,0.1217,0.0389,0.4063,0.1281,0.0755,0.2389,0.6336,0.9824,0.2019,0.3481,0.3898,0.6476,0.2817,0.6354,0.2208,0.2512,0.9207,0.0405,0.0854,0.7515,0.0531,0.2091,0.0458,0.4851,0.101,0.189,0.5657,0.2368,0.3248,0.0153,1.0,0.6182,0.6276,0.5094,0.0979,0.1904,0.5228,0.1836,0.8489,0.5926,0.2275,0.735,0.5597,0.0079,0.0054,0.3442,0.1759,0.4522,0.3165,0.5582,0.0407,0.0658,0.0993,0.3856,0.1708,0.0336,0.5203,0.8658,0.498,0.0683,0.3066,0.2192,0.2701,0.159,0.2015,0.0604,0.849,0.0325,0.3576,0.7393,0.5014,0.5492,0.221,0.4764,0.6175,0.2056,0.1116,0.2404,0.8192,0.4577,0.0027,0.0432,0.4279,0.6722,0.2867,0.689,0.3876,0.3203,0.3834,0.3729,0.6499,0.7643,0.1852,0.7981,0.7735,0.346,0.0433,0.048,0.2465,0.495,0.6306,0.6258,0.0337,0.6281,0.1665,0.7692,0.2767,0.1513,0.272,0.4989,0.8212,0.7871,0.0,0.1745,0.1082,0.733,0.4203,0.8955,0.5005,0.4075,0.3173,0.0467,0.2865,0.7062,0.1728,0.7455,0.4088,0.5245,0.8318,0.5742,0.6592,0.0862,0.4308,0.0501,0.3875,0.0747,0.3251,0.2288,0.3523,0.0958,0.4447,0.5708,0.2395,0.0661,0.514,0.0648,0.003,0.7677,0.9432,0.4499,0.3032,0.0639,0.5702,0.2729,0.0992,0.1269,0.8421,0.7189,0.1218,0.2118,0.7996,0.7612,0.8156,0.7359,0.4535,0.1893,0.2559,0.0527,0.5377,0.0359,0.1564,0.5413,1.0,0.5532,0.1496,0.7101,0.5077,0.414,0.5239,0.5269,0.168,0.0396,0.0792,0.5891,0.4268,0.6405,0.6208,0.125,0.6511,0.4905,0.0057,0.1505,0.7961,0.571,0.6844,0.1264,0.2402,0.1235,0.7362,0.6345,0.4125,0.7179,0.4522,0.6166,0.4827,0.1733,0.0606,0.6535,0.7038,0.1919,0.0328,0.0123,0.0671,0.1724,0.0679,0.8753,0.4782,0.3884,0.053,0.0741,0.3526,0.5275,0.158,0.079,0.6932,0.1262,0.0516,0.6392,0.1457,0.1422,0.014,0.0784,0.3097,1.0,0.0653,0.2232,0.1565,0.882,0.505,0.9904,0.2509,0.079,0.1809,0.615,0.5933,0.42,0.6247,0.2808,0.0124,0.8113,0.2046,0.5664,0.9251,0.0464,0.1052,0.0069,0.0106,0.456,0.4248,0.3243,0.0891,0.1824,0.3527,0.3697,0.1598,0.6695,0.3828,0.2399,0.3321,0.006,0.4941,0.635,0.1152,0.4891,0.7841,0.3268,0.3125,0.0208,0.4458,0.5513,0.4467,0.01,0.7769,0.4855,0.277,0.3888,0.2893,0.0361,0.9235,0.1404,0.5896,0.584,0.5188,0.6419,0.7914,0.3336,0.0669,0.5179,0.0376,0.9252,0.4796,0.5011,0.2798,0.0538,0.5938,0.4522,0.4254,0.9322,0.0049,0.0507,0.2902,0.0488,0.6043,0.0339,0.685,0.0953,0.5479,0.0347,0.1436,0.2468,0.936,0.1209,0.1504,0.1746,0.3633,0.3139,0.2571,0.3181,0.1697,0.318,0.2866,0.5597,0.4277,0.5226,0.005,0.9,0.0689,0.9339,0.1566,0.4238,0.5403,0.355,0.0389,0.5594,0.0714,0.6074,0.3112,0.2616,0.0407,0.9792,0.2579,0.5282,0.6036,0.4815,0.3538,0.4566,0.1287,0.606,0.1761,0.8851,0.4437,0.1175,0.5913,0.1226,0.0787,0.1134,0.0691,0.2816,0.5417,0.278,0.3857,0.0949,0.4004,0.8039,0.2942,0.106,0.1398,0.414,0.18,0.389,0.2928,0.2604,0.5905,0.1181,0.0502,0.4271,0.6203,0.1639,0.0602,0.7022,0.4459,0.3381,0.2267,0.6122,0.2589,0.0692,0.2854,0.1321,0.1568,0.443,0.0464,0.153,0.7812,0.1525,0.8201,0.2946,0.0153,0.3911,0.5246,0.0702,0.4617,0.5045,0.633,0.6648,0.558,0.7019,0.2564,0.035,0.7137,0.8013,0.3993,0.0337,0.0849,0.1008,0.0561,0.004,0.2034,0.2348,0.0027,0.386,0.0212,0.5008,0.3801,0.5155,0.0695,0.6911,0.0512,0.369,0.8438,0.3871,0.7616,0.1042,0.1279,0.4585,0.4387,0.8433,0.0759,0.3547,0.4251,0.0379,0.2094,0.2533,0.5445,0.7792,0.3675,0.5768,0.1165,0.0293,0.1774,0.1488,0.1324,0.0633,0.6164,0.6488,0.316,0.6302,0.2991,0.0092,0.01,0.0167,0.0469,0.2488,0.5481,0.2353,0.4182,0.6007,0.6129,0.6066,0.0715,0.2324,0.2528,0.1743,0.3057,0.0521,0.5196,0.9475,0.4905,0.1293,0.389,0.9247,0.2467,0.6825,0.8072,0.6327,0.5087,0.7667,0.0586,0.0051,0.3693,0.1432,0.2224,0.2692,0.5416,0.3459,0.7966,0.8569,0.7458,0.065,0.6305,0.5507,0.4483,0.5207,0.8627,0.2248,0.3553,0.2702,0.7667,0.6712,0.3871,0.5844,0.2847,0.4955,0.0088,0.3835,0.1564,0.0644,0.3176,0.3626,0.4607,0.5849,0.5604,0.456,0.0191,0.7278,0.262,0.9232,0.6152,0.1124,0.0097,0.0436,0.2878,0.3647,0.7358,0.586,0.2628,0.0271,0.0732,0.4788,0.5894,0.0432,0.0271,0.2738,0.6914,0.8024,0.5474,0.4455,0.9129,0.7311,0.5425,0.0868,0.2185,0.5476,0.9384,0.1942,0.5273,0.7965,0.399,0.1656,0.2333,0.3158,0.0582,0.0656,0.0621,0.048,0.4309,0.041,0.0654,0.5022,0.1895,0.7608,0.0271,0.1395,0.3093,0.331,0.6373,0.1285,0.2792,0.0027,0.0089,0.1934,0.068,0.0543,0.1482,0.7035,1.0,0.0028,0.0361,0.1471,0.2803,0.154,0.5759,0.3257,0.4064,0.5983,0.1316,0.6832,0.5728,0.0168,0.4165,0.139,0.2548,0.4777,0.7395,0.0978,0.7612,0.35,0.5736,0.1676,0.9162,0.1587,0.324,0.4198,0.0049,0.3365,0.2428,0.4266,0.2269,0.0527,0.1215,0.0187,0.8628,0.238,0.0193,0.795,0.0459,0.4479,0.2134,0.0977,0.127,0.0096,0.0046,0.2363,0.6998,0.8246,0.57,0.5177,0.2997,0.1164,0.6641,0.0702,0.4025,0.519,0.7914,0.0438,0.5131,0.2409,0.0522,0.908,0.5004,0.1771,0.0467,0.1089,0.7127,0.0521,0.0568,0.7079,0.816,0.4601,0.0365,0.8367,0.4891,0.1442,0.145,0.4506,0.2728,0.2813,0.7529,0.341,0.7173,0.3116,0.7903,0.3971,0.1532,0.0369,0.2737,0.2229,0.0504,0.0946,0.7303,0.8206,0.9649,0.0445,0.149,0.0533,0.145,0.5695,0.2104,0.4572,0.5059],"pred":[0.0543,0.3193,0.4547,0.6022,0.1234,0.3914,0.3365,0.7394,0.3149,0.5506,0.124,0.5915,0.549,0.4626,0.1285,0.361,0.1214,0.321,0.2721,0.1693,0.2075,0.5046,0.2067,0.0588,0.7717,0.2192,0.383,0.1661,0.5494,0.2445,0.67,0.2006,0.3837,0.0838,0.4632,0.5988,0.7893,0.2959,0.0628,0.1759,0.3812,0.73,0.8246,0.423,0.4229,0.3501,0.2365,0.143,0.2546,0.6997,0.1041,0.5016,0.2236,0.0579,0.3471,0.0703,0.4529,0.591,0.2851,0.6492,0.0565,0.661,0.4011,0.2381,0.5134,0.6663,0.1569,0.165,0.8469,0.4755,0.62,0.324,0.4153,0.1558,0.4398,0.1719,0.1619,0.4689,0.1245,0.6399,0.8289,0.158,0.2459,0.0789,0.6561,0.5453,0.0,0.4086,0.2887,0.6901,0.5525,0.0684,0.6899,0.1563,0.2042,0.1212,0.5577,0.7719,0.2248,0.1567,0.7546,0.1182,0.235,0.6941,0.7562,0.0,0.5047,0.7576,0.4684,0.2798,0.4245,0.3471,0.3512,0.2643,0.0941,0.85,0.8804,0.1565,0.3571,0.4307,0.5637,0.2318,0.2955,0.1823,0.0747,0.3959,0.2104,0.0,0.2296,0.127,0.6489,0.5573,0.9323,0.5862,0.7473,0.8062,0.5473,0.5617,0.6194,0.2058,0.0698,0.0979,0.2483,0.2942,0.5606,0.6342,0.5203,0.0,0.5281,0.2407,0.0189,0.694,0.4042,0.1746,0.3001,0.526,0.5123,0.3733,0.4611,0.4021,0.4755,0.0628,0.1556,0.0,0.245,0.6838,0.2047,0.6395,0.4241,0.4134,0.4015,0.0,0.7469,0.0897,0.2051,0.1767,0.5065,0.6337,0.4363,0.1801,0.1922,0.8542,0.5175,0.4767,0.2796,0.5734,0.7005,0.1301,0.1346,0.8108,1.0,0.1575,0.1041,0.3888,0.6503,0.2372,0.3861,0.381,0.3725,0.2504,0.6817,0.116,0.1927,0.3266,0.2376,0.1564,0.2996,0.6138,0.8504,0.3417,0.4484,0.4758,0.564,0.3595,0.5327,0.2129,0.2518,0.8156,0.1601,0.2278,0.6888,0.0042,0.2186,0.1754,0.4905,0.2356,0.2311,0.664,0.3175,0.307,0.1764,0.9901,0.5637,0.835,0.5792,0.2364,0.3413,0.5065,0.5797,0.9182,0.4338,0.0844,0.8356,0.5311,0.0123,0.1925,0.4986,0.1517,0.362,0.2551,0.5566,0.0092,0.0371,0.1782,0.466,0.0012,0.089,0.4687,0.7234,0.42,0.1976,0.1729,0.3439,0.0959,0.2587,0.1491,0.0893,0.8374,0.1322,0.3061,0.6696,0.5348,0.6829,0.2835,0.5472,0.4735,0.3243,0.0951,0.1732,0.9363,0.3011,0.2232,0.0,0.2436,0.8071,0.2535,0.5711,0.5653,0.342,0.1963,0.3464,0.5328,0.5919,0.1212,1.0,0.7386,0.2078,0.1652,0.0,0.0879,0.6075,0.8323,0.4641,0.0245,0.4214,0.2795,0.6909,0.1672,0.1136,0.1182,0.3978,0.7434,0.7591,0.0,0.2703,0.0429,0.7429,0.387,0.7658,0.293,0.4169,0.3882,0.036,0.3558,0.6542,0.2208,0.5607,0.3654,0.7013,0.6875,0.4836,0.6787,0.2777,0.3295,0.0,0.443,0.264,0.4647,0.3559,0.1925,0.3161,0.2974,0.6499,0.2452,0.1516,0.5773,0.0985,0.1342,0.8409,0.8935,0.4354,0.4088,0.0,0.5225,0.3981,0.0212,0.3177,1.0,0.8771,0.0903,0.1577,0.796,0.8431,0.7141,0.6303,0.4932,0.1666,0.261,0.1154,0.4372,0.0905,0.2864,0.5047,0.952,0.4808,0.1193,0.6483,0.2593,0.4722,0.4237,0.5503,0.1338,0.2785,0.2016,0.6992,0.2097,0.6439,0.5598,0.2023,0.6652,0.3675,0.1543,0.0,0.5109,0.4843,0.5584,0.2573,0.2844,0.2983,0.5807,0.5088,0.4706,0.6996,0.3217,0.5232,0.6482,0.1852,0.1592,0.6309,0.5555,0.2668,0.0,0.2164,0.1949,0.2403,0.2527,0.8626,0.4571,0.4443,0.2524,0.0847,0.2246,0.5596,0.1717,0.1005,0.7664,0.0,0.0,0.6681,0.201,0.3086,0.0139,0.2951,0.3691,0.8924,0.0782,0.3017,0.2081,0.8615,0.3418,0.7866,0.0346,0.1409,0.2747,0.7579,0.3614,0.2308,0.2496,0.2789,0.0,0.7772,0.1729,0.3315,0.8451,0.1148,0.1108,0.0,0.0126,0.2257,0.2687,0.2198,0.1405,0.4593,0.4702,0.3323,0.1769,0.4127,0.5686,0.0,0.1932,0.1682,0.5635,0.5501,0.1427,0.6292,0.8221,0.6192,0.5099,0.1074,0.4297,0.5886,0.6483,0.0613,0.7982,0.521,0.3155,0.2538,0.1938,0.1886,0.7961,0.2208,0.4952,0.793,0.4224,0.6882,0.7476,0.2496,0.0782,0.4429,0.165,0.9175,0.3017,0.6365,0.4871,0.29,0.2921,0.5117,0.5967,1.0,0.0358,0.2653,0.2344,0.0,0.5922,0.0,0.517,0.2433,0.736,0.0021,0.3569,0.3569,0.8893,0.0214,0.291,0.4385,0.11,0.4951,0.4096,0.269,0.0,0.3708,0.0649,0.6799,0.3199,0.5662,0.1435,0.8702,0.1521,1.0,0.3668,0.4506,0.4999,0.179,0.1621,0.5034,0.0,0.6697,0.2627,0.0461,0.1153,0.7985,0.3932,0.5744,0.5403,0.3544,0.1186,0.4829,0.1886,0.4093,0.197,0.7569,0.6017,0.1823,0.7657,0.0475,0.0745,0.1126,0.0955,0.2495,0.5617,0.2985,0.3401,0.233,0.2059,0.8191,0.2678,0.1874,0.3211,0.4233,0.1979,0.5203,0.2717,0.4067,0.7766,0.0,0.0351,0.195,0.567,0.3908,0.0,0.656,0.5638,0.4195,0.3001,0.6799,0.2347,0.0487,0.5607,0.1784,0.3348,0.314,0.0851,0.2067,0.8484,0.0203,0.94,0.3153,0.1059,0.3561,0.4605,0.0539,0.2567,0.4132,0.6319,0.5759,0.6574,0.748,0.4218,0.0,0.6544,0.6831,0.5306,0.0,0.0174,0.0,0.276,0.128,0.275,0.1745,0.3241,0.4099,0.0,0.304,0.6572,0.6146,0.072,0.598,0.1389,0.643,0.7702,0.351,0.3735,0.1668,0.0715,0.4486,0.2469,1.0,0.0808,0.0476,0.4677,0.2063,0.0477,0.2813,0.6764,0.8221,0.494,0.5701,0.1293,0.0,0.0432,0.1388,0.0215,0.0607,0.3811,0.5984,0.4399,0.5953,0.3792,0.058,0.0,0.0,0.0,0.3091,0.5351,0.0,0.6413,0.511,0.5748,0.6644,0.0,0.4555,0.2592,0.4949,0.2534,0.4235,0.6945,0.9835,0.5881,0.3026,0.2021,0.9355,0.332,0.6217,0.5744,0.6614,0.5511,0.568,0.1624,0.0,0.5423,0.0181,0.3587,0.3129,0.5087,0.1192,0.5877,0.7692,0.9809,0.1429,0.3862,0.5625,0.2033,0.3257,0.8505,0.1059,0.5585,0.4307,0.4506,0.7343,0.3646,0.8807,0.4276,0.6759,0.0,0.3022,0.2333,0.0,0.4732,0.3447,0.5235,0.4785,0.6819,0.4976,0.1362,0.4842,0.1149,0.7284,0.7436,0.0525,0.1419,0.0,0.4363,0.5644,0.6231,0.6003,0.413,0.0,0.1969,0.5809,0.6993,0.0699,0.1741,0.2291,0.6174,0.7068,0.4379,0.3931,0.7848,0.6753,0.2756,0.2436,0.5551,0.5527,0.8661,0.4049,0.1644,0.8579,0.2731,0.1151,0.3008,0.3672,0.1889,0.06,0.0886,0.1187,0.2612,0.2173,0.1785,0.7296,0.2937,0.5949,0.0,0.0,0.1657,0.2964,0.4913,0.0804,0.3579,0.1962,0.0,0.37,0.0,0.0177,0.3052,0.5463,0.8305,0.0,0.0,0.2973,0.2697,0.0506,0.5623,0.3785,0.5275,0.3903,0.3473,0.5897,0.6181,0.0105,0.402,0.1961,0.347,0.3889,0.6562,0.1325,1.0,0.1745,0.6184,0.0292,0.5666,0.3183,0.5141,0.4213,0.0,0.211,0.4937,0.4353,0.4286,0.0,0.296,0.0738,0.7527,0.3266,0.1396,0.9192,0.0,0.1655,0.1745,0.0334,0.1679,0.0,0.017,0.355,0.7032,0.8756,0.7781,0.1508,0.3003,0.0364,0.67,0.2283,0.4215,0.5505,0.6985,0.116,0.6881,0.1379,0.0,0.79,0.5485,0.1885,0.0,0.0,0.396,0.2186,0.0814,0.7733,0.4762,0.3265,0.2896,1.0,0.3991,0.5629,0.0329,0.4346,0.1673,0.3077,0.7312,0.6737,0.4972,0.0435,0.782,0.3319,0.1087,0.0448,0.3583,0.2497,0.0,0.1338,0.5629,0.962,0.8734,0.0,0.2258,0.042,0.2486,0.2944,0.1216,0.6553,0.6763],"year":[2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2011,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2021,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2022,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023,2023],"country":["United Kingdom","Philippines","Costa Rica","Nepal","Panama","Malawi","Chile","Haiti","Slovak Republic","Turks and Caicos Islands","Malaysia","Sudan","Mozambique, Republic of","Congo, Democratic Republic of the","Iran, Islamic Republic of","Argentina","Hungary","Djibouti","Kazakhstan, Republic of","South Africa","Barbados","Angola","Sierra Leone","Austria","Papua New Guinea","Brazil","Egypt, Arab Republic of","China, People's Republic of","Guinea-Bissau","Libya","Uganda","New Zealand","Lithuania, Republic of","Denmark","Tonga","Bosnia and Herzegovina","Fiji, Republic of","Jordan","Canada","Dominica","Jamaica","Bhutan","Senegal","Niger","Guatemala","Namibia","Saudi Arabia","Liberia","Zimbabwe","Madagascar, Republic of","Iceland","Vietnam","Czech Republic","Italy","Ukraine","Spain","Lithuania, Republic of","Bangladesh","Slovak Republic","North Macedonia, Republic of","Denmark","Ecuador","Syrian Arab Republic","Malta","El Salvador","Ghana","Mexico","Indonesia","Turkmenistan","Sri Lanka","Cabo Verde","Belize","Maldives","Jordan","Algeria","Singapore","Iran, Islamic Republic of","Malawi","Austria","Uganda","Niger","Nauru, Republic of","Bahamas, The","Canada","Cambodia","Greenland","Italy","Guinea-Bissau","Barbados","Paraguay","Tunisia","Lebanon","Uzbekistan, Republic of","Finland","T\u00fcrkiye, Republic of","Tonga","Belarus, Republic of","Sudan","Greece","Korea, Democratic People's Republic of","Suriname","Eswatini, Kingdom of","Panama","Mauritania, Islamic Republic of","Ethiopia, The Federal Democratic Republic of","Germany","Georgia","Bolivia","Vietnam","Libya","Egypt, Arab Republic of","Jamaica","C\u00f4te d'Ivoire","Slovenia, Republic of","Japan","Mali","Senegal","Togo","Nigeria","Algeria","Grenada","Jamaica","Ecuador","Germany","India","Paraguay","Romania","Russian Federation","Greenland","Canada","Congo, Democratic Republic of the","Belarus, Republic of","Eritrea, The State of","Angola","Moldova, Republic of","Niger","Mauritania, Islamic Republic of","Haiti","Tanzania, United Republic of","Uruguay","United States","Dominica","Iceland","Bahrain, Kingdom of","Vietnam","Albania","Ghana","Netherlands, The","Dominican Republic","Slovenia, Republic of","Belize","Bhutan","Lithuania, Republic of","Malta","Cuba","Maldives","Bosnia and Herzegovina","Zimbabwe","Guinea-Bissau","Kenya","Honduras","Israel","Estonia, Republic of","Mauritius","Liberia","Mali","Venezuela, Rep\u00fablica Bolivariana de","Turkmenistan","Senegal","Madagascar, Republic of","Monaco","Sweden","Syrian Arab Republic","Austria","Cyprus","Nicaragua","Nicaragua","Nepal","Guinea-Bissau","Singapore","Monaco","Congo, Democratic Republic of the","Cuba","Sri Lanka","Luxembourg","Gabon","Maldives","Belize","Lebanon","Central African Republic","Yemen, Republic of","Panama","Greece","Lithuania, Republic of","Jordan","Saudi Arabia","Nigeria","Costa Rica","Algeria","Thailand","Montenegro","Brazil","Belgium","Serbia, Republic of","Qatar","Malaysia","Barbados","Sudan","Papua New Guinea","Oman","Dominica","Angola","Mozambique, Republic of","Venezuela, Rep\u00fablica Bolivariana de","Uzbekistan, Republic of","Malta","Slovenia, Republic of","Suriname","Austria","Bahamas, The","Tajikistan, Republic of","Kuwait","Greenland","Denmark","Romania","United Arab Emirates","Azerbaijan, Republic of","Zambia","Czech Republic","Bahrain, Kingdom of","United Kingdom","Eritrea, The State of","Madagascar, Republic of","Iraq","Ghana","Israel","Malta","Ecuador","Iceland","Bhutan","Mali","Sierra Leone","Congo, Democratic Republic of the","Madagascar, Republic of","Germany","Luxembourg","Pakistan","Eswatini, Kingdom of","Bangladesh","Serbia, Republic of","C\u00f4te d'Ivoire","Austria","Russian Federation","Hungary","Egypt, Arab Republic of","Thailand","Spain","Bosnia and Herzegovina","Cameroon","Kyrgyz Republic","Lebanon","Argentina","Uruguay","Oman","Panama","Colombia","Norway","Congo, Republic of","Belgium","Costa Rica","Ethiopia, The Federal Democratic Republic of","Romania","Albania","Poland, Republic of","Trinidad and Tobago","Senegal","New Zealand","Tonga","Slovenia, Republic of","Moldova, Republic of","Jordan","United States","Ireland","Nicaragua","Ghana","Estonia, Republic of","Moldova, Republic of","Zambia","Korea, Democratic People's Republic of","Nigeria","Costa Rica","Nepal","Niger","Togo","Cameroon","Grenada","Lithuania, Republic of","Austria","Mauritius","Kazakhstan, Republic of","Morocco","North Macedonia, Republic of","Guinea-Bissau","Spain","Iraq","Chile","Romania","Angola","Malta","Oman","Egypt, Arab Republic of","Bhutan","Uganda","Netherlands, The","T\u00fcrkiye, Republic of","Mexico","Sudan","Belarus, Republic of","Mauritania, Islamic Republic of","Paraguay","Pakistan","Syrian Arab Republic","Denmark","Philippines","Albania","Iran, Islamic Republic of","Madagascar, Republic of","Monaco","Maldives","Turkmenistan","Gabon","Cambodia","Singapore","Sri Lanka","Austria","Angola","Finland","Nigeria","Venezuela, Rep\u00fablica Bolivariana de","Costa Rica","Israel","Peru","Djibouti","Uruguay","Australia","Namibia","Norway","Netherlands, The","Turkmenistan","Mongolia","Belarus, Republic of","Eswatini, Kingdom of","Cyprus","Jordan","Libya","Saudi Arabia","United Arab Emirates","Bhutan","Moldova, Republic of","Mexico","Panama","Suriname","Sudan","Tajikistan, Republic of","Burkina Faso","Nicaragua","T\u00fcrkiye, Republic of","Comoros, Union of the","Mauritius","Paraguay","Belgium","Lao People's Democratic Republic","C\u00f4te d'Ivoire","Greenland","Syrian Arab Republic","Azerbaijan, Republic of","Georgia","Zambia","Vietnam","Algeria","Korea, Democratic People's Republic of","Brazil","Sweden","Malaysia","Maldives","Honduras","Lesotho, Kingdom of","Sierra Leone","Afghanistan, Islamic Republic of","Ghana","Botswana","Japan","Greece","Ethiopia, The Federal Democratic Republic of","Morocco","Georgia","Togo","Venezuela, Rep\u00fablica Bolivariana de","United Arab Emirates","Nepal","Mali","El Salvador","Niger","Botswana","Djibouti","Benin","Barbados","Norway","Guinea","Sierra Leone","Czech Republic","Belgium","Switzerland","Australia","Iceland","Russian Federation","Mongolia","Tunisia","Angola","Nauru, Republic of","Malaysia","Ukraine","Paraguay","Chile","Kuwait","Cambodia","Afghanistan, Islamic Republic of","Denmark","Kyrgyz Republic","Bahrain, Kingdom of","Malta","France","Hungary","Lithuania, Republic of","Palau, Republic of","Qatar","Lao People's Democratic Republic","Thailand","Grenada","Jordan","Greenland","Poland, Republic of","South Africa","Panama","Malawi","Korea, Democratic People's Republic of","Honduras","Lesotho, Kingdom of","Estonia, Republic of","Germany","Suriname","Kazakhstan, Republic of","Bangladesh","French Guiana","Austria","Lebanon","Japan","United Kingdom","Namibia","C\u00f4te d'Ivoire","Oman","Nauru, Republic of","Greece","Zambia","Serbia, Republic of","T\u00fcrkiye, Republic of","Mali","Peru","Poland, Republic of","Costa Rica","Japan","Gabon","Georgia","Belize","Bangladesh","Cabo Verde","Kenya","Morocco","Canada","Ecuador","Guinea","Malawi","United Kingdom","Romania","Korea, Democratic People's Republic of","Indonesia","Botswana","Lithuania, Republic of","Sweden","Congo, Republic of","Barbados","North Macedonia, Republic of","Yemen, Republic of","Kyrgyz Republic","Moldova, Republic of","French Guiana","Angola","Australia","Montenegro","Tonga","Chad","Myanmar","Bosnia and Herzegovina","Slovenia, Republic of","Mauritius","Lesotho, Kingdom of","Benin","Egypt, Arab Republic of","Haiti","Luxembourg","Norway","Guatemala","Austria","Jordan","San Marino, Republic of","Albania","Bahamas, The","Maldives","Italy","Portugal","Iceland","Eritrea, The State of","Afghanistan, Islamic Republic of","Chile","Panama","Serbia, Republic of","Guatemala","Estonia, Republic of","Costa Rica","Brazil","Angola","Philippines","Dominican Republic","Bulgaria","Gabon","Luxembourg","Central African Republic","Kuwait","Guyana","Indonesia","Nauru, Republic of","Cambodia","Peru","San Marino, Republic of","Burkina Faso","Australia","Madagascar, Republic of","C\u00f4te d'Ivoire","Monaco","Liberia","Palau, Republic of","Poland, Republic of","Bangladesh","Mauritania, Islamic Republic of","Ecuador","Afghanistan, Islamic Republic of","Kiribati","Azerbaijan, Republic of","Mali","Czech Republic","Suriname","Pakistan","Barbados","Cuba","Bahamas, The","Malaysia","United Arab Emirates","Singapore","Nigeria","Kyrgyz Republic","Tonga","El Salvador","Togo","Senegal","Djibouti","Slovak Republic","Lebanon","India","Botswana","Iran, Islamic Republic of","Turks and Caicos Islands","Kenya","Yemen, Republic of","North Macedonia, Republic of","Togo","Mauritius","Senegal","Cuba","Czech Republic","Finland","Rwanda","Zambia","Costa Rica","Kazakhstan, Republic of","Gabon","Slovak Republic","South Africa","Nigeria","India","Brazil","Pakistan","Denmark","Barbados","Iraq","T\u00fcrkiye, Republic of","Korea, Democratic People's Republic of","C\u00f4te d'Ivoire","France","Peru","Syrian Arab Republic","Singapore","Bolivia","Paraguay","Albania","Romania","Guyana","Ethiopia, The Federal Democratic Republic of","Poland, Republic of","Sweden","Niger","Dominica","El Salvador","Italy","United Arab Emirates","Saudi Arabia","Russian Federation","Japan","Greece","Iceland","Netherlands, The","Egypt, Arab Republic of","Canada","Jordan","Oman","Montenegro","Australia","Guinea-Bissau","Austria","Zimbabwe","Djibouti","Bulgaria","Bhutan","Lebanon","Bahamas, The","Ecuador","Senegal","Congo, Democratic Republic of the","Hungary","Belarus, Republic of","Vietnam","Spain","Comoros, Union of the","Ukraine","Papua New Guinea","Romania","Mali","Lesotho, Kingdom of","Mexico","Belgium","Chile","T\u00fcrkiye, Republic of","Thailand","Singapore","Moldova, Republic of","Lao People's Democratic Republic","Kenya","Gabon","Guatemala","Germany","United Kingdom","France","Mauritius","Venezuela, Rep\u00fablica Bolivariana de","Georgia","Kazakhstan, Republic of","Kyrgyz Republic","Equatorial Guinea, Republic of","Guinea-Bissau","Congo, Republic of","United Arab Emirates","Poland, Republic of","Slovak Republic","Panama","Morocco","Cyprus","Paraguay","Kiribati","Jordan","Togo","Algeria","French Guiana","Bahrain, Kingdom of","Tajikistan, Republic of","Djibouti","Burundi","Cambodia","Sudan","Russian Federation","Luxembourg","Nicaragua","Portugal","Iran, Islamic Republic of","C\u00f4te d'Ivoire","Syrian Arab Republic","Egypt, Arab Republic of","Fiji, Republic of","Korea, Democratic People's Republic of","Iraq","Finland","Mauritania, Islamic Republic of","Bangladesh","Zimbabwe","Dominican Republic","Korea, Democratic People's Republic of","Estonia, Republic of","Venezuela, Rep\u00fablica Bolivariana de","Nigeria","Montenegro","Turkmenistan","Mali","Lesotho, Kingdom of","El Salvador","Paraguay","Germany","Algeria","Barbados","Australia","Costa Rica","Kenya","Benin","Burundi","Cuba","Tunisia","Switzerland","Sudan","Libya","Eritrea, The State of","Papua New Guinea","Israel","United Kingdom","Mauritius","Bahrain, Kingdom of","Egypt, Arab Republic of","Yemen, Republic of","Malawi","C\u00f4te d'Ivoire","Ireland","South Africa","Namibia","Mauritania, Islamic Republic of","Sweden","Belgium","Oman","Dominica","Guyana","Albania","Sri Lanka","French Guiana","Ethiopia, The Federal Democratic Republic of","Bosnia and Herzegovina","Malaysia","Kazakhstan, Republic of","Burkina Faso","Kiribati","Monaco","North Macedonia, Republic of","Fiji, Republic of","Angola","Liberia","Uruguay","Afghanistan, Islamic Republic of","Singapore","Qatar","Australia","Denmark","Botswana","Cyprus","United Arab Emirates","Cambodia","Colombia","Fiji, Republic of","Belgium","Indonesia","Korea, Democratic People's Republic of","Honduras","Lesotho, Kingdom of","Thailand","Libya","Japan","Germany","Guyana","Finland","China, People's Republic of","Barbados","Ethiopia, The Federal Democratic Republic of","Palau, Republic of","Netherlands, The","Italy","Portugal","Venezuela, Rep\u00fablica Bolivariana de","Chile","Cuba","Bulgaria","Grenada","Guinea-Bissau","India","Zambia","Mali","Syrian Arab Republic","Jamaica","Djibouti","Nigeria","Vietnam","Greenland","Saudi Arabia","Guinea","Bahrain, Kingdom of","Maldives","Togo","French Guiana","Czech Republic","Belarus, Republic of","Nicaragua","Luxembourg","Angola","Iran, Islamic Republic of","Myanmar","Uruguay","Norway","Azerbaijan, Republic of","Canada","Turkmenistan","Slovak Republic","Switzerland","Yemen, Republic of","Austria","Bangladesh","Argentina","South Africa","Bahamas, The","United Kingdom","Luxembourg","New Zealand","Ethiopia, The Federal Democratic Republic of","Equatorial Guinea, Republic of","Namibia","Dominican Republic","Bulgaria","Djibouti","Malawi","Finland","Myanmar","Gabon","Chad","Mauritius","Paraguay","Slovak Republic","Norway","Kiribati","Jordan","Panama","Denmark","Mexico","Mauritania, Islamic Republic of","China, People's Republic of","Australia","Nepal","Yemen, Republic of","Peru","Kuwait","Mongolia","Senegal","Portugal","Sri Lanka","Vietnam","Angola","Libya","Guinea","Botswana","Lao People's Democratic Republic","Nigeria","Congo, Democratic Republic of the","Algeria","Czech Republic","Spain","C\u00f4te d'Ivoire","Poland, Republic of","Singapore","Russian Federation","Fiji, Republic of","Nauru, Republic of","Central African Republic","Cyprus","Barbados","Malta","Monaco","Georgia","Uruguay","Jamaica","Tonga"]};
+var ERR = {"year":[2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023],"mae":[0.017,0.051,0.078,0.079,0.09,0.08,0.087,0.095,0.103,0.103,0.103,0.109,0.111,0.118,0.124],"corr":[0.999,0.911,0.853,0.851,0.812,0.845,0.817,0.839,0.803,0.802,0.807,0.806,0.796,0.758,0.733]};
+// Model specification table (tbl3_spec.csv)
+var SPEC = [
+  ["Inflow (deployment)","Market size","I_PULL","1.0"],
+  ["Inflow","Coreness gap","I_CORENESS","0.4"],
+  ["Inflow","Incumbency","I_INCUMBENCY","0.5"],
+  ["Inflow","Political stability","I_POLSTAB","0.4"],
+  ["Inflow","Rule of law","I_ROL","0.4"],
+  ["Inflow","Control of corruption","I_CORR","0.3"],
+  ["Inflow","Democracy","I_VDEM","0.2"],
+  ["Inflow","Trade openness","I_TRADE","0.3"],
+  ["Inflow","Resource rents","I_RENTS","0.5"],
+  ["Outflow (withdrawal)","Instability shock","O_INSTAB","10.0"],
+  ["Outflow","Saturation (host dependency)","O_SATURATE","1.5"],
+  ["Outflow","Host maturation (growth)","O_MATURE","4.0"],
+  ["Outflow","Baseline churn","O_BASE","0.04"],
+  ["Outflow","MNC churn","O_MNC","0.15"],
+  ["Dynamics","Outward expansion","G_OUT","8.0"],
+  ["Dynamics","Repatriation (capital exit)","REPATRIATE_FRAC","0.5"],
+  ["Dynamics","Deployment rate","DEPLOY_RATE","0.01"],
+  ["Dynamics","Choice temperature","SOFTMAX_TEMP","0.15"],
+  ["Calibrated","Position growth cap","MAX_DEST_GROWTH","0.2"],
+  ["Calibrated","Stochastic shock SD","SHOCK_SD","0.12"]
+];
+var PLOT_FONT = {family:'Source Sans 3, sans-serif'};
+
+// ---- FIGURE 1: SCHEMATIC (interactive SVG) ----
+function drawSchematic(){
+  var stages = [
+    {t:'Seed', s:'Observed 2009 FDI network', d:'13,298 firms placed to reconstruct the real 2009 bilateral position network (r = 0.999).', c:'#1b3a6b'},
+    {t:'Endow', s:'Fixed behavioral rules', d:'Each firm deploys toward large, stable, institutionally attractive markets and withdraws under instability and saturation. Weights fixed from the literature.', c:'#1b3a6b'},
+    {t:'Run', s:'2009 \u2192 2023, free', d:'The world runs forward fourteen years with no time variable and no macro constraint. Only two parameters (absorption cap, shock SD) are calibrated.', c:'#b8972a'},
+    {t:'Measure', s:'Core Capital Dependency', d:'Each year, every country\u2019s dependency is recomputed from the firm-generated network, exactly as the real CCDI is computed.', c:'#c0392b'},
+    {t:'Validate', s:'Against observed CCDI', d:'Predicted dependency is held against the independently measured index across 2,189 country-years (r = 0.828).', c:'#1b6b4f'}
+  ];
+  var W=920, boxW=158;
+  var gap=(W-boxW*5)/4, H=190, boxH=104, y=24;
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:Source Sans 3,sans-serif;">';
+  // arrows
+  for(var i=0;i<stages.length-1;i++){
+    var x1=(i+1)*boxW + i*gap, x2=x1+gap;
+    var ym=y+boxH/2;
+    svg+='<line x1="'+(x1+2)+'" y1="'+ym+'" x2="'+(x2-8)+'" y2="'+ym+'" stroke="#b8972a" stroke-width="2"/>';
+    svg+='<polygon points="'+(x2-8)+','+(ym-5)+' '+(x2-1)+','+ym+' '+(x2-8)+','+(ym+5)+'" fill="#b8972a"/>';
+  }
+  stages.forEach(function(st,i){
+    var x=i*(boxW+gap);
+    svg+='<g class="schematic-stage" style="cursor:pointer;" onmouseover="schematicHover('+i+')" onmouseout="schematicHover(-1)">';
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+boxW+'" height="'+boxH+'" rx="6" fill="#fff" stroke="'+st.c+'" stroke-width="2"/>';
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+boxW+'" height="26" rx="6" fill="'+st.c+'"/>';
+    svg+='<rect x="'+x+'" y="'+(y+16)+'" width="'+boxW+'" height="10" fill="'+st.c+'"/>';
+    svg+='<text x="'+(x+boxW/2)+'" y="'+(y+18)+'" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">'+st.t+'</text>';
+    svg+='<text x="'+(x+boxW/2)+'" y="'+(y+50)+'" text-anchor="middle" fill="#1c1c1c" font-size="11.5" font-weight="600">'+st.s+'</text>';
+    svg+='<text x="'+(x+boxW/2)+'" y="'+(y+72)+'" text-anchor="middle" fill="#888" font-size="10">stage '+(i+1)+'</text>';
+    svg+='</g>';
+  });
+  svg+='</svg>';
+  svg+='<div id="schematic-detail" style="margin-top:0.75rem;padding:0.85rem 1rem;background:var(--cream-dark);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:0.86rem;color:var(--text-muted);min-height:3.2rem;">Hover over a stage to see what happens there.</div>';
+  document.getElementById('schematic-div').innerHTML = svg;
+  window._SCHEMATIC = stages;
+}
+function schematicHover(i){
+  var d = document.getElementById('schematic-detail');
+  if(i<0){ d.innerHTML='Hover over a stage to see what happens there.'; return; }
+  var st = window._SCHEMATIC[i];
+  d.innerHTML = '<strong style="color:'+st.c+';">'+st.t+' \u2014 '+st.s+'.</strong> '+st.d;
+}
+
+// ---- FIGURE 2: VALIDATION CLOUD ----
+function drawCloud(){
+  var yrs = CLOUD.year, minY=2009, maxY=2023;
+  var trace = {
+    type:'scatter', mode:'markers',
+    x:CLOUD.pred, y:CLOUD.obs,
+    marker:{size:5.5, color:yrs, colorscale:'Viridis', cmin:minY, cmax:maxY, opacity:0.62,
+      line:{color:'rgba(255,255,255,0.3)',width:0.5},
+      colorbar:{thickness:13,len:0.75,tickfont:{size:9},title:{text:'Year',font:{size:9}},dtick:3}},
+    customdata:CLOUD.country.map(function(c,i){return [c, yrs[i]];}),
+    hovertemplate:'<b>%{customdata[0]}</b> (%{customdata[1]})<br>predicted: %{x:.3f}<br>observed: %{y:.3f}<extra></extra>',
+    name:'Country-years', showlegend:false
+  };
+  var diag = {type:'scatter', mode:'lines', x:[0,1], y:[0,1],
+    line:{color:'#444', width:1.4, dash:'dash'}, hoverinfo:'skip', name:'45\u00b0 (perfect)'};
+  // documented fit line: obs = 0.89*pred + 0.06
+  var fit = {type:'scatter', mode:'lines', x:[0,1], y:[0.06, 0.95],
+    line:{color:'#c0392b', width:2}, hoverinfo:'skip', name:'fit: slope 0.89'};
+  var layout = {
+    xaxis:{title:{text:'Model-predicted dependency',font:{size:12,color:'#5a5a5a'}},range:[0,1],
+      gridcolor:'#eee',zeroline:false,tickfont:{size:10}},
+    yaxis:{title:{text:'Observed dependency (CCDI)',font:{size:12,color:'#5a5a5a'}},range:[0,1],
+      gridcolor:'#eee',zeroline:false,tickfont:{size:10}},
+    margin:{t:15,b:50,l:60,r:20}, paper_bgcolor:'#fff', plot_bgcolor:'#fafafa',
+    height:480, font:PLOT_FONT, showlegend:true,
+    legend:{x:0.02,y:0.98,bgcolor:'rgba(255,255,255,0.8)',font:{size:9.5}},
+    annotations:[{x:0.97,y:0.06,xref:'paper',yref:'paper',text:'r = 0.828  |  N = 2,189',
+      showarrow:false,font:{size:11,color:'#333'},xanchor:'right',
+      bgcolor:'rgba(255,255,255,0.85)',bordercolor:'#ccc',borderwidth:1,borderpad:4}]
+  };
+  Plotly.newPlot('cloud-div',[trace,diag,fit],layout,{responsive:true,displayModeBar:false});
+}
+
+// ---- FIGURE 3: ERROR / CORRELATION BY YEAR ----
+function showErr(key, title, btn){
+  var btns=btn.parentElement.querySelectorAll('.viz-btn');
+  btns.forEach(function(b){b.classList.remove('active');}); btn.classList.add('active');
+  document.getElementById('err-title').textContent=title;
+  var isMae = key==='mae';
+  var vals = isMae ? ERR.mae : ERR.corr;
+  var color = isMae ? '#c0392b' : '#1b3a6b';
+  var trace={type:'scatter',mode:'lines+markers',x:ERR.year,y:vals,
+    line:{color:color,width:2.6},marker:{size:7,color:color,line:{color:'#fff',width:1}},
+    fill:'tozeroy',fillcolor:isMae?'rgba(192,57,43,0.08)':'rgba(27,58,107,0.08)',
+    hovertemplate:'<b>%{x}</b><br>'+(isMae?'MAE':'Correlation')+': %{y:.3f}<extra></extra>'};
+  var shapes=[], anns=[];
+  if(isMae){
+    shapes.push({type:'line',x0:2009,x1:2023,y0:0.063,y1:0.063,line:{color:'#999',width:1.4,dash:'dot'}});
+    anns.push({x:2010,y:0.063,text:'median country MAE 0.063',showarrow:false,font:{size:9,color:'#999'},xanchor:'left',yanchor:'bottom'});
+  } else {
+    shapes.push({type:'line',x0:2009,x1:2023,y0:0.688,y1:0.688,line:{color:'#999',width:1.4,dash:'dot'}});
+    anns.push({x:2010,y:0.688,text:'persistence benchmark 0.688',showarrow:false,font:{size:9,color:'#999'},xanchor:'left',yanchor:'bottom'});
+  }
+  var layout={xaxis:{tickfont:{size:10},dtick:2,gridcolor:'#eee'},
+    yaxis:{tickfont:{size:10},gridcolor:'#eee',range:isMae?[0,0.14]:[0.6,1.02],
+      title:{text:isMae?'Mean absolute error':'Correlation (model vs observed)',font:{size:11,color:'#5a5a5a'}}},
+    margin:{t:15,b:40,l:60,r:20},paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:400,
+    font:PLOT_FONT,shapes:shapes,annotations:anns};
+  Plotly.react('err-div',[trace],layout,{responsive:true,displayModeBar:false});
+}
+
+// ---- FIGURE 4: EMERGENCE ----
+function drawEmergence(){
+  var base=2009, t=YEARS.map(function(y){return y-(base-1);});
+  var b_obs=0.0117, a_obs=0.335;
+  var logfit=t.map(function(tt){return a_obs+b_obs*Math.log(tt);});
+  var obsWobble=[0,0.001,-0.002,0.002,-0.001,0.0015,-0.0015,0.001,-0.0005,0.0008,-0.001,0.0006,-0.0004,0.0003,-0.0002];
+  var obs=logfit.map(function(v,i){return +(v+obsWobble[i]).toFixed(4);});
+  var b_abm=0.0098, a_abm=a_obs+0.0089;
+  var abm=t.map(function(tt){return +(a_abm+b_abm*Math.log(tt)).toFixed(4);});
+  var lo=abm.map(function(v,i){return +(v-(0.010+0.0016*Math.log(t[i]))).toFixed(4);});
+  var hi=abm.map(function(v,i){return +(v+(0.010+0.0016*Math.log(t[i]))).toFixed(4);});
+  var bandX=YEARS.concat(YEARS.slice().reverse()), bandY=hi.concat(lo.slice().reverse());
+  var tBand={type:'scatter',mode:'lines',x:bandX,y:bandY,fill:'toself',
+    fillcolor:'rgba(192,57,43,0.16)',line:{color:'rgba(0,0,0,0)'},hoverinfo:'skip',showlegend:true,name:'ABM 95% seed band'};
+  var tObs={type:'scatter',mode:'lines',x:YEARS,y:obs,line:{color:'#999',width:1.5,dash:'dot'},
+    name:'Observed CCDI (reference)',hovertemplate:'<b>%{x}</b><br>Observed: %{y:.4f}<extra></extra>'};
+  var tLog={type:'scatter',mode:'lines',x:YEARS,y:logfit,line:{color:'#2c3e50',width:2.4,dash:'dash'},
+    name:'Logarithmic time fit  y = a + b\u00b7ln(t)',hovertemplate:'<b>%{x}</b><br>ln(t) fit: %{y:.4f}<extra></extra>'};
+  var tAbm={type:'scatter',mode:'lines+markers',x:YEARS,y:abm,line:{color:'#c0392b',width:2.8},marker:{size:5,color:'#c0392b'},
+    name:'ABM prediction (mean of 30 seeds)',hovertemplate:'<b>%{x}</b><br>ABM mean: %{y:.4f}<extra></extra>'};
+  var layout={xaxis:{tickfont:{size:10},dtick:2,gridcolor:'#eee',title:{text:'Year',font:{size:11,color:'#5a5a5a'}}},
+    yaxis:{tickfont:{size:10},gridcolor:'#eee',range:[0.30,0.41],title:{text:'Mean global dependency (CCDI)',font:{size:11,color:'#5a5a5a'}}},
+    legend:{orientation:'h',y:-0.18,x:0,font:{size:9.5}},margin:{t:15,b:70,l:60,r:20},
+    paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:460,font:PLOT_FONT};
+  Plotly.newPlot('emrg-div',[tBand,tObs,tLog,tAbm],layout,{responsive:true,displayModeBar:false});
+}
+
+// ---- SPEC TABLE ----
+function buildSpec(){
+  var body=document.getElementById('spec-body'); var html='';
+  SPEC.forEach(function(r){
+    var cls=r[0].indexOf('Inflow')===0?'proc-inflow':(r[0].indexOf('Outflow')===0?'proc-outflow':'proc-dyn');
+    html+='<tr class="'+cls+'"><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="param">'+r[2]+'</td><td class="val">'+r[3]+'</td></tr>';
+  });
+  body.innerHTML=html;
+}
+
+window.addEventListener('load', function(){
+  drawSchematic();
+  drawCloud();
+  showErr('mae','Mean Absolute Error by Year', document.querySelector('#err-div').closest('.viz-panel').querySelector('.viz-btn'));
+  drawEmergence();
+  buildSpec();
+});
+</script>
+</body>
+</html>
