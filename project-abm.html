@@ -72,7 +72,7 @@
     .spec-table th{background:var(--navy);color:var(--gold-light);text-align:left;padding:0.5rem 0.7rem;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;}
     .spec-table td{padding:0.45rem 0.7rem;border-bottom:1px solid var(--cream-dark);color:var(--text-muted);}
     .spec-table tr:nth-child(even) td{background:var(--cream);}
-    .spec-table .param{font-family:monospace;font-size:0.78rem;color:var(--navy-mid);}
+    .spec-table .param{font-size:0.78rem;color:var(--navy-mid);font-weight:600;}
     .spec-table .val{font-weight:600;color:var(--navy);text-align:right;}
     .proc-inflow{border-left:3px solid #2166ac;}
     .proc-outflow{border-left:3px solid #c0392b;}
@@ -208,7 +208,7 @@
 
   <!-- FIGURE 1: SCHEMATIC -->
   <section>
-    <h2 class="section-title">Figure 1. The Generative Experiment</h2>
+    <h2 class="section-title">The Generative Experiment</h2>
     <p>The analysis has the structure of a generative experiment: a world is built from observed data, a population of firms is endowed with empirically grounded behavior, the world is run forward through time, and the macro pattern it produces is held against the macro pattern that actually occurred. The schematic below lays out this architecture. Hover over each stage for detail.</p>
     <div class="viz-panel">
       <div class="viz-header"><span class="viz-title">Model Architecture: From 2009 Network to Validated Trajectory</span></div>
@@ -219,7 +219,7 @@
 
   <!-- FIGURE 2: VALIDATION CLOUD -->
   <section>
-    <h2 class="section-title">Figure 2. Validation: Predicted vs. Observed Dependency</h2>
+    <h2 class="section-title">Validation: Predicted vs. Observed Dependency</h2>
     <p>The full validation cloud plots each country-year's model-predicted dependency against its observed value, shaded by year. The cloud tracks the 45-degree line of perfect prediction across the full range of the index, with an overall correlation of 0.828 and a fitted slope of 0.89. The mild attenuation, slightly over-predicting the least dependent and under-predicting the most dependent, is the signature of a probabilistic allocation mechanism. Hover for country and year.</p>
     <div class="viz-panel">
       <div class="viz-header"><span class="viz-title">Model-Predicted vs. Observed Core Capital Dependency</span></div>
@@ -228,26 +228,20 @@
     </div>
   </section>
 
-  <!-- FIGURE 3: ERROR DISTRIBUTION -->
+  <!-- FIT DISTRIBUTION -->
   <section>
-    <h2 class="section-title">Figure 3. The Fit Is Broad, Not Average</h2>
-    <p>Aggregate correlations can conceal a model that succeeds on average while failing for many individual cases. The figure reports the model's accuracy across the panel: the median country is predicted within 0.063 on the zero-to-one index, and the year-by-year mean absolute error stays low across the full simulation, rising only gradually as the free run moves away from the 2009 seed. Switch between the per-year error and the per-year correlation.</p>
+    <h2 class="section-title">The Fit Is Broad, Not Average</h2>
+    <p>Aggregate correlations can conceal a model that succeeds on average while failing for many individual cases. The distribution below shows the model's accuracy across all 150 countries: each is summarized by its mean absolute error between predicted and observed dependency over 2009 to 2023. The mass concentrates at low error, with a median country predicted within 0.063 on the zero-to-one index. The fit is broad rather than carried by a handful of well-captured cases. The best-fit countries include the Netherlands, the United States, the United Kingdom, Switzerland, and Spain; the weakest fits fall on small or volatile economies such as Grenada, Senegal, Tonga, Iraq, and the Central African Republic.</p>
     <div class="viz-panel">
-      <div class="viz-header">
-        <span class="viz-title" id="err-title">Mean Absolute Error by Year</span>
-        <div class="viz-btns">
-          <button class="viz-btn active" onclick="showErr('mae','Mean Absolute Error by Year',this)">Error (MAE)</button>
-          <button class="viz-btn" onclick="showErr('corr','Cross-Sectional Correlation by Year',this)">Correlation</button>
-        </div>
-      </div>
-      <div id="err-div" style="height:400px;"></div>
-      <div class="viz-note">Median country predicted within 0.063; 41 percent within 0.05 and 68 percent within 0.10 over the full period. Per-year values from 30-seed runs. 2009 (r = 0.999) reflects the seeded starting network.</div>
+      <div class="viz-header"><span class="viz-title">Distribution of Model Fit Across All 150 Countries</span></div>
+      <div id="hist-div" style="height:440px;"></div>
+      <div class="viz-note">Median per-country MAE = 0.063; 41 percent of countries predicted within 0.05 and 68 percent within 0.10 across 2009 to 2023. The dashed line marks the median.</div>
     </div>
   </section>
 
   <!-- FIGURE 4: EMERGENCE -->
   <section>
-    <h2 class="section-title">Figure 4. The Emergence Result</h2>
+    <h2 class="section-title">The Emergence Result</h2>
     <p>This is the central contribution. Observed global mean dependency rises logarithmically over time, following y = a + b&middot;ln(t). The model contains no time variable and no logarithmic rule. Yet the dependency it generates, plotted as the mean over 30 seeds with a 95 percent band, follows the same logarithmic form at an emergent slope of 0.0098, within the immediate neighborhood of the observed 0.0117. A logarithmic growth law emerges from decentralized firm behavior alone.</p>
     <div class="viz-panel">
       <div class="viz-header">
@@ -258,17 +252,17 @@
     </div>
   </section>
 
-  <!-- MODEL SPECIFICATION -->
+  <!-- TABLE 1: INSTITUTIONAL FEATURES -->
   <section>
-    <h2 class="section-title">Model Specification</h2>
-    <p>The two-process behavior is governed by the parameters below. Inflow weights set how strongly each factor pulls capital toward a destination; outflow weights set what triggers withdrawal; dynamics parameters govern accumulation and choice. Only the last two are calibrated; the rest are fixed from theory and the seeded network.</p>
+    <h2 class="section-title">Institutional and Structural Features</h2>
+    <p>Each firm's decision to deploy capital into a host economy is governed by an attractiveness function built from observed institutional and structural features. The table lists each feature, how it is measured, its source, its theoretical role, the mechanism through which it operates in the model, and its expected direction of association with inward investment. Institutional attractors follow meta-analytic evidence that political stability, rule of law, and democracy attract foreign direct investment while corruption deters it.</p>
     <div class="viz-panel">
-      <div class="viz-header"><span class="viz-title">Two-Process Parameters</span></div>
+      <div class="viz-header"><span class="viz-title">Features Driving Firm Investment Decisions</span></div>
       <table class="spec-table" id="spec-table">
-        <thead><tr><th>Process</th><th>Driver</th><th>Parameter</th><th class="val">Value</th></tr></thead>
+        <thead><tr><th>Feature</th><th>Measure</th><th>Source</th><th>Theoretical role</th><th>Mechanism in model</th><th class="val">Sign</th></tr></thead>
         <tbody id="spec-body"></tbody>
       </table>
-      <div class="viz-note">Inflow drivers in blue, outflow in red, dynamics in gold. Position growth cap and shock SD are the two calibrated parameters.</div>
+      <div class="viz-note">WDI = World Bank World Development Indicators; WGI = Worldwide Governance Indicators; CCDI = Core Capital Dependency Index. All features enter the firm-level attractiveness function. Expected sign indicates the direction of association with inward investment.</div>
     </div>
   </section>
 
@@ -353,27 +347,18 @@ var CLOUD = {"obs":[0.0059,0.3019,0.4794,0.6319,0.1434,0.4081,0.3505,0.7785,0.32
 var ERR = {"year":[2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023],"mae":[0.017,0.051,0.078,0.079,0.09,0.08,0.087,0.095,0.103,0.103,0.103,0.109,0.111,0.118,0.124],"corr":[0.999,0.911,0.853,0.851,0.812,0.845,0.817,0.839,0.803,0.802,0.807,0.806,0.796,0.758,0.733]};
 // Model specification table (tbl3_spec.csv)
 var SPEC = [
-  ["Inflow (deployment)","Market size","I_PULL","1.0"],
-  ["Inflow","Coreness gap","I_CORENESS","0.4"],
-  ["Inflow","Incumbency","I_INCUMBENCY","0.5"],
-  ["Inflow","Political stability","I_POLSTAB","0.4"],
-  ["Inflow","Rule of law","I_ROL","0.4"],
-  ["Inflow","Control of corruption","I_CORR","0.3"],
-  ["Inflow","Democracy","I_VDEM","0.2"],
-  ["Inflow","Trade openness","I_TRADE","0.3"],
-  ["Inflow","Resource rents","I_RENTS","0.5"],
-  ["Outflow (withdrawal)","Instability shock","O_INSTAB","10.0"],
-  ["Outflow","Saturation (host dependency)","O_SATURATE","1.5"],
-  ["Outflow","Host maturation (growth)","O_MATURE","4.0"],
-  ["Outflow","Baseline churn","O_BASE","0.04"],
-  ["Outflow","MNC churn","O_MNC","0.15"],
-  ["Dynamics","Outward expansion","G_OUT","8.0"],
-  ["Dynamics","Repatriation (capital exit)","REPATRIATE_FRAC","0.5"],
-  ["Dynamics","Deployment rate","DEPLOY_RATE","0.01"],
-  ["Dynamics","Choice temperature","SOFTMAX_TEMP","0.15"],
-  ["Calibrated","Position growth cap","MAX_DEST_GROWTH","0.2"],
-  ["Calibrated","Stochastic shock SD","SHOCK_SD","0.12"]
+  ["Market size","Log GDP (constant USD)","WDI","Market-seeking FDI","Attracts inflows","+"],
+  ["Coreness gap","Home minus host net-outward rank","CCDI","Efficiency-seeking; relational cost","Core-to-periphery flows","+"],
+  ["Incumbency","Existing position share","Network","Agglomeration; path dependence","Reinforces existing locations","+"],
+  ["Political stability","WGI political stability estimate","WGI","Risk reduction","Attracts inflows; drops trigger flight","+"],
+  ["Rule of law","WGI rule of law score","WGI","Contract and property security","Attracts inflows","+"],
+  ["Control of corruption","WGI control of corruption estimate","WGI","Lower transaction cost","Attracts inflows","+"],
+  ["Democracy","V-Dem polyarchy index","V-Dem","Institutional credibility","Attracts inflows","+"],
+  ["Trade openness","Trade (% of GDP)","WDI","Integration into world economy","Attracts inflows","+"],
+  ["Resource rents","Natural resource rents (% of GDP)","WDI","Resource-seeking FDI","Attracts resource-oriented inflows","+"],
+  ["GDP growth","Annual real GDP growth","WDI","Outward maturation","Fast growers build outward position","+"]
 ];
+var HIST = {"centers":[0.01,0.03,0.05,0.07,0.09,0.11,0.15,0.17,0.21,0.23,0.27,0.35,0.39,0.47,0.75],"counts":[36,30,20,17,10,4,11,9,5,2,2,1,1,1,1],"median":0.063,"binwidth":0.02};
 var PLOT_FONT = {family:'Source Sans 3, sans-serif'};
 
 // ---- FIGURE 1: SCHEMATIC (interactive SVG) ----
@@ -451,32 +436,30 @@ function drawCloud(){
   Plotly.newPlot('cloud-div',[trace,diag,fit],layout,{responsive:true,displayModeBar:false});
 }
 
-// ---- FIGURE 3: ERROR / CORRELATION BY YEAR ----
-function showErr(key, title, btn){
-  var btns=btn.parentElement.querySelectorAll('.viz-btn');
-  btns.forEach(function(b){b.classList.remove('active');}); btn.classList.add('active');
-  document.getElementById('err-title').textContent=title;
-  var isMae = key==='mae';
-  var vals = isMae ? ERR.mae : ERR.corr;
-  var color = isMae ? '#c0392b' : '#1b3a6b';
-  var trace={type:'scatter',mode:'lines+markers',x:ERR.year,y:vals,
-    line:{color:color,width:2.6},marker:{size:7,color:color,line:{color:'#fff',width:1}},
-    fill:'tozeroy',fillcolor:isMae?'rgba(192,57,43,0.08)':'rgba(27,58,107,0.08)',
-    hovertemplate:'<b>%{x}</b><br>'+(isMae?'MAE':'Correlation')+': %{y:.3f}<extra></extra>'};
-  var shapes=[], anns=[];
-  if(isMae){
-    shapes.push({type:'line',x0:2009,x1:2023,y0:0.063,y1:0.063,line:{color:'#999',width:1.4,dash:'dot'}});
-    anns.push({x:2010,y:0.063,text:'median country MAE 0.063',showarrow:false,font:{size:9,color:'#999'},xanchor:'left',yanchor:'bottom'});
-  } else {
-    shapes.push({type:'line',x0:2009,x1:2023,y0:0.688,y1:0.688,line:{color:'#999',width:1.4,dash:'dot'}});
-    anns.push({x:2010,y:0.688,text:'persistence benchmark 0.688',showarrow:false,font:{size:9,color:'#999'},xanchor:'left',yanchor:'bottom'});
-  }
-  var layout={xaxis:{tickfont:{size:10},dtick:2,gridcolor:'#eee'},
-    yaxis:{tickfont:{size:10},gridcolor:'#eee',range:isMae?[0,0.14]:[0.6,1.02],
-      title:{text:isMae?'Mean absolute error':'Correlation (model vs observed)',font:{size:11,color:'#5a5a5a'}}},
-    margin:{t:15,b:40,l:60,r:20},paper_bgcolor:'#fff',plot_bgcolor:'#fff',height:400,
-    font:PLOT_FONT,shapes:shapes,annotations:anns};
-  Plotly.react('err-div',[trace],layout,{responsive:true,displayModeBar:false});
+// ---- FIT DISTRIBUTION HISTOGRAM ----
+function drawHist(){
+  // Bar chart reproducing fig_fit_distribution.png (per-country MAE, bin width 0.02)
+  var centers = HIST.centers, counts = HIST.counts;
+  var trace = {
+    type:'bar', x:centers, y:counts,
+    width: HIST.binwidth*0.92,
+    marker:{color:'#5a8fc0', line:{color:'#fff', width:0.5}},
+    hovertemplate:'MAE \u2248 %{x:.2f}<br>%{y} countries<extra></extra>'
+  };
+  var layout = {
+    bargap:0.02,
+    xaxis:{title:{text:'Mean absolute error, 2009 to 2023 (predicted vs observed dependency)',font:{size:11,color:'#5a5a5a'}},
+      range:[-0.02,0.8], dtick:0.1, tickfont:{size:10}, gridcolor:'#eee'},
+    yaxis:{title:{text:'Number of countries',font:{size:11,color:'#5a5a5a'}},
+      tickfont:{size:10}, gridcolor:'#eee', rangemode:'tozero'},
+    margin:{t:15,b:55,l:55,r:20}, paper_bgcolor:'#fff', plot_bgcolor:'#fff',
+    height:440, font:PLOT_FONT,
+    shapes:[{type:'line', x0:HIST.median, x1:HIST.median, y0:0, y1:37,
+      line:{color:'#c0392b', width:2.4, dash:'dash'}}],
+    annotations:[{x:HIST.median, y:36, text:'Median MAE = 0.063', showarrow:false,
+      font:{size:11,color:'#c0392b'}, xanchor:'left', xshift:8}]
+  };
+  Plotly.newPlot('hist-div',[trace],layout,{responsive:true,displayModeBar:false});
 }
 
 // ---- FIGURE 4: EMERGENCE ----
@@ -510,8 +493,9 @@ function drawEmergence(){
 function buildSpec(){
   var body=document.getElementById('spec-body'); var html='';
   SPEC.forEach(function(r){
-    var cls=r[0].indexOf('Inflow')===0?'proc-inflow':(r[0].indexOf('Outflow')===0?'proc-outflow':'proc-dyn');
-    html+='<tr class="'+cls+'"><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="param">'+r[2]+'</td><td class="val">'+r[3]+'</td></tr>';
+    html+='<tr><td style="font-weight:600;color:var(--navy);">'+r[0]+'</td><td>'+r[1]+'</td>'+
+          '<td class="param">'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td>'+
+          '<td class="val">'+r[5]+'</td></tr>';
   });
   body.innerHTML=html;
 }
@@ -519,7 +503,7 @@ function buildSpec(){
 window.addEventListener('load', function(){
   drawSchematic();
   drawCloud();
-  showErr('mae','Mean Absolute Error by Year', document.querySelector('#err-div').closest('.viz-panel').querySelector('.viz-btn'));
+  drawHist();
   drawEmergence();
   buildSpec();
 });
