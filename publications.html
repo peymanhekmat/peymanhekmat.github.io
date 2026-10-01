@@ -203,7 +203,7 @@ fetch('publications.json')
     years.forEach(year => {
       html += '<div class="year-block"><div class="year-label">' + year + '</div>';
       byYear[year].forEach(p => {
-        const auth = p.authors.replace(/Peyman Hekmatpour/g, '<strong>Peyman Hekmatpour</strong>');
+        const auth = p.authors.replace(/(Peyman Hekmatpour|Hekmatpour, Peyman)/g, '<strong>$1</strong>');
         html += '<div class="pub-item">'
           + '<div class="pub-header" onclick="toggleAbstract(this)">'
           + '<div class="pub-main">'
