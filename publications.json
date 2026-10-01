@@ -1,6 +1,14 @@
 [
   {
     "year": "2026",
+    "authors": "Hekmatpour, Peyman.",
+    "title": "Subnational ecologically unequal exchange and air pollution: a county-level Longitudinal network analysis of U.S. commodity flows.",
+    "journal": "Environmental Sociology.",
+    "doi": "https://doi.org/10.1080/23251042.2026.2741185",
+    "abstract": "Traditionally, ecologically unequal exchange (EUE) theory has been applied to the unequal structure of international trade and its degrading environmental impacts. In this study, I expand this framework to the subnational level, arguing that similar patterns of unequal exchange can occur between subnational areas (e.g., counties) and that EUE can explain changes in local environmental outcomes. Using network data from the Census Bureau's Commodity Flow Survey (CFS), I develop four relational measures of EUE. Using the American Community Survey (ACS) and the CDC's Daily County-Level PM2.5 Concentrations, I develop a 3-wave (2012, 2017, 2022) panel dataset of 9,214 county-year observations nested in 3,094 counties. Results from two-way fixed-effects models indicate that shifts in EUE position can reshape local air quality. Counties that become net exporters of ecologically intensive commodities experience higher PM2.5, while those that increasingly rely on importing such commodities experience lower air pollution. A growing share of ecologically intensive production is associated with higher PM2.5 levels, while an increased share of transit and warehousing activity is associated with lower air pollution. These findings extend the EUE framework beyond the global scale, highlighting subnational network position as a key driver of local environmental inequality in the United States."
+  },
+  {
+    "year": "2026",
     "authors": "Schnabel, Landon, Ilana M. Horwitz, Peyman Hekmatpour, and Cyrus Schleifer.",
     "title": "DIY Faith.",
     "journal": "Contexts (2026).",
